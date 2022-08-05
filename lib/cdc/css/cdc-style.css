@@ -1,0 +1,17 @@
+body {font-family: 'Pretendard', 'Noto Sans KR', sans-serif !important;}
+
+#q-app h1, 
+#q-app h2, 
+#q-app h3,
+#q-app h4, 
+#q-app h5, 
+#q-app h6, 
+#q-app p {
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    letter-spacing: -0.05em;
+    color: #121212;
+}
+#q-app h2 {font-size: 1.5em; font-weight: bold;}
+

@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+/* 새글 스킨 (latest) */
+#tab-5 .lat{
+    margin-bottom: 0;
+}
+#tab-5 .lat li:before {
+    content: '';
+    display: inline-block;
+    width: 0px;
+    height: 0px;
+    border-radius: 100%;
+    background: #1acb86;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(0,-50%);
+}
+
+#tab-5 .lat li .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
+
+#tab-5 .lat .empty_li {line-height:145px;color:#666;text-align:center;padding:0}
+#tab-5 .lat .empty_li:before {background:none;padding:0}
+
+#tab-5 .type_line a{
+    line-height: 24px;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    vertical-align: middle;
+    color: #222222;
+}
+
+
+#tab-5 .type_line li:nth-child(1) span,
+#tab-5 .type_line li:nth-child(2) span,
+#tab-5 .type_line li:nth-child(3) span{
+    color: #1acb86
+}
+
+#tab-5 .type_line li span{
+    font-weight: 600;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #121212;
+    line-height: 15px;
+}
+
+
+#tab-5 .line_box{
+    padding: 0 !important;
+}
+
+#tab-5 .lat li{
+    border-bottom: 0;
+    height: 15px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+}
+#tab-5 .lat li:last-child{
+    margin-bottom: 0;
+}

@@ -1,0 +1,91 @@
+@charset "utf-8";
+
+/* 새글 스킨 (latest) */
+.lat {
+   position:relative;
+   background:#fff
+}
+
+.lat .con_title {
+   font-size: 20px;
+   font-weight: 700;
+}
+
+.lat ul {
+   margin: 10px 0 0;
+}
+
+.lat li {
+   padding: 0 0 0 7px;
+   position: relative;
+   line-height: 22px;
+}
+
+.lat li:before {
+   content: '';
+   display: inline-block;
+   width: 3px;
+   height: 3px;
+   border-radius: 100%;
+   background: #1acb86;
+   position: absolute;
+   left: 0; 
+   top: 50%;
+   transform: translate(0,-50%);
+}
+
+.lat li a {
+   font-size: 15px;
+   color: #333;
+   font-weight: 400;
+}
+
+.lat li span.date {
+   position: absolute;
+   top: 0;
+   right: 0;
+   color: #aaa;
+   font-size: 13px;
+}
+
+.lat li .fa-heart {color:#ff0000}
+.lat li .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
+.lat li .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
+.lat li .hot_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#ff0000;background:#ffb9b9;text-align:center;border-radius:2px;vertical-align:middle}
+.lat li .fa-caret-right {color:#bbb}
+.lat li .fa-download {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#daae37;background:#ffefb9;text-align:center;border-radius:2px;vertical-align:middle}
+.lat li .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;vertical-align:middle}
+
+.lat .profile_img img{border-radius:50%}
+
+.lt_info {padding:10px 0}
+.lt_info .lt_nick {}
+.lt_info .lt_date {color:#888}
+
+.lat .empty_li {line-height:145px;color:#666;text-align:center;padding:0}
+.lat .empty_li:before {background:none;padding:0}
+
+.lat .lt_cmt {
+   background:#e9eff5;
+   color:#3a8afd;
+   font-size:11px;
+   height:16px;
+   line-height:16px;
+   padding:0 5px;
+   border-radius:3px
+   ;vertical-align:middle
+}
+
+.lat .lt_more {
+   position: absolute;
+   top: 0;
+   right: 0;
+   display: inline-block;
+   font-size: 14px;
+   color: #aaa;
+   text-align: center;
+}
+
+.lat .lt_more:hover {
+   color:#777;
+}
