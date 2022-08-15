@@ -1,17 +1,12 @@
 <?php
-
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
 // quasar Css
 add_stylesheet('<link href="https://cdn.jsdelivr.net/npm/quasar@2.7.5/dist/quasar.prod.css" rel="stylesheet" type="text/css">', 0);
 add_stylesheet('<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">', 0);
 
-
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="' . $board_skin_url . '/style.css">', 0);
 add_stylesheet('<link rel="stylesheet" href="' . CDC_CSS_URL . '/cdc-style.css">', 0);
-
-
 ?>
 
 <?php
@@ -43,7 +38,8 @@ if ($board['bo_use_category']) {
 		<div id="q-app">
 			<section v-if="form" id="bo_w">
 				<h2>마케팅 인사이트 글쓰기</h2>
-				<q-form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+				<?php echo $action_url ?>
+				<form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
 					<input type="hidden" name="uid" v-model="formHiddenData.uid">
 					<input type="hidden" name="w" v-model="formHiddenData.w">
 					<input type="hidden" name="bo_table" v-model="bo_table">
@@ -58,54 +54,38 @@ if ($board['bo_use_category']) {
 
 				
 					<?php
-					// $option = '';
-					// $option_hidden = '';
-					// if ($is_notice || $is_html || $is_secret || $is_mail) {
-					// 	$option = '';
-					// 	if ($is_notice) {
-					// 		$option .= "\n" . '<input type="checkbox" id="notice" name="notice" value="1" ' . $notice_checked . '>' . "\n" . '<label for="notice">공지</label>';
-					// 	}
+					$option = '';
+					$option_hidden = '';
+					if ($is_notice || $is_html || $is_secret || $is_mail) {
+						$option = '';
+						if ($is_notice) {
+							$option .= "\n" . '<input type="checkbox" id="notice" name="notice" value="1" ' . $notice_checked . '>' . "\n" . '<label for="notice">공지</label>';
+						}
 
-					// 	if ($is_html) {
-					// 		if ($is_dhtml_editor) {
-					// 			$option_hidden .= '<input type="hidden" value="html1" name="html">';
-					// 		} else {
-					// 			$option .= "\n" . '<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="' . $html_value . '" ' . $html_checked . '>' . "\n" . '<label for="html">html</label>';
-					// 		}
-					// 	}
+						if ($is_html) {
+							if ($is_dhtml_editor) {
+								$option_hidden .= '<input type="hidden" value="html1" name="html">';
+							} else {
+								$option .= "\n" . '<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="' . $html_value . '" ' . $html_checked . '>' . "\n" . '<label for="html">html</label>';
+							}
+						}
+						if ($is_secret) {
+							if ($is_admin || $is_secret == 1) {
+								print_r2('is_secret22 : '.$is_secret. '   '. $is_admin);
+								$option .= "\n" . '<input type="checkbox" id="secret" name="secret" value="secret" ' . $secret_checked . '>' . "\n" . '<label for="secret">비밀글</label>';
+							} else {
+								print_r2('else option_hidden');
+								$option_hidden .= '<input type="hidden" name="secret" value="secret">';
+							}
+						}
 
-					// 	if ($is_secret) {
-					// 		if ($is_admin || $is_secret == 1) {
-					// 			print_r2('is_secret22 : '.$is_secret. '   '. $is_admin);
-					// 			$option .= "\n" . '<input type="checkbox" id="secret" name="secret" value="secret" ' . $secret_checked . '>' . "\n" . '<label for="secret">비밀글</label>';
-					// 		} else {
-					// 			print_r2('else option_hidden');
-					// 			$option_hidden .= '<input type="hidden" name="secret" value="secret">';
-					// 		}
-					// 	}
-
-					// 	if ($is_mail) {
-					// 		print_r2('is_mail33 : '.$is_mail);
-					// 		$option .= "\n" . '<input type="checkbox" id="mail" name="mail" value="mail" ' . $recv_email_checked . '>' . "\n" . '<label for="mail">답변메일받기</label>';
-					// 	}
-					// }
-					// echo $option_hidden;
+						if ($is_mail) {
+							print_r2('is_mail33 : '.$is_mail);
+							$option .= "\n" . '<input type="checkbox" id="mail" name="mail" value="mail" ' . $recv_email_checked . '>' . "\n" . '<label for="mail">답변메일받기</label>';
+						}
+					}
+					echo $option_hidden;
 					?> 
-
-					<!-- echo hiddden $option 사용유무 추후 검토 필요-->
-					<!-- is_html && is_dhtml_editor hidden -->
-					<input v-if="is_html && is_dhtml_editor" type="hidden" value="html1" name="html"> 
-					<!-- is_secret -->
-					<div v-if="is_secret">
-						<div v-if="is_admin || is_secret == 1">
-						
-							<!-- <input type="checkbox" id="secret" name="secret" value="secret" :checked="secret_checked">  
-							<label for="secret">비밀글</label> -->
-						</div>
-						<div v-else>
-							<input type="hidden" name="secret" value="secret">
-						</div>
-					</div>
 
 					<div class="tbl_frm01 tbl_wrap">
 						<table>
@@ -117,8 +97,6 @@ if ($board['bo_use_category']) {
 										<!-- 카테고리 : CDC_JS_URL/categoryComponents.js -->
 										 <category 
 										 		v-model="form.ca_name"
-												name="ca_name"
-										 		:group="form.ca_name"
 												:opts="code_category"
 												@ca_name="setCateVal"
 												required
@@ -169,7 +147,7 @@ if ($board['bo_use_category']) {
 
 										<!-- TODO : Content SmartEditor 가져올것..  -->
 										<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-									
+										
 										<!-- 최소/최대 글자 수 사용 시 -->
 										<div v-if="editor.write_min || editor.write_max" id="char_count_wrap"><span id="char_count"></span>글자</div>
 									
@@ -193,6 +171,7 @@ if ($board['bo_use_category']) {
 								<!-- 첨부파일 -->
 								<?php for ($i = 0; $is_file && $i < $file_count; $i++) { ?>
 									<tr>
+										
 										<th scope="row">이미지 첨부파일<?= $i + 1 ?></th>
 										<td>
 											<input type="file" name="bf_file[]" title="파일첨부 <?php echo $i + 1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file frm_input">
@@ -205,7 +184,6 @@ if ($board['bo_use_category']) {
 										</td>
 									</tr>
 								<?php } ?>
-
 
 								<q-input type="hidden" name="wr_1" id="wr_1" v-model="form.wr_1" value="<?php echo $write['wr_2']; ?>">
 								<q-input type="hidden" name="wr_2" id="wr_2" v-model="form.wr_2" value="<?php echo $write['wr_2']; ?>">
@@ -241,9 +219,9 @@ if ($board['bo_use_category']) {
 									<th><label for="">노출매체</label></th>
 									<td class="row">
 										<div class="q-gutter-sm justify-start col-4">
-											<q-checkbox size="xs" v-model="form.cdc.is_blog" true-value="Y" false-value="N" label="블로그" />
-											<q-checkbox size="xs" v-model="form.cdc.is_insta" true-value="Y" false-value="N" label="인스타" />
-											<q-checkbox size="xs" v-model="form.cdc.is_youtube" true-value="Y" false-value="N" label="유튜브" />
+											<q-checkbox size="xs" v-model="form.cdc.is_blog" name="is_blog" true-value="Y" false-value="N" label="블로그" />
+											<q-checkbox size="xs" v-model="form.cdc.is_insta" name="is_insta" true-value="Y" false-value="N" label="인스타" />
+											<q-checkbox size="xs" v-model="form.cdc.is_youtube" name="is_youtube" true-value="Y" false-value="N" label="유튜브" />
 										</div>
 
 										<div class="col-2">
@@ -252,7 +230,7 @@ if ($board['bo_use_category']) {
 										<div v-if="isCdcMode" class="q-gutter-sm col-6">
 											<q-button-group>
 												<q-btn>1|미리보기</q-btn>
-												<q-btn>2|임시등록</q-btn>
+												<q-btn @click="formSave(this)">2|임시등록</q-btn>
 												<q-btn>3|등록</q-btn>
 											</q-button-group>
 										</div>
@@ -260,47 +238,17 @@ if ($board['bo_use_category']) {
 								</tr>
 								<tr>
 
-									<!-- 썸네일 -->
+								<!-- 썸네일 -->
 								<tr v-if="isThumNail">
 									<th scope="row"><label for="">썸네일</label></th>
 									<td>
-											<q-card class="my-card">
-												<q-card-section>
-														<template v-if="!!file && 
-																		!!file['2'] && 
-																		!!file['2'].href ">
-															<q-img 
-															:src="file['2'].href" outlined ref="fileImg" 
-															height="100px" width="200px" />
-														</template>
-														
-														<q-img v-else-if="!!form.cdc.thumnailUrl"
-																:src="form.cdc.thumnailUrl" 
-																outlined @click="thumnailFileOpen" 
-																spinner-color="primary" spinner-size="82px" 
-																ref="fileImg"
-																height="300px"
-																style="display: block; margin-left: auto; margin-right: auto;">
-														</q-img>
-
-														<q-btn v-else>
-															<q-icon name="img:https://d29fhpw069ctt2.cloudfront.net/icon/image/37950/preview.svg" 
-															@click="thumnailFileOpen" 
-															size="400px">
-															</q-icon>
-														</q-btn>
-												</q-card-section>
-											</q-card>
-											<q-file ref="thumnail" color="teal" 
-													v-model="bf_file[2]"
-													style="display: none"
-													accept="image/*">
-													
-											</q-file>
+											<thumnail
+												v-model="bf_file[3]"
+												:bf_file="bf_file[3]"
+												:src="form.cdc.thumnailUrl"
+											/>
 									</td>
 								</tr>
-
-
 
 								<!-- 유튜브 동영상 -->
 								<tr v-if="isYoutubeVideo">
@@ -315,7 +263,7 @@ if ($board['bo_use_category']) {
 										</div>
 										<div class="q-gutter-md row items-start">
 											<q-field>
-												<q-input @blur="inputYoutubeLink" v-model="input_src_youtube"size="100" type="text" label="영상링크를 입력해주세요" :dense="dense" />
+												<q-input @blur="inputYoutubeLink" name="wr_youtube_link" v-model="input_src_youtube"size="100" type="text" label="영상링크를 입력해주세요" :dense="dense" />
 											</q-field>
 										</div>
 									</td>
@@ -326,21 +274,14 @@ if ($board['bo_use_category']) {
 									<th scope="row">메인 해시태그</th>
 									<td>
 										<div class="q-gutter-md row items-start">
-											<!-- <div style="display: inline;"
-												v-for="i in 3">
-													<q-input 
-														outlined 
-														type="text"  
-														v-model="`form.cdc.wr_mhash_${i}`" 
-														:label="`#${i}`"  
-														size="20" 
-														:dense="true"
-													 />
-											</div>  -->
-											<cdchashtag 
-												v-for="i in 3"
-												v-model="`cdc.form.wr_mhash_${i}"
-												:label="`#${i}`" />
+										<q-input v-for="i in 3"
+													:name="`wr_mhash_${i}`"
+													:key="i" 
+													outlined
+													v-model="form.cdc[`wr_mhash_${i}`]" 
+													:label="`#${i}`" 
+													dense size="20">
+											</q-input>
 										</div>
 									</td>
 								</tr>
@@ -349,26 +290,18 @@ if ($board['bo_use_category']) {
 									<th scope="row">서브 해시태그</th>
 									<td>
 										<div class="q-gutter-md row items-start">
-											<!-- <div style="display: inline;"
-												v-for="i in 7">
-													<q-input 
-														outlined 
-														type="text"  
-														v-model="`form.cdc.wr_shash_${i}`" 
-														:label="`#${i + 3}`"  
-														size="20" 
-														:dense="true"
-													/>
-											</div> -->
-											<cdchashtag 
-												v-for="i in 7"
-												v-model="`cdc.form.wr_shash_${i}"
-												:label="`#${i + 3}`" />
+											<q-input v-for="i in 7" 
+													:key="i" 
+													:name="`wr_shash_${i}`"
+													outlined
+													v-model="form.cdc[`wr_shash_${i}`]" 
+													:label="`#${i + 3}`" 
+													dense size="20">
+											</q-input>
 										</div>
 									</td>
 								</tr>
-
-								<?php if ($is_guest) { //자동등록방지  
+								<?php if ($is_guest) { //자동등록방지 
 								?>
 									<tr>
 										<th scope="row">자동등록방지</th>
@@ -386,6 +319,8 @@ if ($board['bo_use_category']) {
 						<my-component>추후 Component 적용 예정</my-component>
 					</div>
 
+					<pre id="logtest">{{form}}</pre>
+
 					<div class="btn_confirm">
 						<a href="./board.php?bo_table=<?php echo $bo_table ?><?= $sublink ?>" class="btn_cancel">취소</a>
 						<input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit">
@@ -393,96 +328,97 @@ if ($board['bo_use_category']) {
 				</form>
 				<!-- {{form}}				 -->
 				<script>
-					<?php if ($write_min || $write_max) { ?>
-						// 글자수 제한
-						var char_min = parseInt(<?php echo $write_min; ?>); // 최소
-						var char_max = parseInt(<?php echo $write_max; ?>); // 최대
+				<?php if($write_min || $write_max) { ?>
+				// 글자수 제한
+				var char_min = parseInt(<?php echo $write_min; ?>); // 최소
+				var char_max = parseInt(<?php echo $write_max; ?>); // 최대
+				check_byte("wr_content", "char_count");
+			
+				$(function() {
+					$("#wr_content").on("keyup", function() {
 						check_byte("wr_content", "char_count");
-
-						$(function() {
-							$("#wr_content").on("keyup", function() {
-								check_byte("wr_content", "char_count");
-							});
-						});
-
-					<?php } ?>
-
-					function html_auto_br(obj) {
-						if (obj.checked) {
-							result = confirm("자동 줄바꿈을 하시겠습니까?\n\n자동 줄바꿈은 게시물 내용중 줄바뀐 곳을<br>태그로 변환하는 기능입니다.");
-							if (result)
-								obj.value = "html2";
-							else
-								obj.value = "html1";
-						} else
-							obj.value = "";
+					});
+				});
+			
+				<?php } ?>
+				function html_auto_br(obj)
+				{
+					if (obj.checked) {
+						result = confirm("자동 줄바꿈을 하시겠습니까?\n\n자동 줄바꿈은 게시물 내용중 줄바뀐 곳을<br>태그로 변환하는 기능입니다.");
+						if (result)
+							obj.value = "html2";
+						else
+							obj.value = "html1";
 					}
+					else
+						obj.value = "";
+				}
+			
+				function fwrite_submit(f)
+				{
 
-					function fwrite_submit(f) {
-						<?php echo $editor_js; // 에디터 사용시 자바스크립트에서 내용을 폼필드로 넣어주며 내용이 입력되었는지 검사함   
-						?>
-
-						var subject = "";
-						var content = "";
-						$.ajax({
-							url: g5_bbs_url + "/ajax.filter.php",
-							type: "POST",
-							data: {
-								"subject": f.wr_subject.value,
-								"content": f.wr_content.value
-							},
-							dataType: "json",
-							async: false,
-							cache: false,
-							success: function(data, textStatus) {
-								subject = data.subject;
-								content = data.content;
+					<?php echo $editor_js; // 에디터 사용시 자바스크립트에서 내용을 폼필드로 넣어주며 내용이 입력되었는지 검사함   ?>
+			
+					var subject = "";
+					var content = "";
+					$.ajax({
+						url: g5_bbs_url+"/ajax.filter.php",
+						type: "POST",
+						data: {
+							"subject": f.wr_subject.value,
+							"content": f.wr_content.value
+						},
+						dataType: "json",
+						async: false,
+						cache: false,
+						success: function(data, textStatus) {
+							subject = data.subject;
+							content = data.content;
+						}
+					});
+			
+					if (subject) {
+						alert("제목에 금지단어('"+subject+"')가 포함되어있습니다");
+						f.wr_subject.focus();
+						return false;
+					}
+			
+					if (content) {
+						alert("내용에 금지단어('"+content+"')가 포함되어있습니다");
+						if (typeof(ed_wr_content) != "undefined")
+							ed_wr_content.returnFalse();
+						else
+							f.wr_content.focus();
+						return false;
+					}
+			
+					if (document.getElementById("char_count")) {
+						if (char_min > 0 || char_max > 0) {
+							var cnt = parseInt(check_byte("wr_content", "char_count"));
+							if (char_min > 0 && char_min > cnt) {
+								alert("내용은 "+char_min+"글자 이상 쓰셔야 합니다.");
+								return false;
 							}
-						});
-
-						if (subject) {
-							alert("제목에 금지단어('" + subject + "')가 포함되어있습니다");
-							f.wr_subject.focus();
-							return false;
-						}
-
-						if (content) {
-							alert("내용에 금지단어('" + content + "')가 포함되어있습니다");
-							if (typeof(ed_wr_content) != "undefined")
-								ed_wr_content.returnFalse();
-							else
-								f.wr_content.focus();
-							return false;
-						}
-
-						if (document.getElementById("char_count")) {
-							if (char_min > 0 || char_max > 0) {
-								var cnt = parseInt(check_byte("wr_content", "char_count"));
-								if (char_min > 0 && char_min > cnt) {
-									alert("내용은 " + char_min + "글자 이상 쓰셔야 합니다.");
-									return false;
-								} else if (char_max > 0 && char_max < cnt) {
-									alert("내용은 " + char_max + "글자 이하로 쓰셔야 합니다.");
-									return false;
-								}
+							else if (char_max > 0 && char_max < cnt) {
+								alert("내용은 "+char_max+"글자 이하로 쓰셔야 합니다.");
+								return false;
 							}
 						}
-
-						<?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  
-						?>
-
-						document.getElementById("btn_submit").disabled = "disabled";
-
-						return true;
 					}
+			
+					<?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
+			
+					document.getElementById("btn_submit").disabled = "disabled";
+			
+					return true;
+				}
 				</script>
-
 				<!-- php 환경 -->
 				<?php include_once(CDC_PATH . "/setConfig.php"); ?>
 
 				<!-- JavaScript Method(Vue.js 3) -->
 				<script src="<?= CDC_JS_URL ?>/categoryComponents.js?v=<?= CDC_VER ?>"></script>
-				<script src="<?= CDC_JS_URL ?>/hashTagComponents.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/thumnailComponents.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/MyComponents.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/cdcVue.js?v=<?= CDC_VER ?>"></script>
 
@@ -491,9 +427,10 @@ if ($board['bo_use_category']) {
 		<!-- } 게시물 작성/수정 끝 -->
 	</section>
 	<script>
+
 		const board_data = <?php echo json_encode($board); ?>;
 		const write_fields = <?php echo json_encode($write); ?>;
-		
+		vm.$data.bo_table = board_data.bo_table;
 		vm.$data.config = {
 			cdc_path: '<?= CDC_PATH ?>',
 			cdc_url: '<?= CDC_URL ?>',
@@ -529,8 +466,7 @@ if ($board['bo_use_category']) {
 
 		vm.$data.editor = {
 			write_min : '<?php $write_min ?>',
-			write_max : '<?php $write_max ?>',
-			editor_html : $('#wr_contents').html()
+			write_max : '<?php $write_max ?>'
 		}
 
 		
@@ -539,10 +475,11 @@ if ($board['bo_use_category']) {
 		for(const val of catNames){
 			vm.$data.code_category.push({
 				label : val,
-				value : val
+				value : val,
+				name: 'ca_name',
 			})
 		}
-		
+
 		vm.fetchData(write_fields);
 		vm.$data.file = <?php echo json_encode($file) ?> || [];
 
@@ -554,6 +491,8 @@ if ($board['bo_use_category']) {
 
 		console.log('vm.allData : ', vm.$data);
 		console.log('vm : ', vm.$);
+
+		
 	</script>
 	<!-- 우측 side 영역 -->
 	<?php include(G5_PATH . '/inc/aside.php'); ?>
