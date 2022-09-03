@@ -1,5 +1,11 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+?>
+
+
+<?php
+include(G5_PATH . '/inc/top.php');
+
 // quasar Css
 add_stylesheet('<link href="https://cdn.jsdelivr.net/npm/quasar@2.7.5/dist/quasar.prod.css" rel="stylesheet" type="text/css">', 0);
 add_stylesheet('<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">', 0);
@@ -7,10 +13,6 @@ add_stylesheet('<link href="https://fonts.googleapis.com/css?family=Roboto:100,3
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="' . $board_skin_url . '/style.css">', 0);
 add_stylesheet('<link rel="stylesheet" href="' . CDC_CSS_URL . '/cdc-style.css">', 0);
-?>
-
-<?php
-include(G5_PATH . '/inc/top.php');
 ?>
 <?php
 //카테고리 라디오 형태 변형을 위한 처리
@@ -38,8 +40,7 @@ if ($board['bo_use_category']) {
 		<div id="q-app">
 			<section v-if="form" id="bo_w">
 				<h2>마케팅 인사이트 글쓰기</h2>
-				<?php echo $action_url ?>
-				<form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+				<q-form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" @submit.prevent="formSave" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
 					<input type="hidden" name="uid" v-model="formHiddenData.uid">
 					<input type="hidden" name="w" v-model="formHiddenData.w">
 					<input type="hidden" name="bo_table" v-model="bo_table">
@@ -71,22 +72,18 @@ if ($board['bo_use_category']) {
 						}
 						if ($is_secret) {
 							if ($is_admin || $is_secret == 1) {
-								print_r2('is_secret22 : '.$is_secret. '   '. $is_admin);
 								$option .= "\n" . '<input type="checkbox" id="secret" name="secret" value="secret" ' . $secret_checked . '>' . "\n" . '<label for="secret">비밀글</label>';
 							} else {
-								print_r2('else option_hidden');
 								$option_hidden .= '<input type="hidden" name="secret" value="secret">';
 							}
 						}
 
 						if ($is_mail) {
-							print_r2('is_mail33 : '.$is_mail);
 							$option .= "\n" . '<input type="checkbox" id="mail" name="mail" value="mail" ' . $recv_email_checked . '>' . "\n" . '<label for="mail">답변메일받기</label>';
 						}
 					}
 					echo $option_hidden;
 					?> 
-
 					<div class="tbl_frm01 tbl_wrap">
 						<table>
 							<tbody>
@@ -95,12 +92,11 @@ if ($board['bo_use_category']) {
 										<th scope="row"><label for="ca_name">카테고리 선택<strong class="sound_only">필수</strong></label></th>
 										 <td class="chk_category"> 
 										<!-- 카테고리 : CDC_JS_URL/categoryComponents.js -->
-										 <category 
-										 		v-model="form.ca_name"
-												:opts="code_category"
-												@ca_name="setCateVal"
-												required
-												/>
+											<category 
+													v-model="form.ca_name"
+													:opts="code_category"
+													required
+													/>
 										</td>
 									</tr>
 
@@ -113,7 +109,7 @@ if ($board['bo_use_category']) {
 											<!-- <input type="text" name="wr_subject" v-model="form.wr_subject" id="wr_subject" required class="frm_input required" size="50" maxlength="255"> -->
 											<div class="row items-start">
 												<div>
-													<q-input outlined type="text" name="wr_subject" v-model="form.wr_subject" id="wr_subject" required  size="40" maxlength="255" :dense="true
+													<q-input outlined class="q-input" type="text" name="wr_subject" v-model="form.wr_subject" id="wr_subject" :rules="[Rules.require({label:`제목`})]"  size="40" maxlength="255" :dense="true
 													">
 												</div>
 
@@ -139,18 +135,19 @@ if ($board['bo_use_category']) {
 								<!-- // 제목 및 임시 저장된 글 -->
 
 								<!-- 내용 -->
+								
 								<tr>
 									<th scope="row"><label for="wr_content">내용<strong class="sound_only">필수</strong></label></th>
 									<td class="wr_content">
+										<?php if($write_min || $write_max) { ?>
 										<!-- 최소/최대 글자 수 사용 시 -->
-										<p v-if="editor.write_min || editor.write_max"id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
-
-										<!-- TODO : Content SmartEditor 가져올것..  -->
+										<p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
+										<?php } ?>
 										<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-										
+										<?php if($write_min || $write_max) { ?>
 										<!-- 최소/최대 글자 수 사용 시 -->
-										<div v-if="editor.write_min || editor.write_max" id="char_count_wrap"><span id="char_count"></span>글자</div>
-									
+										<div id="char_count_wrap"><span id="char_count"></span>글자</div>
+										<?php } ?>
 									</td>
 								</tr>
 								<?php for ($i = 1; $is_link && $i <= G5_LINK_COUNT; $i++) { ?>
@@ -162,7 +159,6 @@ if ($board['bo_use_category']) {
 																										} ?>" id="wr_link<?php echo $i ?>" class="frm_input" size="50">
 																										
 																									<!-- 링크 -->
-																									<?php print_r2('$is_link  : '. $is_link . '  i : '. $i); ?>
 																									</td>
 											
 									</tr>
@@ -171,7 +167,6 @@ if ($board['bo_use_category']) {
 								<!-- 첨부파일 -->
 								<?php for ($i = 0; $is_file && $i < $file_count; $i++) { ?>
 									<tr>
-										
 										<th scope="row">이미지 첨부파일<?= $i + 1 ?></th>
 										<td>
 											<input type="file" name="bf_file[]" title="파일첨부 <?php echo $i + 1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file frm_input">
@@ -229,8 +224,8 @@ if ($board['bo_use_category']) {
 
 										<div v-if="isCdcMode" class="q-gutter-sm col-6">
 											<q-button-group>
-												<q-btn>1|미리보기</q-btn>
-												<q-btn @click="formSave(this)">2|임시등록</q-btn>
+												<q-btn @click="getAutoSave">1|미리보기</q-btn>
+												<q-btn @click="autoSave">2|임시등록</q-btn>
 												<q-btn>3|등록</q-btn>
 											</q-button-group>
 										</div>
@@ -238,15 +233,68 @@ if ($board['bo_use_category']) {
 								</tr>
 								<tr>
 
+								<!-- 이미지 -->
+								<tr v-if="isImageForm">
+									<th scope="row"><label for="">이미지</label></th>
+									<td>
+										<div class="q-gutter-md row items-start">
+												<thumnail
+													v-for="i in imageUpCount"
+													:key="i"
+													v-model="bf_file[i - 1]"
+													:bf_file="bf_file[i - 1]"
+													@remove="removeImage"
+													style="width:140px; height:100px;"
+												>
+												</thumnail>
+										</div>
+									</td>
+								</tr> 
+
 								<!-- 썸네일 -->
 								<tr v-if="isThumNail">
 									<th scope="row"><label for="">썸네일</label></th>
 									<td>
 											<thumnail
-												v-model="bf_file[3]"
-												:bf_file="bf_file[3]"
-												:src="form.cdc.thumnailUrl"
+												v-model="bf_file[10]"
+												:bf_file="bf_file[10]"
+												@remove="removeImage"
 											/>
+									</td>
+								</tr>
+
+								
+
+								<!-- CTA 배너 -->
+								<tr v-if="isCtaVanner">
+									<th scope="row"><label for="">CTA배너</label></th>
+									<td>
+											<thumnail
+												v-model="bf_file[11]"
+												:bf_file="bf_file[11]"
+												@remove="removeImage"
+											>
+											</thumnail>
+											<div v-if="bf_file[11]" class="q-gutter-md row items-start">
+												<q-input 
+													name="wr_cat_link"
+													class="q-input"
+													style="margin-top:20px;"
+													outlined
+													v-model="form.cdc.wr_cat_link" 
+													label="클릭 링크를 입력해주세요" 
+													dense size="100">
+												</q-input>
+											</div>
+									</td>
+								</tr>
+
+								<!-- 동영상 15 ~ 60 -->
+								<tr v-if="isShortVideo">
+									<th scope="row">동영상(15~60초)</th>
+									<td>
+										 <inputvideo  
+										 v-model="form.cdc.wr_video_link" /> 
 									</td>
 								</tr>
 
@@ -254,18 +302,11 @@ if ($board['bo_use_category']) {
 								<tr v-if="isYoutubeVideo">
 									<th scope="row">유튜브 동영상</th>
 									<td>
-										<div v-if="!!form.cdc.wr_youtube_link" class="q-pa-md">
-												<q-video
-													:ratio="16/9"
-													:src="form.cdc.wr_youtube_link"
-													@onStateChange="changeState"
-												/>
-										</div>
-										<div class="q-gutter-md row items-start">
-											<q-field>
-												<q-input @blur="inputYoutubeLink" name="wr_youtube_link" v-model="input_src_youtube"size="100" type="text" label="영상링크를 입력해주세요" :dense="dense" />
-											</q-field>
-										</div>
+										 <inputvideo  
+										 :clcd="'youtube'"
+										 v-model="form.cdc.wr_youtube_link" 
+										 ref="test"
+										 /> 
 									</td>
 								</tr>
 
@@ -275,12 +316,15 @@ if ($board['bo_use_category']) {
 									<td>
 										<div class="q-gutter-md row items-start">
 										<q-input v-for="i in 3"
+													class="q-input"
 													:name="`wr_mhash_${i}`"
 													:key="i" 
+													:rules="[Rules.require({label:`메인해시태크${i}`})]" 
 													outlined
 													v-model="form.cdc[`wr_mhash_${i}`]" 
 													:label="`#${i}`" 
-													dense size="20">
+													style="max-width:100%;"
+													dense size="25">
 											</q-input>
 										</div>
 									</td>
@@ -293,10 +337,30 @@ if ($board['bo_use_category']) {
 											<q-input v-for="i in 7" 
 													:key="i" 
 													:name="`wr_shash_${i}`"
+													:rules="[Rules.require({label:`서브해시태크${i + 3}`})]" 
 													outlined
 													v-model="form.cdc[`wr_shash_${i}`]" 
 													:label="`#${i + 3}`" 
-													dense size="20">
+													dense size="25">
+											</q-input>
+										</div>
+									</td>
+								</tr>
+
+								<!-- 유튜브 태그 -->
+								<tr v-if="isYtag">
+									<th scope="row">유튜브 태그</th>
+									<td>
+										<div class="q-gutter-md row items-start"
+											style="width:100%;"
+										>
+											<q-input 
+													name="wr_ytag"
+													:rules="[Rules.require({label:`유튜브 태그`})]"
+													outlined
+													v-model="form.cdc.wr_ytag" 
+													label="유튜브 태그를 입력하세요" 
+													dense size="50">
 											</q-input>
 										</div>
 									</td>
@@ -314,19 +378,13 @@ if ($board['bo_use_category']) {
 						</table>
 
 					</div>
-
-					<div>
-						<my-component>추후 Component 적용 예정</my-component>
-					</div>
-
-					<pre id="logtest">{{form}}</pre>
+					  <pre id="logtest"></pre> 
 
 					<div class="btn_confirm">
 						<a href="./board.php?bo_table=<?php echo $bo_table ?><?= $sublink ?>" class="btn_cancel">취소</a>
 						<input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit">
 					</div>
-				</form>
-				<!-- {{form}}				 -->
+				</q-form>
 				<script>
 				<?php if($write_min || $write_max) { ?>
 				// 글자수 제한
@@ -372,6 +430,7 @@ if ($board['bo_use_category']) {
 						async: false,
 						cache: false,
 						success: function(data, textStatus) {
+							//console.log('data : ', data);
 							subject = data.subject;
 							content = data.content;
 						}
@@ -417,9 +476,13 @@ if ($board['bo_use_category']) {
 				<?php include_once(CDC_PATH . "/setConfig.php"); ?>
 
 				<!-- JavaScript Method(Vue.js 3) -->
+				<script src="<?= CDC_JS_URL ?>/cdcCommon.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/DragAndDrop.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/categoryComponents.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/thumnailComponents.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/inputvideoComponents.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/MyComponents.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/ValidateRules.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/cdcVue.js?v=<?= CDC_VER ?>"></script>
 
 			</section>
@@ -430,6 +493,7 @@ if ($board['bo_use_category']) {
 
 		const board_data = <?php echo json_encode($board); ?>;
 		const write_fields = <?php echo json_encode($write); ?>;
+		console.log('write_fields : ', write_fields);
 		vm.$data.bo_table = board_data.bo_table;
 		vm.$data.config = {
 			cdc_path: '<?= CDC_PATH ?>',
@@ -454,7 +518,6 @@ if ($board['bo_use_category']) {
 			page : '<?= $page ?>'
 		}
 		
-
 		vm.$data.is_html = '<?= $is_html ?>';
 		vm.$data.is_secret = '<?= $is_secret ?>';
 		vm.$data.is_notice = '<?= $is_notice ?>';
@@ -469,7 +532,6 @@ if ($board['bo_use_category']) {
 			write_max : '<?php $write_max ?>'
 		}
 
-		
 		const catNames = board_data.bo_category_list.split("|");
 
 		for(const val of catNames){
@@ -491,8 +553,7 @@ if ($board['bo_use_category']) {
 
 		console.log('vm.allData : ', vm.$data);
 		console.log('vm : ', vm.$);
-
-		
+		console.log('Ruels : ', rules);
 	</script>
 	<!-- 우측 side 영역 -->
 	<?php include(G5_PATH . '/inc/aside.php'); ?>

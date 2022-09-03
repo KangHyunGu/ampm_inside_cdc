@@ -147,7 +147,6 @@ function conv_rich_content($matches)
     return view_image($view, $matches[1], $matches[2]);
 }
 $view['rich_content'] = preg_replace_callback("/{이미지\:([0-9]+)[:]?([^}]*)}/i", "conv_rich_content", $view['content']);
-
 $is_signature = false;
 $signature = '';
 if ($board['bo_use_signature'] && $view['mb_id']) {

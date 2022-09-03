@@ -319,8 +319,9 @@ function get_filesize($size)
 function get_file($bo_table, $wr_id)
 {
     global $g5, $qstr, $board;
-
+   
     $file['count'] = 0;
+    
     $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
     $result = sql_query($sql);
     while ($row = sql_fetch_array($result))
@@ -347,10 +348,46 @@ function get_file($bo_table, $wr_id)
         $file[$no]['bf_storage'] = $row['bf_storage'];
         $file['count']++;
     }
-
     return run_replace('get_files', $file, $bo_table, $wr_id);
 }
 
+// CDC 이미지 파일 - 신규 추가
+function get_file_cdc($bo_table, $wr_id){
+
+    global $g5, $qstr, $board;
+   
+    $cdc_file['count'] = 0;
+    
+    //$sql = " select * from {$g5['cdc_file']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
+    $sql = " select * from g5_cdc_file where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
+    $result = sql_query($sql);
+    while ($row = sql_fetch_array($result))
+    {
+        $no = (int) $row['bf_no'];
+        $bf_content = $row['bf_content'] ? html_purifier($row['bf_content']) : '';
+        $cdc_file[$no]['href'] = G5_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
+        $cdc_file[$no]['download'] = $row['bf_download'];
+        // 4.00.11 - 파일 path 추가
+        $cdc_file[$no]['path'] = G5_DATA_URL.'/file/'.$bo_table;
+        $cdc_file[$no]['size'] = get_filesize($row['bf_filesize']);
+        $cdc_file[$no]['datetime'] = $row['bf_datetime'];
+        $cdc_file[$no]['source'] = addslashes($row['bf_source']);
+        $cdc_file[$no]['bf_content'] = $bf_content;
+        $cdc_file[$no]['content'] = get_text($bf_content);
+        //$file[$no]['view'] = view_file_link($row['bf_file'], $file[$no]['content']);
+        $cdc_file[$no]['view'] = view_file_link($row['bf_file'], $row['bf_width'], $row['bf_height'], $cdc_file[$no]['content']);
+        $cdc_file[$no]['file'] = $row['bf_file'];
+        $cdc_file[$no]['image_width'] = $row['bf_width'] ? $row['bf_width'] : 640;
+        $cdc_file[$no]['image_height'] = $row['bf_height'] ? $row['bf_height'] : 480;
+        $cdc_file[$no]['image_type'] = $row['bf_type'];
+        $cdc_file[$no]['bf_fileurl'] = $row['bf_fileurl'];
+        $cdc_file[$no]['bf_thumburl'] = $row['bf_thumburl'];
+        $cdc_file[$no]['bf_storage'] = $row['bf_storage'];
+        $cdc_file['count']++;
+    }
+
+    return run_replace('get_files', $cdc_file, $bo_table, $wr_id);
+}
 
 // 폴더의 용량 ($dir는 / 없이 넘기세요)
 function get_dirsize($dir)
@@ -477,6 +514,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['link_hit'][$i] = (int)$list["wr_link{$i}_hit"];
     }
 
+    
     // 가변 파일
     if ($board['bo_use_list_file'] || ($list['wr_file'] && $subject_len == 255) /* view 인 경우 */) {
         $list['file'] = get_file($board['bo_table'], $list['wr_id']);
@@ -487,6 +525,10 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     if ($list['file']['count'])
         $list['icon_file'] = '<i class="fa fa-download" aria-hidden="true"></i> ';
 
+    // 가변 파일 - CDC 이미지(썸네일, 이미지 1 ~ 10)
+    if($list['cdc'] && $list['cdc']['wr_cdc_file']){
+        $list['cdc']['file'] = get_file_cdc($board['bo_table'], $list['wr_id']);
+    } 
     return $list;
 }
 
@@ -746,6 +788,22 @@ function get_write($write_table, $wr_id, $is_cache=false)
         $g5_object->set('bbs', $wr_id, $write, $wr_bo_table);
     }
 
+    // CDC 레코드 추출
+    $cdc_sql = "select * from g5_wr_cdc
+                 where bo_table = '$wr_bo_table'
+                 and wr_id = '$wr_id'";
+
+    $cdc_res = sql_fetch($cdc_sql);
+    
+    if(isset($cdc_res)){
+     $write['cdc'] = $cdc_res;
+     // 
+     if($write['cdc']['wr_cdc_file']){
+         // 가변 파일 - CDC 이미지(썸네일, 이미지 1 ~ 10)
+        $write['cdc']['file'] = get_file_cdc($wr_bo_table, $wr_id);
+     }
+    }
+    
     return $write;
 }
 

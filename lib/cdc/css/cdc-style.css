@@ -17,14 +17,14 @@ body {font-family: 'Pretendard', 'Noto Sans KR', sans-serif !important;}
 
 #q-app h2 {font-size: 1.5em; font-weight: bold;}
 
-#q-app .tbl_frm01 td .main-hash-tag input[type="text"] 
-{
-    width: 30%;
-}
 
 #q-app .my_card{
     width: 100%;
     max-width: 300px;
     height: 100%;
     max-height: 300px;
+}
+
+#q-app #bo_w .tbl_frm01 td .q-input input[type="text"] {
+    width:100% !important;
 }

@@ -17,8 +17,7 @@ include(G5_PATH.'/inc/top.php');
 		<div class="visual_banner">
 			<img src="<? G5_URL ?>/images/sub_banner1.jpg" alt="마케터 인사이트 배너">
 		</div>
-      
-
+		
 		<!-- 게시물 읽기 시작 { -->
 		<article id="bo_v" style="width:<?php echo $width; ?>">
 			<div class="bo_title_wrap">

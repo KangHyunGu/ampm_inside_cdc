@@ -479,6 +479,8 @@ if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이�
 
 $write = array();
 $write_table = '';
+$write_cdc = array();
+
 if ($bo_table) {
     $board = get_board_db($bo_table, true);
     if (isset($board['bo_table']) && $board['bo_table']) {

@@ -788,5 +788,8 @@ run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
 if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
-else
-    goto_url($redirect_url);
+else{
+    if($bo_table == 'insight_cdc'){echo($redirect_url);} 
+    else {goto_url($redirect_url);}
+}
+    

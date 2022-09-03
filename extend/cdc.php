@@ -4,4 +4,6 @@
     define('CDC_CSS_URL', CDC_URL.'/css');
     define('CDC_JS_URL', CDC_URL.'/js');
     define('CDC_VER', uniqid());
+    $g5['cdc_table'] = 'g5_wr_cdc';
+    $g5['cdc_file'] = 'g5_cdc_file';
 ?>
