@@ -40,7 +40,7 @@ if ($board['bo_use_category']) {
 		<div id="q-app">
 			<section v-if="form" id="bo_w">
 				<h2>마케팅 인사이트 글쓰기</h2>
-				<q-form name="fwrite" ref="form" id="fwrite" action="<?php echo $action_url ?>" @submit.prevent="formSave" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+				<q-form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" @submit.prevent="formSave" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
 					<input type="hidden" name="uid" v-model="formHiddenData.uid">
 					<input type="hidden" name="w" v-model="formHiddenData.w">
 					<input type="hidden" name="bo_table" v-model="bo_table">
@@ -115,28 +115,18 @@ if ($board['bo_use_category']) {
 
 												<!-- 임시 저장된 글  -->
 												<div style="display: inline;" v-if="<?php $is_member?>">
-													<!--  -->
-													<q-btn class="q-ml-sm" size="md" color="black" id="btn_autosave" @click="isAutoSaveOpen = true" :label="`임시 저장된 글(${skinSaveList.length})`"></q-btn>
-													<div id="autosave_pop" v-if="isAutoSaveOpen" style="display: block;">
+													<script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
+													<q-btn class="q-ml-sm" size="md" color="black" id="btn_autosave" label="임시 저장된 글(<?php echo $autosave_count; ?>)"></q-btn>
+													<!-- <button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button> -->
+													<div id="autosave_pop">
 														<!-- 임시 저장된 글 기능  -->
 														<strong>임시 저장된 글 목록</strong>
-														<div><button type="button" class="autosave_close" @click="isAutoSaveOpen = false"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
-															<ul v-for="index in skinSaveList.length"
-																:key="index"
-															>
-																<li>
-																	<a href="#none" class="autosave_load" @click="autosave_load(skinSaveList[index - 1])">
-																	  {{skinSaveList[index - 1].wr_subject}}
-																	</a>
-																	<span>
-																		{{skinSaveList[index - 1].date}}
-																		<button type="button" class="autosave_del" @click="autosave_remove(index - 1)">삭제</button>
-																	</span>
-																</li>
-															</ul>
-														<div><button type="button" class="autosave_close" @click="isAutoSaveOpen = false"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
+														<div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
+														<ul></ul>
+														<div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
 													</div>
 												</div>
+											</div>
 											
 											</div>
 										</div>
@@ -234,19 +224,21 @@ if ($board['bo_use_category']) {
 
 										<div v-if="isCdcMode" class="q-gutter-sm col-6">
 											<q-button-group>
-												<q-btn>1|미리보기</q-btn>
+												<q-btn @click="getAutoSave">1|미리보기</q-btn>
 												<q-btn @click="autoSave">2|임시등록</q-btn>
 												<q-btn>3|등록</q-btn>
 											</q-button-group>
 										</div>
 									</td>
 								</tr>
+								<tr>
+
 								<!-- 이미지 -->
 								<tr v-if="isImageForm">
 									<th scope="row"><label for="">이미지</label></th>
 									<td>
 										<div class="q-gutter-md row items-start">
-												<imageform
+												<thumnail
 													v-for="i in imageUpCount"
 													:key="i"
 													v-model="bf_file[i - 1]"
@@ -254,7 +246,7 @@ if ($board['bo_use_category']) {
 													@remove="removeImage"
 													style="width:140px; height:100px;"
 												>
-												</imageform>
+												</thumnail>
 										</div>
 									</td>
 								</tr> 
@@ -263,7 +255,7 @@ if ($board['bo_use_category']) {
 								<tr v-if="isThumNail">
 									<th scope="row"><label for="">썸네일</label></th>
 									<td>
-											<imageform
+											<thumnail
 												v-model="bf_file[10]"
 												:bf_file="bf_file[10]"
 												@remove="removeImage"
@@ -277,12 +269,12 @@ if ($board['bo_use_category']) {
 								<tr v-if="isCtaVanner">
 									<th scope="row"><label for="">CTA배너</label></th>
 									<td>
-											<imageform
+											<thumnail
 												v-model="bf_file[11]"
 												:bf_file="bf_file[11]"
 												@remove="removeImage"
 											>
-											</imageform>
+											</thumnail>
 											<div v-if="bf_file[11]" class="q-gutter-md row items-start">
 												<q-input 
 													name="wr_cat_link"
@@ -380,13 +372,13 @@ if ($board['bo_use_category']) {
 										<td>
 											<?php echo $captcha_html ?>
 										</td>
-								</tr>
+									</tr>
 								<?php } ?>
 							</tbody>
 						</table>
 
 					</div>
-					   <!-- <pre id="logtest"></pre>  -->
+					  <pre id="logtest"></pre> 
 
 					<div class="btn_confirm">
 						<a href="./board.php?bo_table=<?php echo $bo_table ?><?= $sublink ?>" class="btn_cancel">취소</a>
@@ -487,8 +479,9 @@ if ($board['bo_use_category']) {
 				<script src="<?= CDC_JS_URL ?>/cdcCommon.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/DragAndDrop.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/categoryComponents.js?v=<?= CDC_VER ?>"></script>
-				<script src="<?= CDC_JS_URL ?>/imageformComponents.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/thumnailComponents.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/inputvideoComponents.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/MyComponents.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/ValidateRules.js?v=<?= CDC_VER ?>"></script>
 				<script src="<?= CDC_JS_URL ?>/cdcVue.js?v=<?= CDC_VER ?>"></script>
 
@@ -500,7 +493,7 @@ if ($board['bo_use_category']) {
 
 		const board_data = <?php echo json_encode($board); ?>;
 		const write_fields = <?php echo json_encode($write); ?>;
-		
+		console.log('write_fields : ', write_fields);
 		vm.$data.bo_table = board_data.bo_table;
 		vm.$data.config = {
 			cdc_path: '<?= CDC_PATH ?>',
@@ -550,8 +543,7 @@ if ($board['bo_use_category']) {
 		}
 
 		vm.fetchData(write_fields);
-		vm.initSkinLocalStorage();
-	
+		vm.$data.file = <?php echo json_encode($file) ?> || [];
 
 		console.log('vm.$data.form : ', vm.$data.form);
 		console.log('write_fields : ', write_fields);

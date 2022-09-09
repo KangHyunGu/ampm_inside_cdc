@@ -7,18 +7,20 @@
 $cdc_sql = "insert into {$g5['cdc_table']} set bo_table = '${bo_table}', wr_id = '$wr_id', {fieldSet}";
 
 if($w == 'u'){
-    // 해당 게시글에 CDC 관련 정보 존재유무 확인 후 update 처리
-    $sel_sql = "select count(*) as cnt from {$g5['cdc_table']} where bo_table = '$bo_table' and wr_id='$wr_id'";
-    $sel_row = sql_query($sel_sql);
-    if($sel_rwo['cnt'] != 0){
+    // 해당 게시글에 CDC 관련 정보 존재유무 확인 후 update 처리(error 확인 필요)
+     $sel_sql = "select count(*) as cnt from {$g5['cdc_table']} where bo_table = '$bo_table' and wr_id='$wr_id'";
+     $row = sql_fetch($sel_sql);
+     if($row['cnt'] != 0){
         $cdc_sql = "update {$g5['cdc_table']} set {fieldSet} where bo_table = '$bo_table' and wr_id = '$wr_id'";
     }
 }
 
 $file_size = count($_FILES);
+$is_insta = $_POST['is_insta'];
+
 $commonSql = "is_youtube = '{$_POST['is_youtube']}',
                     is_blog = '{$_POST['is_blog']}',
-                    is_insta = '{$_POST['is_insta']}',
+                    is_insta = '$is_insta',
                     wr_cat_link = '{$_POST['wr_cat_link']}',
                     wr_mhash_1 = '{$_POST['wr_mhash_1']}',
                     wr_mhash_2 = '{$_POST['wr_mhash_2']}',
