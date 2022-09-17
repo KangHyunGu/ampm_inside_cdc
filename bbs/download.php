@@ -6,8 +6,10 @@ ob_end_clean();
 
 $no = isset($_REQUEST['no']) ? (int) $_REQUEST['no'] : 0;
 
-@include_once($board_skin_path.'/download.head.skin.php');
+//테이블 유형 구분처리
+$file_table_name = $_REQUEST['clcd'] == 'cdc' ?  $g5['cdc_file'] : $g5['board_file_table'];
 
+@include_once($board_skin_path.'/download.head.skin.php');
 // 쿠키에 저장된 ID값과 넘어온 ID값을 비교하여 같지 않을 경우 오류 발생
 // 다른곳에서 링크 거는것을 방지하기 위한 코드
 if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
@@ -17,7 +19,7 @@ if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
 if($board['bo_download_point'] <= 0 && $is_guest)
     alert('다운로드 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id)));
 
-$sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
+$sql = " select * from $file_table_name where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
 $file = sql_fetch($sql);
 if (!$file['bf_file'])
     alert_close('파일 정보가 존재하지 않습니다.');
@@ -82,7 +84,7 @@ $ss_name = 'ss_down_'.$bo_table.'_'.$wr_id.'_'.$no;
 if (!get_session($ss_name))
 {
     // 다운로드 카운트 증가
-    $sql = " update {$g5['board_file_table']} set bf_download = bf_download + 1 where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
+    $sql = " update $file_table_name set bf_download = bf_download + 1 where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
     sql_query($sql);
     // 다운로드 카운트를 증가시키고 세션을 생성
     $_SESSION[$ss_name] = true;

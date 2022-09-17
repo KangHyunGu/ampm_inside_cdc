@@ -28,3 +28,16 @@ body {font-family: 'Pretendard', 'Noto Sans KR', sans-serif !important;}
 #q-app #bo_w .tbl_frm01 td .q-input input[type="text"] {
     width:100% !important;
 }
+
+hr .split{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* View.skin */
+.bo_v_cdc_split{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top: 2px solid black;
+    border-bottom: 1px solid gray;
+}

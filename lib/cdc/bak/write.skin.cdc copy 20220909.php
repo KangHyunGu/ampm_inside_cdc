@@ -2,9 +2,17 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+
 <?php
 include(G5_PATH . '/inc/top.php');
-include(CDC_PATH.'/cdc_cdn_include.php');
+
+// quasar Css
+add_stylesheet('<link href="https://cdn.jsdelivr.net/npm/quasar@2.7.5/dist/quasar.prod.css" rel="stylesheet" type="text/css">', 0);
+add_stylesheet('<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">', 0);
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="' . $board_skin_url . '/style.css">', 0);
+add_stylesheet('<link rel="stylesheet" href="' . CDC_CSS_URL . '/cdc-style.css">', 0);
 ?>
 <?php
 //카테고리 라디오 형태 변형을 위한 처리
@@ -16,6 +24,10 @@ if ($board['bo_use_category']) {
 	}
 }
 ?>
+
+<!-- Add the following at the end of your body tag vue3(Vue3 사용)-->
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quasar@2.7.5/dist/quasar.umd.prod.js"></script>
 
 <div id="container" class="sub">
 	<!-- 좌측 컨텐츠 영역 -->
@@ -235,9 +247,8 @@ if ($board['bo_use_category']) {
 									<td>
 										<div class="q-gutter-md row items-start">
 												<imageform
-													v-for="i in 10"
+													v-for="i in imageUpCount"
 													:key="i"
-													v-show="ShowControl(i)"
 													v-model="bf_file[i - 1]"
 													:bf_file="bf_file[i - 1]"
 													@remove="removeImage"
@@ -291,11 +302,7 @@ if ($board['bo_use_category']) {
 									<th scope="row">동영상(15~60초)</th>
 									<td>
 										 <inputvideo  
-										 	v-model="form.cdc.wr_video_link"
-											ref="inputvideo"
-											:bf_file="bf_file[12]"
-											@uploader-video="uploaderVideo($event, 'bf_file', 12)"
-											/> 
+										 v-model="form.cdc.wr_video_link" /> 
 									</td>
 								</tr>
 
@@ -304,11 +311,9 @@ if ($board['bo_use_category']) {
 									<th scope="row">유튜브 동영상</th>
 									<td>
 										 <inputvideo  
-											:clcd="'youtube'"
-											ref="inputvideoYoutube"
-											v-model="form.cdc.wr_youtube_link"
-											:bf_file="bf_file[13]"
-											@uploader-video="uploaderVideo($event, 'bf_file', 13)"
+										 :clcd="'youtube'"
+										 v-model="form.cdc.wr_youtube_link" 
+										 ref="test"
 										 /> 
 									</td>
 								</tr>
@@ -368,25 +373,6 @@ if ($board['bo_use_category']) {
 										</div>
 									</td>
 								</tr>
-
-								<!-- 재생목록 -->
-								<tr v-if="isVideoList">
-									<th scope="row">재생목록</th>
-									<td>
-										<div class="q-gutter-md row items-start"
-											style="width:100%;"
-										>
-											<q-input 
-													name="wr_playlist_link"
-													:rules="[Rules.require({label:`재생목록`})]"
-													outlined
-													v-model="form.cdc.wr_playlist_link" 
-													label="영상재생목록 URL링크 입력하세요" 
-													dense size="100">
-											</q-input>
-										</div>
-									</td>
-								</tr>
 								<?php if ($is_guest) { //자동등록방지 
 								?>
 									<tr>
@@ -400,7 +386,7 @@ if ($board['bo_use_category']) {
 						</table>
 
 					</div>
-					  <pre id="logtest"></pre>  
+					   <!-- <pre id="logtest"></pre>  -->
 
 					<div class="btn_confirm">
 						<a href="./board.php?bo_table=<?php echo $bo_table ?><?= $sublink ?>" class="btn_cancel">취소</a>
@@ -494,29 +480,89 @@ if ($board['bo_use_category']) {
 					return true;
 				}
 				</script>
-				
+				<!-- php 환경 -->
+				<?php include_once(CDC_PATH . "/setConfig.php"); ?>
 
 				<!-- JavaScript Method(Vue.js 3) -->
 				<script src="<?= CDC_JS_URL ?>/cdcCommon.js?v=<?= CDC_VER ?>"></script>
-				<script>
-					const board_data = <?php echo json_encode($board); ?>;
-					const write_fields = <?php echo json_encode($write); ?>;
-					const bo_table = board_data.bo_table;
-				</script>
-				<script src="<?= CDC_JS_URL ?>/write/DragAndDrop.js?v=<?= CDC_VER ?>"></script>
-				<script src="<?= CDC_JS_URL ?>/write/categoryComponents.js?v=<?= CDC_VER ?>"></script>
-				<script src="<?= CDC_JS_URL ?>/write/imageformComponents.js?v=<?= CDC_VER ?>"></script>
-				<script src="<?= CDC_JS_URL ?>/write/inputvideoComponents.js?v=<?= CDC_VER ?>"></script>
-				<script src="<?= CDC_JS_URL ?>/write/ValidateRules.js?v=<?= CDC_VER ?>"></script>
-				<script src="<?= CDC_JS_URL ?>/write/cdcWriteFormVue.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/DragAndDrop.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/categoryComponents.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/imageformComponents.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/inputvideoComponents.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/ValidateRules.js?v=<?= CDC_VER ?>"></script>
+				<script src="<?= CDC_JS_URL ?>/cdcVue.js?v=<?= CDC_VER ?>"></script>
 
 			</section>
 		</div>
 		<!-- } 게시물 작성/수정 끝 -->
 	</section>
-	<!-- php 환경 -->
-	<?php include_once(CDC_PATH . "/setConfig.php"); ?>
+	<script>
 
+		const board_data = <?php echo json_encode($board); ?>;
+		const write_fields = <?php echo json_encode($write); ?>;
+		
+		vm.$data.bo_table = board_data.bo_table;
+		vm.$data.config = {
+			cdc_path: '<?= CDC_PATH ?>',
+			cdc_url: '<?= CDC_URL ?>',
+			cdc_css_url: '<?= CDC_CSS_URL ?>',
+			cdc_js_url: '<?= CDC_JS_URL ?>',
+			G5_URL : '<?= G5_URL ?>',
+		}
+
+		vm.$data.action_url = '<?= $action_url?>'
+
+		vm.$data.formHiddenData = {
+			uid : '<?= get_uniqid(); ?>',
+			w   : '<?= $w ?>',
+			wr_id : '<?= $wr_id ?>',
+			sca : '<?= $sca ?>',
+			sfl : '<?= $sfl ?>',
+			stx : '<?= $stx ?>',
+			spt : '<?= $spt ?>',
+			sst : '<?= $sst ?>',
+			sod : '<?= $sod ?>',
+			page : '<?= $page ?>'
+		}
+		
+		vm.$data.is_html = '<?= $is_html ?>';
+		vm.$data.is_secret = '<?= $is_secret ?>';
+		vm.$data.is_notice = '<?= $is_notice ?>';
+		vm.$data.is_mail = '<?= $is_mail ?>';
+		vm.$data.is_admin = '<?= $is_admin ?>';
+		vm.$data.secret_checked = '<?= $secret_checked ?>'
+		vm.$data.recv_email_checked = '<?= $reve_email_checked ?>';
+		vm.$data.is_category = '<?= $is_category ?>';
+
+		vm.$data.editor = {
+			write_min : '<?php $write_min ?>',
+			write_max : '<?php $write_max ?>'
+		}
+
+		const catNames = board_data.bo_category_list.split("|");
+
+		for(const val of catNames){
+			vm.$data.code_category.push({
+				label : val,
+				value : val,
+				name: 'ca_name',
+			})
+		}
+
+		vm.fetchData(write_fields);
+		vm.initSkinLocalStorage();
+	
+
+		console.log('vm.$data.form : ', vm.$data.form);
+		console.log('write_fields : ', write_fields);
+		console.log('board_data : ', board_data);
+		console.log('vm.$data.config : ', vm.$data.config);
+		console.log('file', vm.$data.files)
+
+		console.log('vm.allData : ', vm.$data);
+		console.log('vm : ', vm.$);
+		console.log('Ruels : ', rules);
+	</script>
 	<!-- 우측 side 영역 -->
 	<?php include(G5_PATH . '/inc/aside.php'); ?>
 

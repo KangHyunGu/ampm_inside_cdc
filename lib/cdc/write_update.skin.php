@@ -5,7 +5,6 @@
 //print_r2($_POST);
 // DB 처리 default INSERT 처리(해당 게시글을 수정하지만 CDC 관련 정보가 없는경우가 존재)
 $cdc_sql = "insert into {$g5['cdc_table']} set bo_table = '${bo_table}', wr_id = '$wr_id', {fieldSet}";
-
 if($w == 'u'){
     // 해당 게시글에 CDC 관련 정보 존재유무 확인 후 update 처리(error 확인 필요)
      $sel_sql = "select count(*) as cnt from {$g5['cdc_table']} where bo_table = '$bo_table' and wr_id='$wr_id'";
@@ -35,6 +34,7 @@ $commonSql = "is_youtube = '{$_POST['is_youtube']}',
                     wr_ytag = '{$_POST['wr_ytag']}',
                     wr_video_link = '{$_POST['wr_video_link']}',
                     wr_youtube_link = '{$_POST['wr_youtube_link']}',
+                    wr_playlist_link = '{$_POST['wr_playlist_link']}',
                     wr_cdc_content = '$wr_content',
                     wr_cdc_title = '$wr_subject',
                     wr_cdc_file = '$file_size'";
