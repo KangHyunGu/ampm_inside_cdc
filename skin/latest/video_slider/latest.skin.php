@@ -32,6 +32,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
                      </div>
 
                     <div class="lank_subject">
+                        <div class="ca"><?php echo "{$list[$i]['ca_name']}"; ?></div>
                         <?php echo $list[$i]['subject']; ?>
                     </div>
 

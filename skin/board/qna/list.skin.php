@@ -85,7 +85,7 @@ include(G5_PATH.'/inc/top.php');
 						</th>
 						<?php } ?>
 						<th scope="col">답변여부</th>
-                  <th scope="col">구분</th>
+						<th scope="col">구분</th>
 						<?php if($member['ampmkey'] == 'Y'){	//마케터 ?>
 						<th scope="col">노출여부</th>
 						<?php } ?>
@@ -95,8 +95,8 @@ include(G5_PATH.'/inc/top.php');
  						<?php if($member['ampmkey'] == 'Y'){	//마케터 ?>
 						<th scope="col">지정마케터</th>
 						<?php } ?>
-                       <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일</a></th>
-                        <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회수</a></th>
+                  <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일 <i class="fas fa-sort style"></i></a></th>
+						<th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회수 <i class="fas fa-sort style"></i></a></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -219,7 +219,7 @@ include(G5_PATH.'/inc/top.php');
 				<option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
 				<option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
 				<option value="wr_18,1"<?php echo get_selected($sfl, 'wr_18,1'); ?>>작성자</option>
-				<option value="wr_2,1"<?php echo get_selected($sfl, 'wr_2,1'); ?>>지정마케터</option>
+				<option value="wr_12,1"<?php echo get_selected($sfl, 'wr_12,1'); ?>>지정마케터</option>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
             <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input frm_input required" size="15" maxlength="20">

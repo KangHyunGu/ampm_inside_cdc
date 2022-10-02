@@ -19,6 +19,8 @@ if(!$wr_comment) {  // 코멘일때는 저장하면 안됨
 				 wr_link1 = '$wr_link1',
 				 wr_link2 = '$wr_link2',
 
+				 wr_ampm_user = '$wr_ampm_user',
+
 				 wr_1 = '{$wr_1}',
 				 wr_2 = '{$wr_2}',
 				 wr_3 = '{$wr_3}',

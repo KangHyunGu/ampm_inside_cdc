@@ -33,6 +33,46 @@ input[type='radio']:checked {
    background: url(../../../images/sel-cate.png) 50% 50% no-repeat;
 }
 
+.inner .media ul li {
+   display: inline-block;
+}
+
+.inner .media ul li a {
+   display: block;
+   width: 20px;
+   height: 20px;
+}
+
+.inner .media ul .instagram a {
+   background: url(/images/instagram.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .instagram.on a {
+   background: url(/images/instagram_on.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .blog a {
+   background: url(/images/blog.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .blog.on a {
+   background: url(/images/blog_on.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .youtube a {
+   background: url(/images/youtube.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .youtube.on a {
+   background: url(/images/youtube_on.png) no-repeat;
+   background-size: 100%;
+}
+
 /* 게시판 버튼 */
 /* 목록 버튼 */
 #bo_list a.btn-default {color: #000;

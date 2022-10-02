@@ -3,135 +3,104 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
-<link rel="stylesheet" href="<?=$board_skin_url?>/style.css">
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <h2 id="container_title"><?php echo $board['bo_subject'] ?></h2>
 
 <div id="view_notice">
-   <ul>
-      <li>
-         ※ 레퍼런스에 작성된 게시글입니다. 실제 내용은 사용자 화면을 통해 확인하세요.
-      </li>
-   </ul>
+	<ul>
+		<li>
+        ※ 레퍼런스에 작성된 게시글입니다. 실제 내용은 사용자 화면을 통해 확인하세요.
+		</li>
+	</ul>
 </div>
 
 <!-- 게시물 읽기 시작 { -->
-   <article id="bo_v" style="width:<?php echo $width; ?>">
+<article id="bo_v" style="width:<?php echo $width; ?>">
+	<!-- 본문 내용 시작 { -->
+	<table id="bo_v_table">
+	<tbody>
+		<tr>
+			<th>카테고리</th>
+			<td class="brand_name">
+				<?php if ($category_name) echo $view['ca_name']; // 분류 출력 끝 ?>     
+				<div class="inner">
+					<!-- media아이콘 -->
+					<div class="media">
+						<ul>
+							<!-- instagram -->
+							<li class="on">
+								<a href="#" target="blank"><img src="<?=G5_URL ?>/images/instagram_on.png" alt=""></a>
+							</li>
+							<!-- naver -->
+							<li class="on">
+								<a href="#" target="blank"><img src="<?=G5_URL ?>/images/blog_on.png" alt=""></a>
+							</li>
+							<!-- youtube -->
+							<li>
+								<a href="#" target="blank"><img src="<?=G5_URL ?>/images/youtube_on.png" alt=""></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>브랜드명</th>
+			<td><?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?></td>
+		</tr>
+		<tr>
+			<th>업종</th>
+			<td><?php echo $view['wr_8']; ?></td>
+		</tr>
+		<!--
+		<tr>
+			<th>업체이미지</th>
+			<td>
+				<?php
+				// 파일 출력
+				$v_img_count = count($view['file']);
+				if($v_img_count) {
+					echo "<div id=\"bo_v_img\">\n";
 
-<!-- 본문 내용 시작 { -->
-<table id="bo_v_table">
-   <tbody>
-      <tr>
-         <th>카테고리</th>
-         <td class="brand_name">
-            <?php if ($category_name) echo $view['ca_name']; // 분류 출력 끝 ?>     
-            <div class="inner">
-               <!-- media아이콘 -->
-               <div class="media">
-                  <ul>
-                     <!-- instagram -->
-                     <li class="on">
-                        <a href="#" target="blank">
-                           <img src="<?=G5_URL ?>/images/instagram_on.png" alt="">
-                        </a>
-                     </li>
-                     <!-- naver -->
-                     <li class="on">
-                        <a href="#" target="blank">
-                           <img src="<?=G5_URL ?>/images/blog_on.png" alt="">
-                        </a>
-                     </li>
-                     <!-- youtube -->
-                     <li>
-                        <a href="#" target="blank">
-                           <img src="<?=G5_URL ?>/images/youtube_on.png" alt="">
-                        </a>
-                     </li>
-                  </ul>
-               </div>
-               <!-- 공유하기 -->
+					for ($i=0; $i<=count($view['file']); $i++) {
+						if ($view['file'][$i]['view']) {
+							//echo $view['file'][$i]['view'];
+							echo get_view_thumbnail($view['file'][$i]['view'], 300);
+						}
+					}
 
-               <div class="share">
-                  <span class="link_copy">
-                    <a href="#" onclick="clip(); return false;">
-                      <i class="fas fa-external-link-alt"></i> 공유하기
-                    </a>
-                  </span>
-               </div>
-               <script type="text/javascript">
-                  function clip(){
-                     var url = '';
-                     var textarea = document.createElement("textarea");
-                     document.body.appendChild(textarea);
-                     url = window.document.location.href;
-                     textarea.value = url;
-                     textarea.select();
-                     document.execCommand("copy");
-                     document.body.removeChild(textarea);
-                     alert("http://<?php echo $_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI];?> \n주소가 복사되었습니다.")
-                  }
-               </script>
-            </div>
-         </td>
-      </tr>
-      <tr>
-         <th>브랜드명</th>
-         <td>
-            <?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?>
-         </td>
-      </tr>
-      <tr>
-         <th>전문직종</th>
-         <td>
-            <?php echo $view['wr_8']; ?>
-         </td>
-      </tr>
-      <tr>
-         <th>업체이미지</th>
-         <td>
-            <?php
-            // 파일 출력
-            $v_img_count = count($view['file']);
-            if($v_img_count) {
-               echo "<div id=\"bo_v_img\">\n";
+					echo "</div>\n";
+				}
+				?>
+			
+			</td>
+		</tr>
+		-->
+		<tr>
+			<th>마케팅KPI</th>
+			<td><?=$view['wr_1']?></td>
+		</tr>
+		<tr>
+			<th>집행매체</th>
+			<td><?=$view['wr_2']?></td>
+		</tr>
+		<tr>
+			<th>집행성과</th>
+			<td><?=$view['wr_3']?></td>
+		</tr>
+		<tr>
+			<th>홈페이지</th>
+			<td><?=$view['wr_4']?></td>
+		</tr>
 
-               for ($i=0; $i<=count($view['file']); $i++) {
-                  if ($view['file'][$i]['view']) {
-                     //echo $view['file'][$i]['view'];
-                     echo get_view_thumbnail($view['file'][$i]['view'], 300);
-                  }
-               }
-
-               echo "</div>\n";
-            }
-            ?>
-         
-         </td>
-      </tr>
-      <tr>
-         <th>마케팅KPI</th>
-         <td><?=$view['wr_1']?></td>
-      </tr>
-      <tr>
-         <th>집행매체</th>
-         <td><?=$view['wr_2']?></td>
-      </tr>
-      <tr>
-         <th>집행성과</th>
-         <td><?=$view['wr_3']?></td>
-      </tr>
-      <tr>
-         <th>홈페이지</th>
-         <td><?=$view['wr_4']?></td>
-      </tr>
-
-      <tr>
-         <th>집행내용</th>
-         <td><div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div></td>
-      </tr>
-   </tbody>
+		<tr>
+			<th>집행내용</th>
+			<td><div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div></td>
+		</tr>
+	</tbody>
 </table>
 <!-- } 본문 내용 끝 -->
 

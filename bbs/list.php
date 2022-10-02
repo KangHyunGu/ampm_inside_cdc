@@ -196,7 +196,7 @@ if ($is_member && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id'
     $is_checkbox = true;
 
 // 정렬에 사용하는 QUERY_STRING
-$qstr2 = 'bo_table='.$bo_table.'&amp;sop='.$sop;
+$qstr2 = 'bo_table='.$bo_table.'&amp;go_table='.$go_table.'&amp;sop='.$sop;
 
 // 0 으로 나눌시 오류를 방지하기 위하여 값이 없으면 1 로 설정
 $bo_gallery_cols = $board['bo_gallery_cols'] ? $board['bo_gallery_cols'] : 1;

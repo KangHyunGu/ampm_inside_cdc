@@ -79,7 +79,7 @@ include(G5_PATH.'/inc/top.php');
 										$link = cut_str($view['link'][$i], 70);
 							?>
 								<a href="<?php echo $view['link_href'][$i] ?>" target="_blank">
-									<i class="fas fa-link"></i> 출처 링크 : <?php echo $link ?>
+									<?php echo $link ?>
 								</a>
 								<!--<span class="bo_v_link_cnt"><?php echo $view['link_hit'][$i] ?>회 연결</span>-->
 							<?php
@@ -98,7 +98,7 @@ include(G5_PATH.'/inc/top.php');
 							   if ($view['file']['count']) {
 								  $cnt = 0;
 								  for ($i=0; $i<count($view['file']); $i++) {
-										if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+										if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'])
 										   $cnt++;
 								  }
 							   }
@@ -107,15 +107,14 @@ include(G5_PATH.'/inc/top.php');
 							<?php
 							   // 가변 파일
 							   for ($i=0; $i<count($view['file']); $i++) {
-								  if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+								  if (isset($view['file'][$i]['source']) && $view['file'][$i]['source']) {
 							?>
 							<!-- 첨부파일 시작 { -->
 							<section id="bo_v_file">
 								<ul>
 									<li>
-										<h3>첨부파일</h3>
 										<a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download">
-									·		<?php echo $view['file'][$i]['source'] ?>
+											<?php echo $view['file'][$i]['source'] ?>
 											<?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
 										</a>
 										<!--
@@ -130,22 +129,7 @@ include(G5_PATH.'/inc/top.php');
 								  }
 							   }
 							?>
-							<?php
-							// 파일 출력
-							$v_img_count = count($view['file']);
-							if($v_img_count) {
-								  echo "<div id=\"bo_v_img\">\n";
-
-								  for ($i=0; $i<=count($view['file']); $i++) {
-									 if ($view['file'][$i]['view']) {
-										//echo $view['file'][$i]['view'];
-										echo get_view_thumbnail($view['file'][$i]['view']);
-									 }
-								  }
-
-								  echo "</div>\n";
-							}
-							?>
+							
 						</td>
 					</tr>
 				</tbody>

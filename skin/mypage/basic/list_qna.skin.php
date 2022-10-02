@@ -70,16 +70,15 @@ include(G5_PATH.'/inc/top.php');
 						</th>
 						<?php } ?>
 						<th scope="col">답변여부</th>
-						<th scope="col">확인여부</th>
+                        <th scope="col">지정여부</th>
 						<th scope="col">구분</th>
 						<?php if($member['ampmkey'] == 'Y'){	//마케터 ?>
 						<th scope="col">노출여부</th>
 						<?php } ?>
 						<th scope="col">제목</th>
 						<th scope="col">작성자</th>
-                        <th scope="col">지정여부</th>
-						<th scope="col">등록일</th>
-						<th scope="col">조회수</th>
+                        <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일 <i class="fas fa-sort style"></i></a></th>
+						<th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회수 <i class="fas fa-sort style"></i></a></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -117,10 +116,15 @@ include(G5_PATH.'/inc/top.php');
 							<span class="qnaIco qnaIco3">답변대기</span>
 							<?php } ?>
 						</td>
-						<td class="td_board">
-						    <!-- 여기에 미확인, 확인에 대한 컬러값을 적용해놓으시오 -->
-                            <span class="qnaIco qnaIco<?=($list[$i]['wr_16'] == 'N' || $list[$i]['wr_16']== '')?'3':'2'?>"><?=(codeToName($code_check, ($list[$i]['wr_16'])?$list[$i]['wr_16']:'N'))?></span>
-						</td>
+                        <!-- 지정마케터 정보가 있는 경우 지정여부 지정으로 출력 -->
+						<td class="td_name2">
+                            <?php if ($list[$i]['wr_11']) { ?>
+							<span class="qnaIco qnaIco4">지정</span>
+							<?php } else {?>
+							<span class="qnaIco qnaIco5">전체</span>
+							<?php } ?>
+                        </td>
+
 						<td class="td_category">
 							<?php if ($list[$i]['ca_name']) { ?>
 							<a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link">
@@ -142,8 +146,6 @@ include(G5_PATH.'/inc/top.php');
 							<?php } ?>
                         </td>
 						<td class="td_name"><?php echo $list[$i]['name'] ?></td>
-						<!-- 지정마케터 정보가 있는 경우 지정여부 지정으로 출력 -->
-						<td class="td_name2"><?=($list[$i]['wr_11'])?'지정':'전체'?></td>
 						<td class="td_date"><?php echo $list[$i]['datetime'] ?></td>
 						<td class="td_num"><?php echo $list[$i]['wr_hit'] ?></td>
 					</tr>
@@ -163,15 +165,23 @@ include(G5_PATH.'/inc/top.php');
 
 					<ul class="btn_bo_user">
 						<?php if ($is_checkbox) {  ?>
+							<?php if ($member['ampmkey'] == 'Y') {  ?>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택숨김" onclick="document.pressed=this.value">선택숨김</button></li>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택노출" onclick="document.pressed=this.value">선택노출</button></li>
+							<?php }  ?>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value">선택삭제</button></li>
 						<?php }  ?>
+					</ul>
 
-                        <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=insight" class="btn_b04">인사이트 글쓰기</a></li>
+               <ul class="btn_bo_adm">
+                  <?php if ($member['ampmkey'] == 'Y') {  ?>
+						<li><a href="<?=G5_BBS_URL?>/write.php?bo_table=insight" class="btn_b04">인사이트 글쓰기</a></li>
                         <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=video" class="btn_b04">영상교육 글쓰기</a></li>
                         <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=reference" class="btn_b04">레퍼런스 글쓰기</a></li>
-					</ul>
+						<?php }else{  ?>
+						<li><a href="<?=G5_BBS_URL?>/write.php?bo_table=qna" class="btn_b04">질문답변 글쓰기</a></li>
+						<?php }  ?>
+               </ul>
 
 				</div>
 
@@ -204,7 +214,7 @@ include(G5_PATH.'/inc/top.php');
 				<option value="wr_18,1"<?php echo get_selected($sfl, 'wr_18,1'); ?>>담당자</option>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input frm_input required" size="15" maxlength="20">
+            <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>"  id="stx" class="sch_input frm_input " size="15" maxlength="20">
             <input type="submit" value="검색" class="sch_btn">
             </form>
 			</fieldset>   

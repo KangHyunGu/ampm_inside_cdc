@@ -22,8 +22,16 @@ include(G5_PATH.'/inc/_inc_loginMeberInfo.php');
         </li>
         <li class="button">
             <div><a href="<?php echo G5_BBS_URL ?>/logout.php" class="logout_bt">로그아웃</a></div>
+            <div><a href="javascript:member_leave();" class="btn_cancel">회원탈퇴</a></div>
             <div><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" class="main_color ed_profile_bt"><?=($member['ampmkey'] == 'Y')?'프로필수정':'내 정보 수정'?></a></div>
         </li>
     </ul>
 </div>
 
+
+<script>
+   function member_leave() {  // 회원 탈퇴
+      if (confirm("회원에서 탈퇴 하시겠습니까?"))
+         location.href = '<?php echo G5_BBS_URL ?>/member_confirm.php?url=member_leave.php';
+   }
+</script>

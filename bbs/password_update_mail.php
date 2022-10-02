@@ -22,8 +22,8 @@ $content = '
                     <tbody>
                         <tr>
                             <td style="width: 100%; padding-bottom: 15px; border-bottom: 1px solid #ddd">
-                                <a href="http://inside.ampm.co.kr/" target="_blank">
-                                    <img src="http://inside.ampm.co.kr/images/mail_logo.png" alt="마케팅인사이트" style="display: block; width: 220px; height: 36px;" width="220" height="36" />
+                                <a href="http://inside.ampm.co.kr/" target="_blank" style="display: block; width: 220px; height: 36px;" width="220" height="36">
+                                    <img src="https://postfiles.pstatic.net/MjAyMjA5MDdfMjQ3/MDAxNjYyNTI1OTQ0ODgw.Veo8PSG6zaBqIj9r3lTP6MXLfQP0cUmn1cNvxFoxll4g.K3ayUv-WrYi89IpNUcJSXNYgcYrxfaW1vFWFbt4prBEg.PNG.ampmglobal/logo.png?type=w966" />
                                 </a>
                             </td>
                         </tr>
@@ -81,7 +81,7 @@ $content = '
                         </tr>
                         <tr>
                             <td>
-                                <a href="{비밀번호변경}" target="_blank" style="display: block; width: 190px; height: 48px; line-height: 48px; border-radius: 5px; background: #1acb86; color: #fff; font-size: 18px; text-align: center; text-decoration: none; letter-spacing: -1px; font-weight: 700;">
+                                <a href="{비밀번호변경}" target="_blank" style="display: inline-block; padding: 10px 20px; border-radius: 5px; background: #1acb86; color: #fff; font-size: 18px; text-align: center; text-decoration: none; letter-spacing: -1px; font-weight: 700;">
                                     비밀번호 변경하기
                                 </a>
                             </td>

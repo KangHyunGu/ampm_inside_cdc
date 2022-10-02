@@ -26,6 +26,10 @@
    font-weight: 500;
 }
 
+.top_sch select {
+   min-width: 150px;
+}
+
 .top_sch .btn-primary {
    background: #353535;
    color: #fff;

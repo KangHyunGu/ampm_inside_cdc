@@ -247,8 +247,12 @@ select {
 
 #mk-header .logo {
     position: absolute;
-    top: 22px;
+    top: 30px;
     left: 0;
+}
+
+#mk-header .logo img {
+   width: 180px;
 }
 
 #mk-header nav .gnb {
@@ -1120,12 +1124,12 @@ select {
 
 #sub-header .head-nav .logo {
     position: absolute;
-    top: 16px;
+    top: 22px;
     left: 0;
 }
 
 #sub-header .head-nav .logo img {
-    width: 125px;
+    width: 150px;
 }
 
 #sub-header .head-nav .gnb {
@@ -1638,8 +1642,8 @@ select {
     position: relative;
     margin-right: 20px;
     width: 280px;
-    height: 230px;
-    border-radius: 15px;
+    height: 280px;
+    border-radius: 8px;
     border: 1px solid #ddd;
     background: #fff;
     overflow: hidden;
@@ -1653,7 +1657,7 @@ select {
 
 .table-list .grid li .rf-img {
     width: 100%;
-    height: 160px;
+    height: 100%;
     overflow: hidden;
     position: relative;
 }
@@ -1663,13 +1667,29 @@ select {
     top: 50%;
     left: 50%;
     width: 100%;
+    height: 100%;
     transform: translate(-50%,-50%);
 }
 
 .table-list .grid li .rf-title {
-    min-height: 65px;
+    position: absolute;
     width: 100%;
-    padding: 10px 15px;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+   justify-content: center;
+}
+
+.table-list .grid li:hover .rf-title {
+   opacity: 1;
+}
+
+.table-list .grid li .rf-title p {
+   color: #fff;
 }
 
 

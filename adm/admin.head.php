@@ -122,7 +122,7 @@ function imageview(id, w, h)
    <div id="hd_top">
       <div id="gnb_top">
          <div id="top_btn">
-            <button type="button" id="btn_gnb" class="btn_gnb_close <?php echo $adm_menu_cookie['btn_gnb'];?>">메뉴</button>
+            <!--button type="button" id="btn_gnb" class="btn_gnb_close <?php echo $adm_menu_cookie['btn_gnb'];?>">메뉴</button-->  
          </div>
          <div id="logo">
             <a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">

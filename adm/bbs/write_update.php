@@ -7,9 +7,11 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 $board_skin_url = G5_ADMBBS_URL.'/bbs_skin/'.$board['bo_skin'];
 $board_skin_path = G5_ADMBBS_PATH.'/bbs_skin/'.$board['bo_skin'];
 
+//print_r2($_POST);exit;
 
+//토큰 값이 일치되지 않는 버그로 주석 처리 - feeris
 // 토큰체크
-check_write_token($bo_table);
+//check_write_token($bo_table);
 
 $g5['title'] = '게시글 저장';
 
@@ -140,6 +142,7 @@ for ($i=1; $i<=20; $i++) {
 
 run_event('write_update_before', $board, $wr_id, $w, $qstr);
 
+
 if ($w == '' || $w == 'u') {
 
     // 외부에서 글을 등록할 수 있는 버그가 존재하므로 공지는 관리자만 등록이 가능해야 함
@@ -230,10 +233,17 @@ if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
         $mb_id = $member['mb_id'];
-        $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
+        $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : ($member['ampmkey'] == 'Y')?$member['mb_name']:$member['mb_nick']));
         $wr_password = '';
         $wr_email = addslashes($member['mb_email']);
         $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
+
+		///////////////////////////////////////////////////////////////////////
+		// AMPM 최초 글 등록 시에 노출 ID,이름도 같이 저장한다.
+		// 담당자 변경 시에 노출 ID,이름을 변경하여 적용한다.
+		///////////////////////////////////////////////////////////////////////
+        $wr_17 = $member['mb_id'];
+        $wr_18 = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : ($member['ampmkey'] == 'Y')?$member['mb_name']:$member['mb_nick']));
     } else {
         $mb_id = '';
         // 비회원의 경우 이름이 누락되는 경우가 있음
@@ -243,6 +253,13 @@ if ($w == '' || $w == 'r') {
         $wr_password = get_encrypt_string($wr_password);
         $wr_email = get_email_address(trim($_POST['wr_email']));
         $wr_homepage = clean_xss_tags($wr_homepage);
+		
+		///////////////////////////////////////////////////////////////////////
+		// AMPM 
+		// 비회원의 경우 아이디는 없고 이름 정보는 넣는다.
+		///////////////////////////////////////////////////////////////////////
+        $wr_17 = '';
+        $wr_18 = clean_xss_tags(trim($_POST['wr_name']));
     }
 
     if ($w == 'r') {
@@ -331,15 +348,41 @@ if ($w == '' || $w == 'r') {
         insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id} 글답변", $bo_table, $wr_id, '쓰기');
     }
 }  else if ($w == 'u') {
-    if (get_session('ss_bo_table') != $_POST['bo_table'] || get_session('ss_wr_id') != $_POST['wr_id']) {
-        alert('올바른 방법으로 수정하여 주십시오.', get_pretty_url($bo_table));
+
+
+	if (get_session('ss_bo_table') != $_POST['bo_table'] || get_session('ss_wr_id') != $_POST['wr_id']) {
+        alert('올바른 방법으로 수정하여 주십시오.', get_pretty_adm_url($bo_table));
     }
 
-    $return_url = get_pretty_url($bo_table, $wr_id);
+    $return_url = get_pretty_adm_url($bo_table, $wr_id);
 
-    if ($is_admin == 'super') // 최고관리자 통과
+    if ($is_admin == 'super') {	// 최고관리자 통과
         ;
-    else if ($is_admin == 'group') { // 그룹관리자
+    
+	///////////////////////////////////////////////////////////////////
+	//AMPM - feeris
+	///////////////////////////////////////////////////////////////////
+	} else if ($is_admin =='manager' || $is_admin =='ma_admin'){ // 운영담당자, 직하관계
+        $mb = get_marketer($member['mb_id']);
+
+		//작성자의 소속정보에 따른 권한 확인
+		if($member['mb_post'] == 'P6'){ //대표이사
+			;
+		}else if($member['mb_post'] == 'P4' || $member['mb_post'] == 'P5'){ //이사
+			;
+		}else if($member['mb_post'] == 'P3'){ //이사
+
+			if ($member['mb_part'] == $mb['mb_part']) // 자신이 관리하는 소속인가?
+				;
+			else
+				continue;
+		}else{	//팀장
+			if ($member['mb_part'] == $mb['mb_part'] && $member['mb_team'] == $mb['mb_team']) // 자신이 관리하는 소속인가?
+				;
+			else
+				continue;
+		}
+    } else if ($is_admin == 'group') { // 그룹관리자
         $mb = get_member($write['mb_id']);
         if ($member['mb_id'] != $group['gr_admin']) // 자신이 관리하는 그룹인가?
             alert('자신이 관리하는 그룹의 게시판이 아니므로 수정할 수 없습니다.', $return_url);
@@ -363,7 +406,7 @@ if ($w == '' || $w == 'r') {
         // 자신의 글이라면
         if ($member['mb_id'] === $wr['mb_id']) {
             $mb_id = $member['mb_id'];
-            $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
+			$wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : ($member['ampmkey'] == 'Y')?$member['mb_name']:$member['mb_nick']));
             $wr_email = addslashes($member['mb_email']);
             $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
         } else {
@@ -387,6 +430,13 @@ if ($w == '' || $w == 'r') {
         if (!trim($wr_name)) alert("이름은 필히 입력하셔야 합니다.");
         $wr_name = clean_xss_tags(trim($_POST['wr_name']));
         $wr_email = get_email_address(trim($_POST['wr_email']));
+		
+		///////////////////////////////////////////////////////////////////////
+		// AMPM 
+		// 비회원의 경우 아이디는 없고 이름 정보는 넣는다.
+		///////////////////////////////////////////////////////////////////////
+        $wr_17 = '';
+        $wr_18 = clean_xss_tags(trim($_POST['wr_name']));
     }
 
     $sql_password = $wr_password ? " , wr_password = '".get_encrypt_string($wr_password)."' " : "";
@@ -726,7 +776,7 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
     $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
 
-    $link_url = get_pretty_url($bo_table, $wr_id, $qstr);
+    $link_url = get_pretty_adm_url($bo_table, $wr_id, $qstr);
 
     include_once(G5_LIB_PATH.'/mailer.lib.php');
 
@@ -770,7 +820,8 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
 delete_cache_latest($bo_table);
 
-$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+//$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+$redirect_url = run_replace('write_update_move_url', short_url_clean('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
 
 run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 

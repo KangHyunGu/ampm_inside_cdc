@@ -26,6 +26,11 @@
    font-weight: 500;
 }
 
+.top_sch select {
+   min-width: 150px;
+}
+
+
 .top_sch .btn-primary {
    background: #353535;
    color: #fff;
@@ -64,7 +69,7 @@
 }
 
 .td_phone {
-   width: 150px;
+   width: 180px;
 }
 
 .td_subject {
@@ -87,6 +92,13 @@
    width: 140px;
 }
 
+.td_board {
+   width: 100px;
+}
+
+.td_board select {
+   height: 30px !important;
+}
 
 .chk_category {
    display: flex;
@@ -325,6 +337,11 @@ input[type='radio']:checked {
    margin-right: 5px
 }
 
+.btn_bo_adm li .btn_bg {
+   background: #c54c4c;
+   border: #c54c4c;
+}
+
 .btn_bo_adm input {
   font-size: 14px;
   display: inline-block;
@@ -383,6 +400,24 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .autosave_content {display:none}
 
 /* 게시판 읽기 */
+#view_notice {
+   padding: 20px;
+   border-radius: 5px;
+   background: #fff;
+   margin-bottom: 20px;
+   box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+#view_notice ul li {
+   font-size: 16px;
+   color: #343e4e;
+   font-weight: 500;
+}
+
+#view_notice ul li p {
+   padding: 5px 0 0;
+}
+
 #bo_v {margin-bottom:20px;padding-bottom:20px}
 .request_title {
    font-size: 26px;

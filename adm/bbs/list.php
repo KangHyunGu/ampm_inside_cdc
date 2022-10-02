@@ -29,6 +29,100 @@ if ($board['bo_use_category']) {
     }
 }
 
+
+///////////////////////////////////////////////////////////////////////
+// 관리자모드 게시판의 경우
+// g5_marketer_detail 테이블과 담당자 정보로 조인하여 소속정보를 체크한다.
+///////////////////////////////////////////////////////////////////////
+$write_table = $g5['write_prefix'] . $bo_table .' a  LEFT OUTER JOIN g5_marketer_detail b ';
+$marketer_search = "";
+
+if($bo_table == 'qna' || $bo_table == 'request'){
+	$write_table.= " ON a.wr_11 = b.mb_id ";
+}else if($bo_table == 'mkestimate'){
+	$write_table.= " ON a.mb_id = b.mb_id ";
+}else{
+	$write_table.= " ON a.wr_17 = b.mb_id ";
+}
+
+// 본부구분
+if($sear_part){
+	$marketer_search .= " and ";
+	
+	if($bo_table == 'qna'){
+		$marketer_search .= " (b.mb_part = '{$sear_part}' or b.mb_part is null) ";
+	}else{
+		$marketer_search .= " b.mb_part = '{$sear_part}' ";
+	}
+}
+
+// 부서구분
+if($sear_team){
+	$marketer_search .= " and ";
+	
+	if($bo_table == 'qna'){
+		$marketer_search .= " (b.mb_team = '{$sear_team}' or b.mb_team is null) ";
+	}else{
+		$marketer_search .= " b.mb_team = '{$sear_team}' ";
+	}
+}
+
+if($member['mb_post'] == 'P6' || $is_admin == 'super' || $is_admin == 'manager'){
+}else if($member['mb_post'] == 'P3' || $member['mb_post'] == 'P4'){ //본부장은 해당 본부 본인 포함 모두 
+	$marketer_search .= " and ";
+	
+	if($member['mb_post'] == 'P4'){	// 영업총괄 - 대외협력실, 2본부
+		$marketer_search .= " (b.mb_team = 'T1' OR b.mb_id = '{$member['mb_id']}') ";
+	}else{
+		if($bo_table == 'qna'){
+			$marketer_search .= " (b.mb_part = '{$member['mb_part']}' or b.mb_part is null) ";
+		}else{
+			$marketer_search .= " b.mb_part = '{$member['mb_part']}' ";
+		}
+	}
+}else if($member['mb_post'] == 'P2'){ //팀장 권한은 본인포함, 팀원모두
+	$marketer_search .= " and ";
+	
+	if($bo_table == 'qna'){
+		$marketer_search .= " (b.mb_part = '{$member['mb_part']}' or b.mb_part is null) ";
+	}else{
+		$marketer_search .= " b.mb_part = '{$member['mb_part']}' ";
+	}
+
+	$marketer_search .= " and ";
+
+	if($bo_table == 'qna'){
+		$marketer_search .= " (b.mb_team = '{$member['mb_team']}' or b.mb_team is null) ";
+	}else{
+		$marketer_search .= " b.mb_team = '{$member['mb_team']}' ";
+	}
+}else{
+	$marketer_search .= " and ";
+	
+	if($bo_table == 'qna'){
+		$marketer_search .= " (b.mb_part = '{$member['mb_part']}' or b.mb_part is null) ";
+	}else{
+		$marketer_search .= " b.mb_part = '{$member['mb_part']}' ";
+	}
+
+	$marketer_search .= " and ";
+
+	if($bo_table == 'qna'){
+		$marketer_search .= " (b.mb_team = '{$member['mb_team']}' or b.mb_team is null) ";
+	}else{
+		$marketer_search .= " b.mb_team = '{$member['mb_team']}' ";
+	}
+
+	$marketer_search .= " and ";
+	$marketer_search .= " b.mb_id = '{$member['mb_id']}' ";
+}
+
+if($bo_table == 'reference' && $sear_wr_8){
+	$marketer_search.= " and wr_8 like '%{$sear_wr_8}%' ";
+	$qstr .=$qstr."&sear_wr_8=".$sear_wr_8;
+}
+
+
 $sop = strtolower($sop);
 if ($sop != 'and' && $sop != 'or')
     $sop = 'and';
@@ -53,7 +147,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
-    $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
+    $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} {$marketer_search} ";
     $row = sql_fetch($sql);
     $total_count = $row['cnt'];
     /*
@@ -64,7 +158,15 @@ if ($sca || $stx || $stx === '0') {     //검색이면
 } else {
     $sql_search = "";
 
-    $total_count = $board['bo_count_write'];
+	///////////////////////////////////////////////////////////////////////
+	// AMPM 사원이 아닌 경우 숨김 게시물 노출하지 않는다.
+	// AMPM 사원이 아닌 경우 퇴사자 게시물 노출하지 않는다.
+	///////////////////////////////////////////////////////////////////////
+    //$total_count = $board['bo_count_write'];
+
+    $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE 1 {$marketer_search} ";
+    $row = sql_fetch($sql);
+    $total_count = $row['cnt'];
 }
 
 if(G5_IS_MOBILE) {
@@ -96,7 +198,7 @@ if (!$is_search_bbs) {
     for ($k=0; $k<$board_notice_count; $k++) {
         if (trim($arr_notice[$k]) == '') continue;
 
-        $row = sql_fetch(" select * from {$write_table} where wr_id = '{$arr_notice[$k]}' ");
+        $row = sql_fetch(" select * from {$write_table} where wr_id = '{$arr_notice[$k]}' {$marketer_search} ");
 
         if (!$row['wr_id']) continue;
 
@@ -183,12 +285,6 @@ if(!$sst)
 
 if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
-}
-
-//마케터소개의 경우-퇴사자제외
-if($bo_table == 'marketer'){
-	$marketer_search = "";
-	$marketer_search = " and wr_2='N'";
 }
 
 if ($is_search_bbs) {

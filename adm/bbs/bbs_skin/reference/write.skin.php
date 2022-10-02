@@ -1,8 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-//sql_query(" ALTER TABLE `{$write_table}` CHANGE `wr_content` `wr_content` LONGTEXT NOT NULL ");
-
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
@@ -18,209 +16,207 @@ if ($board['bo_use_category']) {
 }
 ?>
 
+<h2 id="container_title"><?php echo $board['bo_subject'] ?> 글쓰기</h2>
+
 <section id="bo_w">
-    <h2 id="container_title"><?php echo $g5['title'] ?></h2>
+	<!-- 게시물 작성/수정 시작 { -->
+	<form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+		<input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
+		<input type="hidden" name="w" value="<?php echo $w ?>">
+		<input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+		<input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
+		<input type="hidden" name="sca" value="<?php echo $sca ?>">
+		<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+		<input type="hidden" name="stx" value="<?php echo $stx ?>">
+		<input type="hidden" name="spt" value="<?php echo $spt ?>">
+		<input type="hidden" name="sst" value="<?php echo $sst ?>">
+		<input type="hidden" name="sod" value="<?php echo $sod ?>">
+		<input type="hidden" name="page" value="<?php echo $page ?>">
 
-    <!-- 게시물 작성/수정 시작 { -->
-      <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
-				<input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
-				<input type="hidden" name="w" value="<?php echo $w ?>">
-				<input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-				<input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
-				<input type="hidden" name="sca" value="<?php echo $sca ?>">
-				<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-				<input type="hidden" name="stx" value="<?php echo $stx ?>">
-				<input type="hidden" name="spt" value="<?php echo $spt ?>">
-				<input type="hidden" name="sst" value="<?php echo $sst ?>">
-				<input type="hidden" name="sod" value="<?php echo $sod ?>">
-				<input type="hidden" name="page" value="<?php echo $page ?>">
 
-				<?php
-				$option = '';
-				$option_hidden = '';
-				if ($is_notice || $is_html || $is_secret || $is_mail) {
-					$option = '';
-					if ($is_notice) {
-						$option .= "\n".'<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'>'."\n".'<label for="notice">공지</label>';
-					}
+		 <?php
+		 $option = '';
+		 $option_hidden = '';
+		 if ($is_notice || $is_html || $is_secret || $is_mail) {
+			$option = '';
+			if ($is_notice) {
+				  $option .= "\n".'<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'>'."\n".'<label for="notice">공지</label>';
+			}
 
-					if ($is_html) {
-						if ($is_dhtml_editor) {
-							$option_hidden .= '<input type="hidden" value="html1" name="html">';
-						} else {
-							$option .= "\n".'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="html">html</label>';
-						}
-					}
+			if ($is_html) {
+				  if ($is_dhtml_editor) {
+					 $option_hidden .= '<input type="hidden" value="html1" name="html">';
+				  } else {
+					 $option .= "\n".'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="html">html</label>';
+				  }
+			}
 
-					if ($is_secret) {
-						if ($is_admin || $is_secret==1) {
-							$option .= "\n".'<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'>'."\n".'<label for="secret">비밀글</label>';
-						} else {
-							$option_hidden .= '<input type="hidden" name="secret" value="secret">';
-						}
-					}
+			if ($is_secret) {
+				  if ($is_admin || $is_secret==1) {
+					 $option .= "\n".'<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'>'."\n".'<label for="secret">비밀글</label>';
+				  } else {
+					 $option_hidden .= '<input type="hidden" name="secret" value="secret">';
+				  }
+			}
 
-					if ($is_mail) {
-						$option .= "\n".'<input type="checkbox" id="mail" name="mail" value="mail" '.$recv_email_checked.'>'."\n".'<label for="mail">답변메일받기</label>';
-					}
-				}
+			if ($is_mail) {
+				  $option .= "\n".'<input type="checkbox" id="mail" name="mail" value="mail" '.$recv_email_checked.'>'."\n".'<label for="mail">답변메일받기</label>';
+			}
+		 }
 
-				echo $option_hidden;
-				?>
+		 echo $option_hidden;
+		 ?>
 
-<div class="tbl_frm01 tbl_wrap">
-					<table>
-					<tbody>
-						<!-- 카테고리 선택 -->
-						<?php if ($is_category) { ?>
-						<tr>
-							<th scope="row"><label for="ca_name">카테고리 선택<strong class="sound_only">필수</strong></label></th>
-							<td class="chk_category">
-								<?=codeToHtml($code_category, $write['ca_name'], "rdo8", "ca_name")?>
-								<!--
-								<select name="ca_name" id="ca_name" required class="required" >
-									<option value="">선택하세요</option>
-									<?php echo $category_option ?>
-								</select>
-								-->
-							</td>
-						</tr>
+		<div class="tbl_frm01 tbl_wrap">
+			<table>
+			<tbody>
+				<!-- 카테고리 선택 -->
+				<?php if ($is_category) { ?>
+				<tr>
+					<th scope="row"><label for="ca_name">카테고리 선택<strong class="sound_only">필수</strong></label></th>
+					<td class="chk_category">
+						<?=codeToHtml($code_category, $write['ca_name'], "rdo8", "ca_name")?>
+					</td>
+				</tr>
+				<?php } ?>
+
+				<tr>
+					<th scope="row"><label for="wr_subject">브랜드명<strong class="sound_only">필수</strong></label></th>
+					<td>
+						<div id="autosave_wrapper">
+							<input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
+							<?php if ($is_member) { // 임시 저장된 글 기능 ?>
+							<script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
+							<button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
+							<div id="autosave_pop">
+								<strong>임시 저장된 글 목록</strong>
+								<div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
+								<ul></ul>
+								<div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
+							</div>
+							<?php } ?>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row"><label for="wr_8">업종<strong class="sound_only">필수</strong></label></th>
+					<td class="chk_category">
+						<select name="wr_8" id="wr_8" class="frm_input" >
+							<option value="">선택하세요</option>
+							<?=codeToHtml($code_sectors, $write['wr_8'], "cbo", "")?>
+						</select>
+					</td>
+				</tr>
+
+				<?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
+				<tr>
+					<th scope="row">업체이미지 <?php //echo $i+1 ?></th>
+					<td>
+						<input type="file" name="bf_file[]" title="파일첨부 <?php echo $i+1 ?> :  용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file frm_input">
+						<?php if ($is_file_content) { ?>
+						<input type="text" name="bf_content[]" value="<?php echo ($w == 'u') ? $file[$i]['bf_content'] : ''; ?>" title="파일 설명을 입력해주세요." class="frm_file frm_input" size="50">
 						<?php } ?>
-
-						<tr>
-							<th scope="row"><label for="wr_subject">브랜드명<strong class="sound_only">필수</strong></label></th>
-							<td>
-								<div id="autosave_wrapper">
-									<input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
-									<?php if ($is_member) { // 임시 저장된 글 기능 ?>
-									<script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
-									<button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
-									<div id="autosave_pop">
-										  <strong>임시 저장된 글 목록</strong>
-										  <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
-										  <ul></ul>
-										  <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
-									</div>
-									<?php } ?>
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row"><label for="wr_1">전문직종<strong class="sound_only">필수</strong></label></th>
-							<td class="chk_category">
-								<select name="wr_8" id="wr_8" class="frm_input" >
-									<option value="">선택하세요</option>
-									<?=codeToHtml($code_sectors, $write['wr_8'], "cbo", "")?>
-								</select>
-							</td>
-						</tr>
-
-						<?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
-						<tr>
-							<th scope="row">업체이미지 <?php //echo $i+1 ?></th>
-							<td>
-								<input type="file" name="bf_file[]" title="파일첨부 <?php echo $i+1 ?> :  용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file frm_input">
-								<?php if ($is_file_content) { ?>
-								<input type="text" name="bf_content[]" value="<?php echo ($w == 'u') ? $file[$i]['bf_content'] : ''; ?>" title="파일 설명을 입력해주세요." class="frm_file frm_input" size="50">
-								<?php } ?>
-								<?php if($w == 'u' && $file[$i]['file']) { ?>
-								<input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
-								<?php } ?>
-							</td>
-						</tr>
+						<?php if($w == 'u' && $file[$i]['file']) { ?>
+						<input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
 						<?php } ?>
+				<span class="s_notice">
+				   ※ 업체 로고 이미지만 사용, 기타 이미지는 삭제 될 수 있음<br>
+				   ※ 권장사이즈 : 가로 220px, 세로 220px (정사각형)
+				</span>
+					</td>
+				</tr>
+				<?php } ?>
 
-						<?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
-						<tr>
-							<th scope="row"><label for="wr_link<?php echo $i ?>">관련링크<?//php echo $i ?></label></th>
-							<td><input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input" size="50" placeholder="영상과 관련링크를 입력하세요."></td>
-						</tr>
+				<?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
+				<tr>
+					<th scope="row"><label for="wr_link<?php echo $i ?>">관련링크<?//php echo $i ?></label></th>
+					<td><input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input" size="50" placeholder="영상과 관련링크를 입력하세요."></td>
+				</tr>
+				<?php } ?>
+
+
+				<tr>
+					<th scope="row"><label for="wr_1">마케팅KPI<strong class="sound_only">필수</strong></label></th>
+					<td>
+						<input type="text" name="wr_1" value="<?=$write['wr_1']?>" id="wr_1" class="frm_input" size="150" maxlength="255">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="wr_2">집행매체<strong class="sound_only">필수</strong></label></th>
+					<td>
+						<input type="text" name="wr_2" value="<?=$write['wr_2']?>" id="wr_2" class="frm_input" size="150" maxlength="255">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="wr_3">집행성과<strong class="sound_only">필수</strong></label></th>
+					<td>
+						<input type="text" name="wr_3" value="<?=$write['wr_3']?>" id="wr_3" class="frm_input" size="150" maxlength="255">
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="wr_4">홈페이지</label></th>
+					<td><input type="text" name="wr_4" value="<?=$write['wr_4']?>" id="wr_4" class="frm_input" size="150"></td>
+				</tr>
+
+
+				<tr>
+					<th scope="row"><label for="wr_content">집행내용<strong class="sound_only">필수</strong></label></th>
+					<td class="wr_content">
+						<?php if($write_min || $write_max) { ?>
+						<!-- 최소/최대 글자 수 사용 시 -->
+						<p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
 						<?php } ?>
-
-
-						<tr>
-							<th scope="row"><label for="wr_1">마케팅KPI<strong class="sound_only">필수</strong></label></th>
-							<td>
-								<input type="text" name="wr_1" value="<?=$write['wr_1']?>" id="wr_1" class="frm_input" size="150" maxlength="255">
-							</td>
-						</tr>
-						<tr>
-							<th scope="row"><label for="wr_2">집행매체<strong class="sound_only">필수</strong></label></th>
-							<td>
-								<input type="text" name="wr_2" value="<?=$write['wr_2']?>" id="wr_2" class="frm_input" size="150" maxlength="255">
-							</td>
-						</tr>
-						<tr>
-							<th scope="row"><label for="wr_3">집행성과<strong class="sound_only">필수</strong></label></th>
-							<td>
-								<input type="text" name="wr_3" value="<?=$write['wr_3']?>" id="wr_3" class="frm_input" size="150" maxlength="255">
-							</td>
-						</tr>
-						<tr>
-							<th scope="row"><label for="wr_4">홈페이지</label></th>
-							<td><input type="text" name="wr_4" value="<?=$write['wr_4']?>" id="wr_4" class="frm_input" size="150"></td>
-						</tr>
-
-
-						<tr>
-							<th scope="row"><label for="wr_content">집행내용<strong class="sound_only">필수</strong></label></th>
-							<td class="wr_content">
-								<?php if($write_min || $write_max) { ?>
-								<!-- 최소/최대 글자 수 사용 시 -->
-								<p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
-								<?php } ?>
-								<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-								<?php if($write_min || $write_max) { ?>
-								<!-- 최소/최대 글자 수 사용 시 -->
-								<div id="char_count_wrap"><span id="char_count"></span>글자</div>
-								<?php } ?>
-							</td>
-						</tr>
-
-							<input type="hidden" name="wr_5" id="wr_5" value="<?php echo $write['wr_5']; ?>">
-							<input type="hidden" name="wr_6" id="wr_6" value="<?php echo $write['wr_6']; ?>">
-							<input type="hidden" name="wr_7" id="wr_7" value="<?php echo $write['wr_7']; ?>">
-							<input type="hidden" name="wr_8" id="wr_8" value="<?php echo $write['wr_8']; ?>">
-							<input type="hidden" name="wr_9" id="wr_9" value="<?php echo $write['wr_9']; ?>">
-							<input type="hidden" name="wr_10" id="wr_10" value="<?php echo $write['wr_10']; ?>">
-							<input type="hidden" name="wr_11" id="wr_11" value="<?php echo $write['wr_11']; ?>">
-							<input type="hidden" name="wr_12" id="wr_12" value="<?php echo $write['wr_12']; ?>">
-							<input type="hidden" name="wr_13" id="wr_13" value="<?php echo $write['wr_13']; ?>">
-							<input type="hidden" name="wr_14" id="wr_14" value="<?php echo $write['wr_14']; ?>">
-							<input type="hidden" name="wr_15" id="wr_15" value="<?php echo $write['wr_15']; ?>">
-							<input type="hidden" name="wr_16" id="wr_16" value="<?php echo $write['wr_16']; ?>">
-							<input type="hidden" name="wr_17" id="wr_17" value="<?php echo $write['wr_17']; ?>">
-							<input type="hidden" name="wr_18" id="wr_18" value="<?php echo $write['wr_18']; ?>">
-
-							<input type="hidden" name="wr_20" id="wr_20" value="<?php echo $write['wr_20']; ?>">
-
-						<tr>
-							<th scope="row"><label for="wr_19">게시물 숨김 여부<strong class="sound_only">필수</strong></label></th>
-							<td>
-								<select name="wr_19" id="wr_19" required class="required" >
-									<?=codeToHtml($code_hide, $write['wr_19'], "cbo", "")?>
-								</select>
-							</td>
-						</tr>
-
-						<?php if ($is_guest) { //자동등록방지  ?>
-						<tr>
-							<th scope="row">자동등록방지</th>
-							<td>
-								<?php echo $captcha_html ?>
-							</td>
-						</tr>
+						<?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+						<?php if($write_min || $write_max) { ?>
+						<!-- 최소/최대 글자 수 사용 시 -->
+						<div id="char_count_wrap"><span id="char_count"></span>글자</div>
 						<?php } ?>
+					</td>
+				</tr>
 
-					</tbody>
-					</table>
-				</div>
-      
-				<div class="btn_confirm">
-					<a href="./board.php?bo_table=<?php echo $bo_table ?><?=$sublink?>" class="btn btn_cancel">취소</a>
-					<input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn btn_submit">
-				</div>
+				<input type="hidden" name="wr_5" id="wr_5" value="<?php echo $write['wr_5']; ?>">
+				<input type="hidden" name="wr_6" id="wr_6" value="<?php echo $write['wr_6']; ?>">
+				<input type="hidden" name="wr_7" id="wr_7" value="<?php echo $write['wr_7']; ?>">
+				<input type="hidden" name="wr_9" id="wr_9" value="<?php echo $write['wr_9']; ?>">
+				<input type="hidden" name="wr_10" id="wr_10" value="<?php echo $write['wr_10']; ?>">
+				<input type="hidden" name="wr_11" id="wr_11" value="<?php echo $write['wr_11']; ?>">
+				<input type="hidden" name="wr_12" id="wr_12" value="<?php echo $write['wr_12']; ?>">
+				<input type="hidden" name="wr_13" id="wr_13" value="<?php echo $write['wr_13']; ?>">
+				<input type="hidden" name="wr_14" id="wr_14" value="<?php echo $write['wr_14']; ?>">
+				<input type="hidden" name="wr_15" id="wr_15" value="<?php echo $write['wr_15']; ?>">
+				<input type="hidden" name="wr_16" id="wr_16" value="<?php echo ($write['wr_16'])?$write['wr_16']:'N' ?>"><!-- 확인여부 -->
+				<input type="hidden" name="wr_17" id="wr_17" value="<?php echo $write['wr_17']; ?>"><!-- 담당아이디(노출) -->
+				<input type="hidden" name="wr_18" id="wr_18" value="<?php echo $write['wr_18']; ?>"><!-- 담당이름(노출) -->
+
+				<input type="hidden" name="wr_20" id="wr_20" value="<?php echo $write['wr_20']; ?>">
+
+				<tr>
+					<th scope="row"><label for="wr_19">게시물 숨김 여부<strong class="sound_only">필수</strong></label></th>
+					<td>
+						<select name="wr_19" id="wr_19" required class="required" >
+							<?=codeToHtml($code_hide, $write['wr_19'], "cbo", "")?>
+						</select>
+					</td>
+				</tr>
+
+				<?php if ($is_guest) { //자동등록방지  ?>
+				<tr>
+					<th scope="row">자동등록방지</th>
+					<td>
+						<?php echo $captcha_html ?>
+					</td>
+				</tr>
+				<?php } ?>
+
+			</tbody>
+			</table>
+		</div>
+
+		<div class="btn_confirm">
+			<a href="./board.php?bo_table=<?php echo $bo_table ?><?=$sublink?>" class="btn btn_cancel">취소</a>
+			<input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn btn_submit">
+		</div>
     </form>
 
     <script>

@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 /* 새글 스킨 (latest) */
+
 .lat {position:relative;margin-bottom:20px;background:#fff}
 .lat .lat_title {display:block;line-height:45px;font-size:1.2em;color:#253dbe}
 .lat .lat_title a {position:relative;color:#000;display:inline-block}
@@ -134,6 +135,12 @@
    border-top:0;
 }
 
+.week_lank .lank_slider .lank_subject .ca{
+    font-size: 14px;
+    font-weight: 400;
+    color: #ff4172;
+ }
+ 
 .week_lank .lank_slider .lank_bottom{
    width: 100%;
    padding: 10px 12px;

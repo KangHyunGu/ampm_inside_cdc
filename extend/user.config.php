@@ -839,7 +839,7 @@ function get_memberLoginInfo($mb_id){
 			//없으면 인트라넷 사진
 			$mbInfo['mk_url'] = G5_INTRANET_URL.'/data/member_image/'.$mk['mb_id'];
 			
-			if($mk['mb_id'] == 'manager'){
+			if($mk['mb_id'] == 'manager' || $mk['mb_id'] == 'cdc'){
 				$mbInfo['mk_url'] = G5_INTRANET_URL.'/img/no_profile.gif';
 			}
 			$mbInfo['mb_images'] = '<img src="'.$mbInfo['mk_url'].'" alt="'.$mk['mb_name'].' AE" width="170">';
@@ -888,6 +888,9 @@ function get_viewNamecardInfo($bo_table, $wr_id){
 		$mbInfo['nick'] = $mk['mb_name']." AE";
 		$mbInfo['mb_team_text'] = ($mk)?codeToName($code_team, get_text($mk['mb_team']))." 팀":"";
 
+		$mbInfo['mb_tel'] = '02-6049-'.$mk['mb_tel'];
+		$mbInfo['mb_email'] = $mk['mb_email'];
+
 		$mb_dir = substr($mk['mb_id'],0,2);
 		$mk_file = G5_DATA_PATH.'/marketer_image/'.$mb_dir.'/'.$mk['mb_id'].'.jpg';
 		if (file_exists($mk_file)) {
@@ -897,7 +900,7 @@ function get_viewNamecardInfo($bo_table, $wr_id){
 			//없으면 인트라넷 사진
 			$mk_url = G5_INTRANET_URL.'/data/member_image/'.$mk['mb_id'];
 			
-			if($mk['mb_id'] == 'manager'){
+			if($mk['mb_id'] == 'manager' || $mk['mb_id'] == 'cdc'){
 				$mk_url = G5_INTRANET_URL.'/img/no_profile.gif';
 			}
 			$mbInfo['mb_images'] = '<img src="'.$mk_url.'" alt="'.$mk['mb_name'].' AE" width="170">';
@@ -917,6 +920,10 @@ function get_viewNamecardInfo($bo_table, $wr_id){
 		$mbInfo['mb_team_text'] = '';
 		$mbInfo['mb_images'] = get_member_profile_img($mk['mb_id']);
 		$mbInfo['mb_slogan'] = cut_str(strip_tags($mk['mb_profile']),30);
+
+		$mbInfo['mb_tel'] = '02-6049-'.$mk['mb_tel'];
+		$mbInfo['mb_email'] = $mk['mb_email'];
+
 	}
 
     return $mbInfo;

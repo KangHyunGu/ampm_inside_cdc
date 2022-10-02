@@ -1,44 +1,49 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+//sql_query(" ALTER TABLE `{$write_table}` CHANGE `wr_content` `wr_content` LONGTEXT NOT NULL ");
 // 선택옵션으로 인해 셀합치기가 가변적으로 변함
-$colspan = 12;
+$colspan = 10;
 
 if ($is_checkbox) $colspan++;
 if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board['bo_skin'].'/style.css">', 0);
-
+add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
-
-<link rel="stylesheet" href="<?=$board_skin_url?>/style.css">
-
+<?php
+//소속처리
+include(G5_PATH.'/inc/_inc_adm_belong.php');
+?>
 <h2 id="container_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2>
+
+<div id="view_notice">
+	<ul>
+		<li>
+        ※ 처리상태 변경방법<br>
+         <p>
+         방법. 1<br>
+         ① 선택박스의 처리상태를 선택하세요.<br>
+         ② 체크박스 선택 후 '선택처리' 버튼을 클릭하세요.<br>
+         
+		 방법. 2<br>
+         ① 체크박스 선택 후 '처리일괄변경' 버튼을 클릭하세요.<br>
+         ② 오픈된 팝업창에서 선택박스의 처리상태를 선택하세요.<br>
+		 ③ '처리일괄변경' 버튼을 클릭하세요.<br>
+         </p>
+		</li>
+	</ul>
+</div>
 
 <!-- 게시판 목록 시작 { -->
 <div id="bo_list" style="width:<?php echo $width; ?>">
 
-    <!-- 검색 -->
-   <div class="top_sch">
-      <select name="sear_part" id="sear_part" class="form-control">
-         <option value=''> 본부 </option>
-         <?=codeToHtml($code_part4, $sear_part, "cbo", "")?>
-      </select>
-      <select name="sear_team" id="sear_team" class="form-control">
-         <option value=''> 팀 </option>
-         <?=codeToHtml($code_team, $sear_team, "cbo", "")?>
-      </select>
-      <select name="sfl" id="sfl" class="form-control">
-         <option value=''>검색항목</option>
-         <?=codeToHtml($member_search, $sfl, "cbo", "")?>
-      </select>
-      <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" class="form-control" placeholder="검색어를 입력하세요.">
-      <button type="button" id="btn_submit" class="btn btn-primary">검색</button>
-      <button type="button" id="reset" class="btn btn-secondary">초기화</button>
-      <!--<a href="<? G5_URL ?>/bbs/board.php?bo_table=insight" class="btn btn-link">대행의뢰 바로가기</a>-->
-   </div>
+	<!-- 검색 -->
+	<?php
+	//검색폼
+	include(G5_PATH.'/inc/_inc_adm_belong_search.php');
+	?>
 
     <!-- 게시판 카테고리 시작 { -->
     <?php if ($is_category) { ?>
@@ -51,12 +56,22 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
     <?php } ?>
     <!-- } 게시판 카테고리 끝 -->
 
-     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
+    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div class="bo_fx">
         <div id="bo_list_total">
             <span>Total <?php echo number_format($total_count) ?>건</span>
             <?php echo $page ?> 페이지
         </div>
+
+        <?php if ($rss_href || $write_href) { ?>
+        <ul class="btn_bo_user">
+            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01">RSS</a></li><?php } ?>
+            <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin">관리자</a></li><?php } ?>
+            <!--
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02">글쓰기</a></li><?php } ?>
+        -->
+        </ul>
+        <?php } ?>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
 
@@ -66,6 +81,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
     <input type="hidden" name="stx" value="<?php echo $stx ?>">
     <input type="hidden" name="spt" value="<?php echo $spt ?>">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
 
@@ -81,17 +98,17 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
             </th>
             <?php } ?>
             <th scope="col">번호</th>
-            <th scope="col">처리현황</th>
-            <th scope="col">제목</th>
+            <th scope="col"><?php echo subject_sort_link('wr_16', $qstr2, 1) ?>확인여부</a></th>
+            <th scope="col"><?php echo subject_sort_link('wr_19', $qstr2, 1) ?>노출여부</a></th>
+            <th scope="col"><?php echo subject_sort_link('wr_10', $qstr2, 1) ?>처리상태</a></th>
             <th scope="col">업체명</th>
-            <th scope="col">연락처</th>
             <th scope="col">관심매체</th>
+            <th scope="col">연락처</th>
             <th scope="col">월 예상 광고비</th>
-            <th scope="col">담당마케터</th>
-			   <th scope="col">IP</th>
+            <th scope="col">지정마케터</th>
+			<th scope="col">IP</th>
             <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일</a></th>
-            <th scope="col">상세보기</th>
-           <?php if ($is_good) { ?><th scope="col"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천</a></th><?php } ?>
+			<?php if ($is_good) { ?><th scope="col"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천</a></th><?php } ?>
             <?php if ($is_nogood) { ?><th scope="col"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?>비추천</a></th><?php } ?>
         </tr>
         </thead>
@@ -102,8 +119,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?>">
             <?php if ($is_checkbox) { ?>
             <td class="td_chk">
-                <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-                <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
+                <label for="chk_bn_id<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
+				<input type="checkbox" name="chk_bn_id[]" value="<?php echo $i; ?>" id="chk_bn_id_<?php echo $i ?>">
+				<input type="hidden" name="wr_id[<?php echo $i; ?>]" value="<?php echo $list[$i]['wr_id']; ?>">
             </td>
             <?php } ?>
             <td class="td_num">
@@ -116,8 +134,15 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
                 echo $list[$i]['num'];
              ?>
             </td>
-            <td class="td_hide"><?php echo $list[$i]['wr_10'] ?></td>
-            <td class="td_subject">
+            <td class="td_hide"><?=(codeToName($code_check, ($list[$i]['wr_16'])?$list[$i]['wr_16']:'N'))?></td>
+            <td class="td_hide"><?=codeToName($code_hide, ($list[$i]['wr_19'])?$list[$i]['wr_19']:'Y')?></td>
+            
+            <td class="td_board">
+               <select name="wr_10[<?php echo $i; ?>]" id="wr_10_<?php echo $i ?>" required>
+                  <?=codeToHtml($state_code, ($list[$i]['wr_10'])?$list[$i]['wr_10']:'접수', "cbo", "")?>
+               </select>
+            </td>
+            <td class="td_company">
                 <?php
                 echo $list[$i]['icon_reply'];
                 if ($is_category && $list[$i]['ca_name']) {
@@ -126,8 +151,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
                 <?php } ?>
 
                 <a href="<?php echo $list[$i]['href'] ?>">
-                    <?=$list[$i]['wr_1']?>님의 <?=$list[$i]['subject']?>
-                    <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?php echo $list[$i]['comment_cnt']; ?><span class="sound_only">개</span><?php } ?>
+                    <?=$list[$i]['wr_1']?>
                 </a>
 
                 <?php
@@ -139,21 +163,17 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
                 //if ($list[$i]['icon_file']) echo '<i class="fas fa-file-image"></i>';
                 //if ($list[$i]['icon_link']) echo '<i class="fa fa-link"></i>';
                 //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
-				    // echo '<img src="'.$board_skin_url.'/img/icon_secret.gif" alt="비밀글">';
-
-                 ?>
+				// echo '<img src="'.$board_skin_url.'/img/icon_secret.gif" alt="비밀글">';
+                ?>
             </td>
-            <td class="td_company"><?php echo $list[$i]['wr_1'] ?></td>
-            <td class="td_phone"><?php echo $list[$i]['wr_5'] ?></td>
-			   <td class="td_datetime"><?php echo $list[$i]['wr_3'] ?></td>
+            <td class="td_phone"><?=codeToName($code_selltype, ($list[$i]['wr_3'])?$list[$i]['wr_3']:'기타')?></td>
+			<td class="td_datetime"><?php echo $list[$i]['wr_5'] ?></td>
             <td class="td_datetime"><?php echo $list[$i]['wr_2'] ?></td>
-            <td class="td_hide"><?php echo ($list[$i]['wr_12'])?$list[$i]['wr_12']:'전체' ?></td>
+            <td class="td_hide"><?php echo $list[$i]['wr_name'] ?></td>
             <td class="td_hide"><?php echo $list[$i]['wr_ip']  ?></td>
 			<td class="td_datetime"><?php echo date("Y-m-d", strtotime($list[$i]['wr_datetime'])) ?></td>
             <?php if ($is_good) { ?><td class="td_num"><?php echo $list[$i]['wr_good'] ?></td><?php } ?>
             <?php if ($is_nogood) { ?><td class="td_num"><?php echo $list[$i]['wr_nogood'] ?></td><?php } ?>
-            <!-- 상세보기 관리자 메모란 -->
-            <td class="td_adm_memo"></td>
         </tr>
         <?php } ?>
         <?php if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
@@ -165,9 +185,11 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
     <div class="bo_fx">
         <?php if ($is_checkbox) { ?>
         <ul class="btn_bo_adm">
-                <li><input type="submit" name="btn btn_submit" value="선택삭제" onclick="document.pressed=this.value"></li>
-                <li><input type="submit" name="btn btn_submit2" value="담당자변경"></li>
-                <li><input type="submit" name="btn btn_submit3" value="게시물숨김"></li>
+            <li><input type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"></li>
+            <li><input type="submit" name="btn_submit" value="선택노출" onclick="document.pressed=this.value"></li>
+            <li><input type="submit" name="btn_submit" value="선택숨김" onclick="document.pressed=this.value"></li>
+            <li><input type="submit" name="btn_submit" value="선택처리" onclick="document.pressed=this.value"></li>
+            <li><input type="submit" class="btn_bg" name="btn_submit" value="처리일괄변경" onclick="document.pressed=this.value"></li>
         </ul>
         <?php } ?>
 
@@ -200,7 +222,7 @@ function all_checked(sw) {
     var f = document.fboardlist;
 
     for (var i=0; i<f.length; i++) {
-        if (f.elements[i].name == "chk_wr_id[]")
+        if (f.elements[i].name == "chk_bn_id[]")
             f.elements[i].checked = sw;
     }
 }
@@ -209,13 +231,23 @@ function fboardlist_submit(f) {
     var chk_count = 0;
 
     for (var i=0; i<f.length; i++) {
-        if (f.elements[i].name == "chk_wr_id[]" && f.elements[i].checked)
+        if (f.elements[i].name == "chk_bn_id[]" && f.elements[i].checked)
             chk_count++;
     }
 
     if (!chk_count) {
         alert(document.pressed + "할 게시물을 하나 이상 선택하세요.");
         return false;
+    }
+
+    if(document.pressed == "담당자일괄변경") {
+        select_copy("proc_marketer");
+        return;
+    }
+
+    if(document.pressed == "처리일괄변경") {
+        select_copy("proc_state");
+        return;
     }
 
     if(document.pressed == "선택복사") {
@@ -243,16 +275,25 @@ function fboardlist_submit(f) {
 function select_copy(sw) {
     var f = document.fboardlist;
 
-    if (sw == "copy")
-        str = "복사";
-    else
-        str = "이동";
+	url = './move.php';
 
-    var sub_win = window.open("", "move", "left=50, top=50, width=500, height=550, scrollbars=1");
+    if (sw == "proc_marketer"){
+        str = "담당자일괄변경";
+		url = './proc_all.php';
+    }else if (sw == "proc_state"){
+        str = "처리일괄변경";
+		url = './proc_all.php';
+     }else if (sw == "copy"){
+        str = "복사";
+    }else{
+        str = "이동";
+	}
+
+   var sub_win = window.open("", sw, "left=50, top=50, width=450, height=300, scrollbars=1");
 
     f.sw.value = sw;
-    f.target = "move";
-    f.action = "./move.php";
+    f.target = sw;
+    f.action = url;
     f.submit();
 }
 </script>

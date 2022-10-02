@@ -31,7 +31,7 @@ if($go_table == 'qna'){
 					INNER JOIN g5_board b ON a.bo_table = b.bo_table
 					WHERE b.gr_id='client'
 	";
-}else if($go_table == 'amypage' || $go_table == 'acomment'){	//마케터 내가쓴글, 내가쓴댓글
+}else if($go_table == 'amypage'){	//마케터 내가쓴글
 	$sql_common = " 
 					FROM (
 						SELECT *, 'insight' as bo_table
@@ -45,6 +45,24 @@ if($go_table == 'qna'){
 					) a
 					INNER JOIN g5_board b ON a.bo_table = b.bo_table
 					WHERE b.gr_id='inside'
+	";
+}else if($go_table == 'acomment'){	//내가쓴댓글
+	$sql_common = " 
+					FROM (
+						SELECT *, 'insight' as bo_table, wr_17 as wr_writer
+						FROM g5_write_insight 
+						union
+						SELECT *, 'reference' as bo_table, wr_17 as wr_writer
+						FROM g5_write_reference 
+						union
+						SELECT *, 'video' as bo_table, wr_17 as wr_writer
+						FROM g5_write_video 
+						union
+						SELECT *, 'qna' as bo_table, if(wr_11 != '', wr_11, wr_17) as wr_writer
+						FROM g5_write_qna 
+					) a
+					INNER JOIN g5_board b ON a.bo_table = b.bo_table
+					WHERE 1
 	";
 }else if($go_table == 'favorites'){		//일반회원 즐겨찾기
 	$fb = get_favoMarketer_info($member['mb_id']);
@@ -158,8 +176,11 @@ if ($mb_id) {
 	}else if($go_table == 'request'){
 		$sql_common .= " and (a.wr_11 = '{$mb_id}'  OR a.wr_11 = '') ";
 	
+	}else if($go_table == 'acomment'){
+		$sql_common .= " and a.wr_writer = '{$mb_id}' ";
+	
 	}else{
-		$sql_common .= " and a.mb_id = '{$mb_id}' ";
+		$sql_common .= " and a.wr_17 = '{$mb_id}' ";
 	}
 }
 
@@ -174,7 +195,15 @@ if ($stx && $sfl) {
 }
 
 
-$sql_order = " order by a.bo_table, wr_num ";
+// 정렬에 사용하는 QUERY_STRING
+$qstr2 = 'bo_table='.$bo_table.'&amp;go_table='.$go_table.'&amp;sop='.$sop.'&amp;view='.$view;
+
+if(!$sst)
+    $sst  = "wr_num, wr_reply";
+
+if ($sst) {
+    $sql_order = " order by {$sst} {$sod} ";
+}
 
 $sql = " select count(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
@@ -188,7 +217,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $list = array();
 $sql = " select * {$sql_common} {$sql_order} limit {$from_record}, {$rows} ";
-echo $sql; 
+//echo $sql; 
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $tmp_write_table = $g5['write_prefix'].$row['bo_table'];
@@ -252,6 +281,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $list[$i]['mk_id'] = $mk_id;
     $list[$i]['mk_name'] = $mk_name;
     $list[$i]['comment'] = $comment;
+
+    $list[$i]['bo_new'] = $row['bo_new'];
+    $list[$i]['bo_hot'] = $row['bo_hot'];
 	
 	if($list[$i]['gr_id'] == 'client' && $list[$i]['bo_table'] == 'request'){
 		if($member['ampmkey'] == 'Y'){
@@ -270,7 +302,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $list[$i]['datetime2'] = $datetime2;
 
 	$list[$i]['icon_new'] = '';
-	if ($board['bo_new'] && $list[$i]['wr_datetime'] >= date("Y-m-d H:i:s", G5_SERVER_TIME - ($board['bo_new'] * 3600)))
+	//if ($board['bo_new'] && $list[$i]['wr_datetime'] >= date("Y-m-d H:i:s", G5_SERVER_TIME - ($board['bo_new'] * 3600)))
+	if ($list[$i]['bo_new'] && $list[$i]['wr_datetime'] >= date("Y-m-d H:i:s", G5_SERVER_TIME - ($list[$i]['bo_new'] * 3600)))
 		$list[$i]['icon_new'] = '<img src="'.$skin_url.'/img/icon_new.gif" alt="새글">';
 
     $list[$i]['comment_cnt'] = '';

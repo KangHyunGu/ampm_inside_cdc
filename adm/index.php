@@ -12,7 +12,7 @@ if($is_admin == 'ma_admin' || $is_admin == 'manager'){
 	exit;
 }else if($is_admin == 'uploader'){
 	$sub_menu = '700000';
-	header('Location:/adm/cdc/index.php');
+	header('Location:/adm/cdc/');
 	exit;
 }else{
 	$sub_menu = '600000';

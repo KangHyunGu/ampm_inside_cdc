@@ -3,120 +3,91 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board['bo_skin'].'/style.css">', 0);
-?>
+add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
-<link rel="stylesheet" href="<?=$board_skin_url?>/style.css">
+/////////////////////////////////////////////////////////////
+//AMPM 사원이면 확인여부 확인처리
+// $is_checkbox = true;
+/////////////////////////////////////////////////////////////
+if($member['ampmkey'] == 'Y'){
+	$write_table = $g5['write_prefix'].$bo_table;
+	sql_query(" UPDATE $write_table SET wr_16 = 'Y' WHERE wr_id = '{$wr_id}' AND wr_11 = '{$member['mb_id']}' ", false);
+}
+?>
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
-
-<h2 id="container_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2>
+<h2 id="container_title"><?php echo $board['bo_subject'] ?></h2>
 
 <!-- 게시물 읽기 시작 { -->
 <!-- div id="bo_v_table"><?php echo $board['bo_subject']; ?></div -->
 
 <article id="bo_v" style="width:<?php echo $width; ?>">
-<!----
-    <header>
-        <h1 id="bo_v_title">
-            <?php
-            if ($category_name) echo $view['ca_name'].' | '; // 분류 출력 끝
-            echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력
-            ?>
-        </h1>
-    </header>
 
-    <section id="bo_v_info">
-        <h2>페이지 정보</h2>
-        작성자 <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
-        <span class="sound_only">작성일</span><strong><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong>
-        조회<strong><?php echo number_format($view['wr_hit']) ?>회</strong>
-        댓글<strong><?php echo number_format($view['wr_comment']) ?>건</strong>
-    </section>
------>
+	<section id="bo_v_atc">
 
-    <section id="bo_v_atc">
-<!--
-        <?php
-        // 파일 출력
-        $v_img_count = count($view['file']);
-        if($v_img_count) {
-            echo "<div id=\"bo_v_img\">\n";
-
-            for ($i=0; $i<=count($view['file']); $i++) {
-                if ($view['file'][$i]['view']) {
-                    //echo $view['file'][$i]['view'];
-                    echo get_view_thumbnail($view['file'][$i]['view']);
-                }
-            }
-
-            echo "</div>\n";
-        }
-        ?>
--->
 		<!-- 입력폼 추가 부분 -->
         <div id="bo_v_con">
 			<div class="tbl_frm01 tbl_wrap">
-            <div class="request_title">
-               <?=$view['wr_name']?>님의 대행의뢰 신청 내용입니다.
-            </div>
+				<div class="request_title">
+					<?=$view['wr_name']?>님의 대행의뢰 신청 내용입니다.
+				</div>
 				<table>
-					<tbody>
-                  <tr>
-                     <th>확인여부</th>
-							<td><?=(codeToName($code_check, ($view['wr_10'])?$view['wr_10']:'N'))?></td>
-                  </tr>
-						<tr>
-							<th>업체명</th>
-							<td><?=$view['wr_subject']?></td>
-						</tr>
-                  <tr>
-                     <th>대행의뢰자</th>
-							<td><?=$view['wr_name']?></td>
-                  </tr>
-						<tr>
-                     <th>관심매체</th>
-                     <td><?=codeToName($code_selltype, $view['wr_3'])?></td>
-                  </tr>
-                  <tr>
-                     <th>월 예상 광고비</th>
-                     <td><?=codeToName($code_monthPrice, $view['wr_2'])?></td>
-                  </tr>
-                  <tr>
-                     <th>연락처</th>
-                     <td><?=$view['wr_5']?></td>
-                  </tr>
-                  <tr>
-                     <th>의뢰내용</th>
-                     <td><div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div></td>
-                  </tr>
-                  <tr>
-						<th>관련링크</th>
-						<td>
-							<?php
-							if (implode('', $view['link'])) {
-							?>
-							<!-- 관련링크 시작 { -->
-							<section id="bo_v_link">
-							<?php
-								// 링크
-								$cnt = 0;
-								for ($i=1; $i<=count($view['link']); $i++) {
-									if ($view['link'][$i]) {
-										$cnt++;
-										$link = cut_str($view['link'][$i], 70);
-							?>
-								<a href="<?php echo $view['link_href'][$i] ?>" target="_blank">
-									<?php echo $link ?>
-								</a>
-								<!--<span class="bo_v_link_cnt"><?php echo $view['link_hit'][$i] ?>회 연결</span>-->
-							<?php
-									}
+				<tbody>
+                <tr>
+					<th>확인여부</th>
+					<td><?=(codeToName($code_check, ($view['wr_10'])?$view['wr_10']:'N'))?></td>
+                </tr>
+				<tr>
+					<th>업체명</th>
+					<td><?=$view['wr_subject']?></td>
+				</tr>
+                <tr>
+					<th>대행의뢰자</th>
+					<td><?=$view['wr_name']?></td>
+                </tr>
+				<tr>
+					<th>관심매체</th>
+                    <td><?=codeToName($code_selltype, $view['wr_3'])?></td>
+                </tr>
+                <tr>
+					<th>월 예상 광고비</th>
+                    <td><?=codeToName($code_monthPrice, $view['wr_2'])?></td>
+                </tr>
+                <tr>
+					<th>연락처</th>
+                    <td><?=$view['wr_5']?></td>
+                </tr>
+                <tr>
+					<th>의뢰내용</th>
+                    <td><div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div></td>
+                </tr>
+                <tr>
+					<th>관련링크</th>
+					<td>
+						<?php
+						if (implode('', $view['link'])) {
+						?>
+						<!-- 관련링크 시작 { -->
+						<section id="bo_v_link">
+						<?php
+							// 링크
+							$cnt = 0;
+							for ($i=1; $i<=count($view['link']); $i++) {
+								if ($view['link'][$i]) {
+									$cnt++;
+									$link = cut_str($view['link'][$i], 70);
+						?>
+							<a href="<?php echo $view['link_href'][$i] ?>" target="_blank">
+								<?php echo $link ?>
+							</a>
+							<!--<span class="bo_v_link_cnt"><?php echo $view['link_hit'][$i] ?>회 연결</span>-->
+						<?php
 								}
-							?>
-							</section>
-							<!-- } 관련링크 끝 -->
-							<?php } ?>
+							}
+						?>
+						</section>
+						<!-- } 관련링크 끝 -->
+						<?php } ?>
 						</td>
 					</tr>
 					<tr>
@@ -126,7 +97,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
 							   if ($view['file']['count']) {
 								  $cnt = 0;
 								  for ($i=0; $i<count($view['file']); $i++) {
-										if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+										if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'])
 										   $cnt++;
 								  }
 							   }
@@ -135,7 +106,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
 							<?php
 							   // 가변 파일
 							   for ($i=0; $i<count($view['file']); $i++) {
-								  if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+								  if (isset($view['file'][$i]['source']) && $view['file'][$i]['source']) {
 							?>
 							<!-- 첨부파일 시작 { -->
 							<section id="bo_v_file">
@@ -146,10 +117,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
 											<?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
 										</a>
 										
-                              <!--
+										<!--
 										<span class="bo_v_file_cnt ">다운로드 : <?php echo $view['file'][$i]['download'] ?>회 &nbsp;&nbsp;</span>
 										<span class="">DATE : <?php echo $view['file'][$i]['datetime'] ?></span>
-                     -->
+										 -->
 									</li>
 								</ul>
 							</section>
@@ -157,22 +128,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
 							<?php
 								  }
 							   }
-							?>
-							<?php
-							// 파일 출력
-							$v_img_count = count($view['file']);
-							if($v_img_count) {
-								  echo "<div id=\"bo_v_img\">\n";
-
-								  for ($i=0; $i<=count($view['file']); $i++) {
-									 if ($view['file'][$i]['view']) {
-										//echo $view['file'][$i]['view'];
-										echo get_view_thumbnail($view['file'][$i]['view']);
-									 }
-								  }
-
-								  echo "</div>\n";
-							}
 							?>
 						</td>
 					</tr>
@@ -196,10 +151,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
 					<?php } ?>
 
 					<ul class="bo_v_com">
-						<?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b02 btn">수정</a></li><?php } ?>
-						<?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b02 btn" onclick="del(this.href); return false;">삭제</a></li><?php } ?>
-						<!--<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn">글쓰기</a></li><?php } ?>
-               -->
+						<?php $update_href=false;if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b02 btn">수정</a></li><?php } ?>
+						<?php $delete_href=false;if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b02 btn" onclick="del(this.href); return false;">삭제</a></li><?php } ?>
+						<?php $write_href=false;if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn">글쓰기</a></li><?php } ?>
 						<li><a href="<?php echo $list_href ?>" class="btn_b03 btn">목록</a></li>
 						<?php if ($member['ampmkey'] == 'Y') { ?><li class="btn_view btn"><?=codeToName($code_hide, $view['wr_19'])?><?php } ?>
 					</ul>

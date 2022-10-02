@@ -357,6 +357,39 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .autosave_close {cursor:pointer}
 .autosave_content {display:none}
 
+.sel-cate {
+    margin: 0 8px 0 0;
+}
+
+input[type='radio'] {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+input[type='radio'], input[type='radio']:checked {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    position: relative;
+    top: 3px;
+    margin-right: 2px;
+}
+
+input[type='radio']:checked {
+    border: 1px solid #349af1;
+    background: url(../../../images/sel-cate.png) 50% 50% no-repeat;
+}
+
+.cho-info {
+    margin: 5px 0 0;
+    font-size: 14px;
+}
+
+.cho-info span {
+    font-weight: 600;
+}
+
 /* 게시판 읽기 */
 #bo_v { background-color: #fff;}
 

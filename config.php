@@ -47,6 +47,7 @@ define('G5_DBCONFIG_FILE',  'dbconfig.php');
 
 define('G5_ADMIN_DIR',      'adm');
 define('G5_BBS_DIR',        'bbs');
+define('G5_ADMBBS_DIR',      'adm/bbs');
 define('G5_CSS_DIR',        'css');
 define('G5_DATA_DIR',       'data');
 define('G5_EXTEND_DIR',     'extend');
@@ -93,6 +94,7 @@ if (isset($g5_path['path'])) {
 }
 
 define('G5_INTRANET_URL',   'http://intranet.ampm.co.kr');
+define('G5_AMPM_URL',   'http://ampm.co.kr');
 
 
 define('G5_ADMIN_URL',      G5_URL.'/'.G5_ADMIN_DIR);
@@ -115,6 +117,7 @@ define('G5_SNS_URL',        G5_PLUGIN_URL.'/'.G5_SNS_DIR);
 define('G5_SYNDI_URL',      G5_PLUGIN_URL.'/'.G5_SYNDI_DIR);
 define('G5_MOBILE_URL',     G5_URL.'/'.G5_MOBILE_DIR);
 define('G5_MMS_URL',		G5_URL.'/'.G5_MMS_DIR);			// SureM mms module @20160507
+
 
 // PATH 는 서버상에서의 절대경로
 define('G5_ADMIN_PATH',     G5_PATH.'/'.G5_ADMIN_DIR);
@@ -229,7 +232,7 @@ define('G5_THUMB_JPG_QUALITY', 90);
 define('G5_THUMB_PNG_COMPRESS', 5);
 
 // 모바일 기기에서 DHTML 에디터 사용여부를 설정합니다.
-define('G5_IS_MOBILE_DHTML_USE', false);
+define('G5_IS_MOBILE_DHTML_USE', true);
 
 // MySQLi 사용여부를 설정합니다.
 define('G5_MYSQLI_USE', true);

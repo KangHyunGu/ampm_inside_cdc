@@ -100,9 +100,9 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 									echo '<li class="file_list">';
 									echo '<i class="fa fa-folder-open" aria-hidden="true"></i>';
 									echo '<a href="'.$list[$i]['file'][$f]['href'].'" class="view_file_download">'.$list[$i]['file'][$f]['source'].$list[$i]['file'][$f]['content'].'('.$list[$i]['file'][$f]['size'].')</a>';
-									echo '<span class="co_file_cnt">'.$list[$i]['file'][$f]['download'].'회 다운로드 <span class="mobile-none">| DATE : '.$list[$i]['file'][$f]['datetime'].'</span></span>';
-									echo '<input type="hidden" name="co_file_name[]" value="'.$list[$i]['file'][$f]['source'].'" class="co_file_name">';
-									echo '<input type="hidden" name="co_file_no[]" value="'.$f.'" class="co_file_no">';
+									//echo '<span class="co_file_cnt">'.$list[$i]['file'][$f]['download'].'회 다운로드 <span class="mobile-none">| DATE : '.$list[$i]['file'][$f]['datetime'].'</span></span>';
+									//echo '<input type="hidden" name="co_file_name[]" value="'.$list[$i]['file'][$f]['source'].'" class="co_file_name">';
+									//echo '<input type="hidden" name="co_file_no[]" value="'.$f.'" class="co_file_no">';
 									echo '</li>';
 								}
 							}
@@ -140,7 +140,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                 <div class="bo_vl_opt">
 					<!-- <button type="button" class="btn_cm_opt btn_b01 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">댓글 옵션</span></button> -->
                     <ul class="bo_vc_act">
-						<?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c', 's'); return false;">대댓글</a></li><?php } ?>
+						<?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c', 's'); return false;">댓글</a></li><?php } ?>
                         <?php if ($list[$i]['is_edit']) { ?><li><a href="<?php echo $c_edit_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu', ''); return false;">수정</a></li><?php } ?>
                         <?php if ($list[$i]['is_del']) { ?><li><a href="<?php echo $list[$i]['del_link']; ?>" onclick="return comment_delete();">삭제</a></li><?php } ?>
                     </ul>
@@ -202,7 +202,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 							<?php if($re_is_comment_reply_edit) { ?>
 							<!-- 대댓글 수정/삭제 -->
 							<div class="re_comm_btn"> 
-								<?php if ($cmlist[$i][$j]['is_reply']) { ?><a href="<?php echo $re_c_reply_href; ?>" onclick="comment_box('<?php echo $re_comment_id ?>', 'c', 's'); return false;">대댓글</a></li><?php } ?>
+								<?php if ($cmlist[$i][$j]['is_reply']) { ?><a href="<?php echo $re_c_reply_href; ?>" onclick="comment_box('<?php echo $re_comment_id ?>', 'c', 's'); return false;">댓글</a></li><?php } ?>
 								<?php if ($cmlist[$i][$j]['is_edit']) { ?><a href="<?php echo $re_c_edit_href; ?>" onclick="comment_box('<?php echo $re_comment_id ?>', 'cu', 's'); return false;">수정</a><?php } ?>
 								<?php if ($cmlist[$i][$j]['is_del']) { ?><a href="<?php echo $cmlist[$i][$j]['del_link']; ?>" onclick="return comment_delete();">삭제</a><?php } ?>
 							</div>

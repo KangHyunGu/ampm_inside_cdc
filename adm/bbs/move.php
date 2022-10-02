@@ -11,25 +11,24 @@ else
     alert('sw 값이 제대로 넘어오지 않았습니다.');
 
 // 게시판 관리자 이상 복사, 이동 가능
-if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
-    alert_close("게시판 관리자 이상 접근이 가능합니다.");
+//if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
+//    alert_close("게시판 관리자 이상 접근이 가능합니다.");
 
 $g5['title'] = '게시물 ' . $act;
 include_once(G5_PATH.'/head.sub.php');
 
 $wr_id_list = '';
-if ($wr_id)
-    $wr_id_list = $wr_id;
-else {
-    $comma = '';
+$comma = '';
 
-    $count_chk_wr_id = (isset($_POST['chk_wr_id']) && is_array($_POST['chk_wr_id'])) ? count($_POST['chk_wr_id']) : 0;
+$count_chk_bn_id = (isset($_POST['chk_bn_id']) && is_array($_POST['chk_bn_id'])) ? count($_POST['chk_bn_id']) : 0;
 
-    for ($i=0; $i<$count_chk_wr_id; $i++) {
-        $wr_id_val = isset($_POST['chk_wr_id'][$i]) ? preg_replace('/[^0-9]/', '', $_POST['chk_wr_id'][$i]) : 0;
-        $wr_id_list .= $comma . $wr_id_val;
-        $comma = ',';
-    }
+
+for($i=0;$i<$count_chk_bn_id;$i++)
+{
+
+	$wr_id_val   = isset($_POST['wr_id'][$k]) ? preg_replace('/[^0-9]/i', '', $_POST['wr_id'][$k]) : 0;
+	$wr_id_list .= $comma . $wr_id_val;
+	$comma = ',';
 }
 
 //$sql = " select * from {$g5['board_table']} a, {$g5['group_table']} b where a.gr_id = b.gr_id and bo_table <> '$bo_table' ";

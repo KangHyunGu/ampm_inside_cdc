@@ -14,8 +14,12 @@ $mb_nonce = isset($_GET['mb_nonce']) ? trim($_GET['mb_nonce']) : '';
 // 회원아이디가 아닌 회원고유번호로 회원정보를 구한다.
 $sql = " select mb_id, mb_lost_certify from {$g5['member_table']} where mb_no = '$mb_no' ";
 $mb  = sql_fetch($sql);
-if (strlen($mb['mb_lost_certify']) < 33)
-    die("Error");
+if (strlen($mb['mb_lost_certify']) < 33){
+    //die("Error");
+	$re_mag = '비밀번호 변경하기 링크가 지연으로 유효하지 않습니다.\\n\\n마케터인사이드에서 패쓰워드 찾기를 다시 해주시기 바랍니다.';
+	$re_url = 'http://inside.ampm.co.kr';
+	alert_move($re_mag, $re_url);
+}
 
 // 인증 링크는 한번만 처리가 되게 한다.
 sql_query(" update {$g5['member_table']} set mb_lost_certify = '' where mb_no = '$mb_no' ");

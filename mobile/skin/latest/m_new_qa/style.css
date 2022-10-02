@@ -1,0 +1,128 @@
+/* 질문답변 최신/인기 */
+.main_qna{
+    width: 100%;
+    background-color: #fff;
+  }
+  
+  .head{
+    background-color: rgb(242, 242, 242);
+  }
+  
+  .head h2{
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    padding: 20px 15px 10px 15px;
+  }
+  
+  .head .sort{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+  }
+  
+  .head .sort li{
+    width: 50%;
+    padding: 8px 0;
+    text-align: center;
+  }
+  
+  .head .sort li a{
+    font-size: 14px;
+  }
+  
+  .head .sort li.show{
+    background-color: #fff;
+  }
+  
+  .head .sort li.show a{
+    color:#1acb86;
+    font-weight: 600;
+  }
+  
+  .main_qna .main_tab_con{
+    width: 100%;
+    padding: 10px 15px;
+  }
+  
+  .main_qna .con_box{
+    display: none;
+  }
+  
+  .main_qna .con_box.active{
+    display: block !important;
+  }
+  
+  .main_qna .type_popular li{
+    padding: 7px 0;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .main_qna .type_popular li:last-child{
+    border-bottom: 0;
+  }
+  
+  .main_qna .type_popular li .no{
+    color: #121212;
+    text-align: center;
+    margin-right: 5px;
+    width: 10px;
+    font-weight: 600;
+  }
+  
+  .main_qna .type_popular li:nth-child(1) .no,
+  .main_qna .type_popular li:nth-child(2) .no,
+  .main_qna .type_popular li:nth-child(3) .no{
+    color: #ff4172;
+  }
+  
+  .main_qna .type_popular li .cate{
+    color: #555;
+    font-size: 10px;
+    background-color: #e5f0ff;
+    padding: 4px 0;
+    text-align: center;
+    width: 60px;
+    margin-right: 5px;
+  }
+  
+  .main_qna .type_popular li p{
+    width: calc(100% - 70px);
+    padding-left: 5px;
+    text-align: left;
+  }
+  
+  .main_qna .type_new li{
+    padding: 7px 0;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .main_qna .type_new li:last-child{
+    border-bottom: 0;
+  }
+  
+  .main_qna .type_new li .cate{
+    color: #555;
+    font-size: 10px;
+    background-color: #e5f0ff;
+    padding: 4px 0;
+    text-align: center;
+    width: 60px;
+    margin-right: 5px;
+  }
+  
+  .main_qna .type_new li p{
+    width: calc(100% - 60px);
+    padding-left: 5px;
+    text-align: left;
+  }
+  
+  

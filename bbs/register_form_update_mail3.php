@@ -21,8 +21,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                     <tbody>
                         <tr>
                             <td style="width: 100%; padding-bottom: 15px; border-bottom: 1px solid #ddd">
-                                <a href="http://inside.ampm.co.kr/" target="_blank">
-                                    <img src="http://inside.ampm.co.kr/images/mail_logo.png" alt="마케팅인사이트" style="display: block; width: 220px; height: 36px;" width="220" height="36" />
+                                 <a href="http://inside.ampm.co.kr/" target="_blank" style="display: block; width: 220px; height: 36px;" width="220" height="36">
+                                    <img src="https://postfiles.pstatic.net/MjAyMjA5MDdfMjQ3/MDAxNjYyNTI1OTQ0ODgw.Veo8PSG6zaBqIj9r3lTP6MXLfQP0cUmn1cNvxFoxll4g.K3ayUv-WrYi89IpNUcJSXNYgcYrxfaW1vFWFbt4prBEg.PNG.ampmglobal/logo.png?type=w966" />
                                 </a>
                             </td>
                         </tr>

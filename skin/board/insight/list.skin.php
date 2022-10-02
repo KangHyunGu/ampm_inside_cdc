@@ -92,8 +92,8 @@ include(G5_PATH.'/inc/top.php');
 						<th scope="col">구분</th>
 						<th scope="col">제목</th>
 						<th scope="col">작성자</th>
-						<th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일</a></th>
-						<th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회수</a></th>
+						<th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일 <i class="fas fa-sort style"></i></a></th>
+						<th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회수 <i class="fas fa-sort style"></i></a></th>
 					</tr>
 				</thead>
 

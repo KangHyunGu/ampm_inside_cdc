@@ -109,10 +109,10 @@ include(G5_PATH.'/inc/top.php');
 									<div class="gall_img"><?php echo $thumb; ?></div>
 
 									<div class="gall_text_href">
-										<span><?php echo $list[$i]['ca_name'] ?></span>
+										<span class="category"><?php echo $list[$i]['ca_name'] ?></span>
                               <span class="view"><?php if($member['ampmkey'] == 'Y'){	//마케터 ?><?=codeToName($code_hide, $list[$i]['wr_19'])?><?php } ?></span>
 										<p>	<?php echo $list[$i]['subject'] ?>
-											<?php if ($list[$i]['icon_new']) echo '<span class="new_icon">N<span class="sound_only">새글</span></span>'; ?>
+											<?php if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new']; ?>
 											<?php if ($list[$i]['comment_cnt']) { ?>
 												<span class="cnt_cmt"><?php echo $list[$i]['wr_comment']; ?></span>
 											<?php } ?>

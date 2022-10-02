@@ -605,8 +605,8 @@ $code_sectors["기타"]			= "기타";
 
 // 숨김여부 
 $code_hide 		= array();			
-$code_hide["Y"] 	= "노출"; 
-$code_hide["N"] 	= "숨김"; 
+$code_hide["Y"] 	= "<span class='style1 viewbox'>노출</span>"; 
+$code_hide["N"] 	= "<span class='style2 viewbox'>숨김</span>"; 
 
 
 // 노출여부 
@@ -616,13 +616,18 @@ $code_visible["N"] 	= "비노출";
 
 // 확인여부 
 $code_check 		= array();			
-$code_check["Y"] 	= "확인"; 
-$code_check["N"] 	= "미확인"; 
+$code_check["Y"] 	= "<span class='qnaIco qnaIco2'>확인</span>"; 
+$code_check["N"] 	= "<span class='qnaIco qnaIco3'>미확인</span>"; 
 
 
 // 게시판종류
 $code_botable	=	array();
-$query = "SELECT * FROM g5_board WHERE gr_id='inside' order by bo_table ";
+
+if($go_table=='acomment'){
+	$query = "SELECT * FROM g5_board WHERE gr_id='inside' OR (gr_id='client' and bo_table='qna')  order by bo_table ";
+}else{
+	$query = "SELECT * FROM g5_board WHERE gr_id='inside' order by bo_table ";
+}
 $_obj = sql_query($query);
 while($_row=sql_fetch_array($_obj)) {
 	$code_botable["{$_row['bo_table']}"] = "{$_row['bo_subject']}";

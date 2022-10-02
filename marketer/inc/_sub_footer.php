@@ -26,23 +26,6 @@ if (G5_IS_MOBILE) {	//모바일인 경우
         
         <div class="ft-copy">
             Copyright © 2022 AMPM Global. All rights reserved.
-            
-            <!--
-            <span>
-                <?php
-                    if($member['mb_id']){
-                ?>
-                    <a href="<?=G5_MARKETER_URL?>/adm">[마케터 관리모드]</a>
-                    <a href="<?=G5_MARKETER_BBS_URL?>/logout.php?utm_member=<?=$member['mb_id']?>">[마케터 로그아웃]</a>
-                    <?php
-                    }else{
-                ?>
-                    <a href="<?=G5_MARKETER_BBS_URL?>/login.php?url=%2Fmarketer%2Fadm&utm_member=<?=$utm_member?>">[마케터 로그인]</a>
-                    <?php
-                    }
-                ?>
-            </span>
-            -->
         </div>
         
         <!--
@@ -86,20 +69,6 @@ if (G5_IS_MOBILE) {	//모바일인 경우
 
             <p>
                 Copyright © 2019 AMPM Global. All rights reserved.
-                <span class="none">
-                <?php
-                        if($member['mb_id']){
-                    ?>
-                        <a href="<?=G5_MARKETER_URL?>/adm">[마케터 관리모드]</a>
-                        <a href="<?=G5_MARKETER_BBS_URL?>/logout.php?utm_member=<?=$member['mb_id']?>">[마케터 로그아웃]</a>
-                        <?php
-                        }else{
-                    ?>
-                        <a href="<?=G5_MARKETER_BBS_URL?>/login.php?url=%2Fmarketer%2Fadm&utm_member=<?=$utm_member?>">[마케터 로그인]</a>
-                        <?php
-                        }
-                    ?>
-                </span>
             </p>
         </div>
         

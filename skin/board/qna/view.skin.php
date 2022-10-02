@@ -46,29 +46,26 @@ include(G5_PATH.'/inc/top.php');
 				</section>
 
 				<div class="inner">
-				   <!-- media아이콘 -->
+				   <!-- media아이콘
 				   <div class="media">
 					  <ul>
-						 <!-- instagram -->
 						 <li>
 							<a href="#" target="blank">
 							   <img src="<?=G5_URL ?>/images/instagram_on.png" alt="">
 							</a>
 						 </li>
-						 <!-- naver -->
 						 <li>
 							<a href="#" target="blank">
 							   <img src="<?=G5_URL ?>/images/blog_on.png" alt="">
 							</a>
 						 </li>
-						 <!-- youtube -->
 						 <li>
 							<a href="#" target="blank">
 							   <img src="<?=G5_URL ?>/images/youtube_on.png" alt="">
 							</a>
 						 </li>
 					  </ul>
-				   </div>
+				   </div> -->
 				   <!-- 공유하기 -->
 				   <div class="share">
 					  <span class="link_copy">
@@ -126,23 +123,6 @@ include(G5_PATH.'/inc/top.php');
 
 			<section id="bo_v_atc">
 				<h2 id="bo_v_atc_title">본문</h2>
-      
-				<?php
-				// 파일 출력
-				$v_img_count = count($view['file']);
-				if($v_img_count) {
-					  echo "<div id=\"bo_v_img\">\n";
-
-					  for ($i=0; $i<=count($view['file']); $i++) {
-						 if ($view['file'][$i]['view']) {
-							//echo $view['file'][$i]['view'];
-							echo get_view_thumbnail($view['file'][$i]['view']);
-						 }
-					  }
-
-					  echo "</div>\n";
-				}
-				?>
       
 				<!-- 본문 내용 시작 { -->
 				<div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>

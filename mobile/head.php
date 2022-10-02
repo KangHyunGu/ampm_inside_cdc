@@ -19,7 +19,12 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 ///////////////////////////////////////////////////////////////////
 include_once(G5_LIB_PATH.'/latest_popular.lib.php');
 ?>
-
+<?php
+////////////////////////////////////////
+//path_dep0 = 마이페이지 탭메뉴 코드
+////////////////////////////////////////
+include(G5_PATH.'/inc/_inc_top_path.php');
+?>
 <header id="hd" class="sticky">
     <!-- <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
 

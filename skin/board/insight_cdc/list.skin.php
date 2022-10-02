@@ -175,7 +175,7 @@ include(G5_PATH.'/inc/top.php');
 						<?php }  ?>
 						<?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?><?=$sublink?>" class="btn_b02 btn">RSS</a></li><?php } ?>
 						<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?><?=$sublink?>" class="btn_b02 btn">관리자</a></li><?php } ?>
-						<?php $write_href=false;if ($write_href) { ?><li><a href="<?php echo $write_href ?><?=$sublink?>" class="btn_b01 btn">글쓰기</a></li><?php } ?>
+						<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?><?=$sublink?>" class="btn_b01 btn">글쓰기</a></li><?php } ?>
 					</ul>
 					<?php } ?>
 				</div>

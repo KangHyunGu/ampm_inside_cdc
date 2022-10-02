@@ -26,6 +26,10 @@
    font-weight: 500;
 }
 
+.top_sch select {
+   min-width: 150px;
+}
+
 .top_sch .btn-primary {
    background: #353535;
    color: #fff;
@@ -72,6 +76,11 @@
 
 .td_manager {
    width: 140px;
+}
+
+.td_manager input {
+   background: #fffcf5;
+   border: 1px solid #ffd320;
 }
 
 .td_datetime {
@@ -276,6 +285,11 @@ input[type='radio']:checked {
 	height: 40px;
 	color: #ffffff !important;
 }
+
+.btn_bo_adm li .btn_bg {
+   background: #c54c4c;
+   border: #c54c4c;
+}
 .bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
@@ -319,6 +333,10 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
    font-size: 16px;
    color: #343e4e;
    font-weight: 500;
+}
+
+#view_notice ul li p {
+   padding: 5px 0 0;
 }
 
 #bo_v .bo_title_wrap {
@@ -437,7 +455,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_v_file {}
 #bo_v_file h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {padding:0 10px;border-bottom:1px solid #eee;background:#f5f6fa}
+#bo_v_file li {padding:0 10px;}
 #bo_v_file a {display:inline-block;padding:8px 0 7px;width:100%;color:#000;word-wrap:break-word}
 #bo_v_file a:focus, #bo_v_file a:hover, #bo_v_file a:active {text-decoration:none}
 #bo_v_file img {float:left;margin:0 10px 0 0}
@@ -513,7 +531,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
     position: relative;
 }
 
-#bo_vc .left{
+#bo_vc .left .pf_img{
     width: 40px;
     height: 40px;
     border: 1px solid #ccc;

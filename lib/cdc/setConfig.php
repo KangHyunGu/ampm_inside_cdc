@@ -45,20 +45,7 @@
             name: 'ca_name',
         })
     }
-
-    //vm.fetchData(write_fields);
-    //vm.initSkinLocalStorage();
-
-
-    console.log('vm.$data.form : ', vm.$data.form);
-    console.log('write_fields : ', write_fields);
-    console.log('board_data : ', board_data);
-    console.log('vm.$data.config : ', vm.$data.config);
-    console.log('file', vm.$data.files)
-
+    
     console.log('vm.allData : ', vm.$data);
-    console.log('vm : ', vm.$);
     console.log('Ruels : ', rules);
-
-    vm.test();
 </script>

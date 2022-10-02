@@ -149,30 +149,30 @@ if ($w == '') {
         alert("로그인된 정보와 수정하려는 정보가 틀리므로 수정할 수 없습니다.\\n만약 올바르지 않은 방법을 사용하신다면 바로 중지하여 주십시오.");
 
     $mb = get_marketer_detail($mb_id);
-    if (!$mb['mb_id'])
-        alert('존재하지 않는 사원 자료입니다.');
+    if (!$mb['mb_id']){
+		sql_query(" insert into {$bo_table} set mb_id = '{$mb_id}', {$sql_common} ");
+	}else{
+
+		$sql = " update {$bo_table}
+					set {$sql_common}
+					where mb_id = '{$mb_id}' ";
+		//echo $sql;exit;
+		sql_query($sql);
 
 
-    $sql = " update {$bo_table}
-                set {$sql_common}
-                where mb_id = '{$mb_id}' ";
-	//echo $sql;exit;
-	sql_query($sql);
+		//인트라넷업데이트용
+		$sql = " update g5_member
+					set {$sql_common1}
+					where mb_id = '{$mb_id}' ";
+		
+		//echo $sql;exit;
+		sql_query_intra($sql);
 
 
-	//인트라넷업데이트용
-    $sql = " update g5_member
-                set {$sql_common1}
-                where mb_id = '{$mb_id}' ";
-    
-	//echo $sql;exit;
-	sql_query_intra($sql);
-
-
-	//마케터소개 LOG 용
-    sql_query(" insert into g5_marketer_permute_log set mb_id = '{$mb_id}', per_type = '정보수정', per_ip = '{$_SERVER['REMOTE_ADDR']}' ,per_date = '".G5_TIME_YMDHIS."', {$sql_common2} ");
+		//마케터소개 LOG 용
+		sql_query(" insert into g5_marketer_permute_log set mb_id = '{$mb_id}', per_type = '정보수정', per_ip = '{$_SERVER['REMOTE_ADDR']}' ,per_date = '".G5_TIME_YMDHIS."', {$sql_common2} ");
+	}
 }
-
 
 $mb_dir = substr($mb_id,0,2);
 

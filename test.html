@@ -1,0 +1,101 @@
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script>	
+$(document).ready( function() {	
+	$('.monts_fontB').click(function(){			
+		//animate()메서드를 이용해서 선택한 태그의 스크롤 위치를 지정해서 0.4초 동안 부드럽게 해당 위치로 이동함 	        
+		$('html, body').animate({
+			scrollTop : $('#lastod_cate').offset().top}, 2000);		//상품위치까지 스크롤처리
+	});	
+
+	$(window).scroll(function() {
+		var target_loca = parseInt($(this).scrollTop())+parseInt($('.banner').height())+50;
+		console.log(target_loca);
+		console.log(Math.ceil($('.banner').offset().top));
+        if (target_loca >= Math.ceil($('.banner').offset().top)) {
+			alert('위치지나면');
+			$('#lastod_cate').fadeOut("slow");
+        }
+    });
+});
+</script>
+</head>
+<body>
+<a class="monts_fontB" href="#section2">화살표
+            <span>↓</span>
+</a>
+
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<h1>Lorem ipsum dolor.</h1>
+<img class="banner" src="//mulawear.jpg3.kr/man/event/220822olympia/banner.jpg">
+<div id="lastod_cate"><h1>화살표 사라짐</h1></div>
+
+
+</body>
+</html>   

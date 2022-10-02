@@ -26,7 +26,7 @@ $mb = sql_fetch($sql);
 if (!$mb['mb_id'] || $mb['mb_leave_date'])
     alert('존재하지 않는 회원입니다.');
 else if (is_admin($mb['mb_id']))
-    alert('관리자 아이디는 접근 불가합니다.');
+    alert('관리자 & 사원 아이디는 접근 불가합니다.');
 
 // 임시비밀번호 발급
 $change_password = rand(100000, 999999);

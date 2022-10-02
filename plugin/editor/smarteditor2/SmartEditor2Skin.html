@@ -7,7 +7,7 @@
 <title>네이버 :: Smart Editor 2 &#8482;</title>
 <link href="css/ko_KR/smart_editor2.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-	body { margin: 10px; }
+body { margin: 10px; }
 </style>
 <script type="text/javascript" src="./js/lib/jindo2.all.js" charset="utf-8"></script>
 <script type="text/javascript" src="./js/lib/jindo_component.js" charset="utf-8"></script>
@@ -17,9 +17,19 @@
 <!-- 사진첨부샘플  --> 
 <script type="text/javascript" src="photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js?v3" charset="utf-8"></script>
 </head>
+
+<style>#smart_editor2 { min-width:100% !important; }</style>
+
+<script>
+heightMode = window.outerWidth < window.outerHeight;
+change_1 = heightMode ? "<br><br><ul style=position:relative;z-index:55;padding-left:5px;margin-top:-5px>" : "<ul>";
+change_2 = heightMode ? "<br><br><ul style=padding-left:5px;margin-top:-10px>" : "<ul>";
+change_3 = heightMode ? "<ul style=margin-top:-10px>" : "<ul>";
+imgBtnChange = heightMode ? "<ul id=se2Button class=se2_multy style=position:absolute;top:0px;right:0px;border:none>" : "<ul id=se2Button class=se2_multy>";
+sizeBtnChange = heightMode ? "<button type=button class='se2_inputarea_controller husky_seditor_editingArea_verticalResizer' title='입력창 크기 조절' style=text-align:left;padding-left:10px>" : "<button type=button class='se2_inputarea_controller husky_seditor_editingArea_verticalResizer' title='입력창 크기 조절'>";
+</script>
+
 <body>
-
-
 
 <span id="rev" style="display:none">Version: 2.9.0.4a256db </span>
 
@@ -29,7 +39,7 @@
 		<div class="se2_tool" id="se2_tool">
 			
 			<div class="se2_text_tool husky_seditor_text_tool">
-			<ul class="se2_font_type">
+			<ul class="se2_font_type" style=position:relative;z-index:60>
 				<li class="husky_seditor_ui_fontName"><button type="button" class="se2_font_family" title="글꼴"><span class="husky_se2m_current_fontName">글꼴</span></button>
 					<!-- 글꼴 레이어 -->
 					<div class="se2_layer husky_se_fontName_layer">
@@ -68,7 +78,7 @@
 					</div>
 					<!-- //폰트 사이즈 레이어 -->
 				</li>
-</ul><ul>
+</ul><script>document.write(change_1)</script>
 				<li class="husky_seditor_ui_bold first_child"><button type="button" title="굵게[Ctrl+B]" class="se2_bold"><span class="_buttonRound tool_bg">굵게[Ctrl+B]</span></button></li>
 
 				<li class="husky_seditor_ui_underline"><button type="button" title="밑줄[Ctrl+U]" class="se2_underline"><span class="_buttonRound">밑줄[Ctrl+U]</span></button></li>
@@ -203,7 +213,7 @@
 				<li class="husky_seditor_ui_superscript"><button type="button" title="윗첨자" class="se2_sup"><span class="_buttonRound">윗첨자</span></button></li>
 
 				<li class="husky_seditor_ui_subscript last_child"><button type="button" title="아래첨자" class="se2_sub"><span class="_buttonRound tool_bg">아래첨자</span></button></li>
-</ul><ul>
+</ul><script>document.write(change_2)</script>
 				<li class="husky_seditor_ui_justifyleft first_child"><button type="button" title="왼쪽정렬" class="se2_left"><span class="_buttonRound tool_bg">왼쪽정렬</span></button></li>
 
 				<li class="husky_seditor_ui_justifycenter"><button type="button" title="가운데정렬" class="se2_center"><span class="_buttonRound">가운데정렬</span></button></li>
@@ -240,7 +250,7 @@
 					</div>
 					<!-- //줄간격 레이어 -->
 				</li>
-</ul><ul>
+</ul><script>document.write(change_3)</script>
                 <li class="husky_seditor_ui_text_more" id="se2_text_more"><button title="더보기" type="button" class="se2_text_tool_more"><span>더보기</span></button>
 					<div class="se2_sub_text_tool se2_sub_step1">
 						<ul>
@@ -251,7 +261,7 @@
 						</ul>
 					</div>
 				</li>
-</ul><ul>
+</ul><script>document.write(change_3)</script>
 				<li class="husky_seditor_ui_quote single_child"><button type="button" title="인용구" class="se2_blockquote"><span class="_buttonRound tool_bg">인용구</span></button>
 					<!-- 인용구 -->
 					<div class="se2_layer husky_seditor_blockquote_layer" style="margin-left:-407px; display:none;">
@@ -275,7 +285,7 @@
 					</div>
 					<!-- //인용구 -->
 				</li>
-</ul><ul>
+</ul><script>document.write(change_3)</script>
 				<li class="husky_seditor_ui_hyperlink first_child"><button type="button" title="링크" class="se2_url"><span class="_buttonRound tool_bg">링크</span></button>
 					<!-- 링크 -->
 					<div class="se2_layer" style="margin-left:-285px">
@@ -536,7 +546,7 @@
 					<!--//@lazyload_html-->
 				</li>
 </ul>
-				<ul class="se2_multy">
+				<script>document.write(imgBtnChange)</script>
 					<li class="se2_mn husky_seditor_ui_photo_attach"><button type="button" class="se2_photo ico_btn"><span class="se2_icon"></span><span class="se2_mntxt">사진<span class="se2_new"></span></span></button></li>
 				</ul>
 			</div>
@@ -765,7 +775,7 @@
 		<!-- //입력 -->
 		<!-- 입력창조절/ 모드전환 -->
 		<div class="se2_conversion_mode">
-			<button type="button" class="se2_inputarea_controller husky_seditor_editingArea_verticalResizer" title="입력창 크기 조절"><span>입력창 크기 조절</span></button>
+			<script>document.write(sizeBtnChange)</script><span>입력창 크기 조절</span></button>
 			<ul class="se2_converter">
 			<li class="active"><button type="button" class="se2_to_editor"><span>Editor</span></button></li>
 			<li><button type="button" class="se2_to_html"><span>HTML</span></button></li>
@@ -792,6 +802,10 @@
 </div>
 <!-- SE2 Markup End -->
 
-
 </body>
+
+<script>
+if (parent.smarteditor2Upload == "no") se2Button.style.display = "none";
+</script>
+
 </html>

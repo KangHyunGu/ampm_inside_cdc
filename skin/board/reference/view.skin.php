@@ -12,180 +12,200 @@ include(G5_PATH.'/inc/top.php');
 
 <div id="container" class="sub">
 	<!-- 좌측 컨텐츠 영역 -->
-	<section class="section_left">
-		<!-- 비주얼 배너 -->
-		<div class="visual_banner">
-			<img src="<?=G5_URL ?>/images/sub_banner3.jpg" alt="마케터 레퍼런스 배너">
-		</div>
+	<div id ="v-app">
+		<section class="section_left">
+			<!-- 비주얼 배너 -->
+			<div class="visual_banner">
+				<img src="<?=G5_URL ?>/images/sub_banner3.jpg" alt="마케터 레퍼런스 배너">
+			</div>
 
-		<!-- 게시물 읽기 시작 { -->
-		<article id="bo_v" style="width:<?php echo $width; ?>">
+			<!-- 게시물 읽기 시작 { -->
+			<article id="bo_v" style="width:<?php echo $width; ?>">
 
-			<!-- 본문 내용 시작 { -->
-			<table id="bo_v_table">
-				<tbody>
-					<tr>
-						<th>카테고리</th>
-						<td class="brand_name">
-							<?php if ($category_name) echo $view['ca_name']; // 분류 출력 끝 ?>     
-							<div class="inner">
-								<!-- media아이콘 -->
-								<div class="media">
-									<ul>
-										<!-- instagram -->
-										<li class="on">
-											<a href="#" target="blank">
-												<img src="<?=G5_URL ?>/images/instagram_on.png" alt="">
-											</a>
-										</li>
-										<!-- naver -->
-										<li class="on">
-											<a href="#" target="blank">
-												<img src="<?=G5_URL ?>/images/blog_on.png" alt="">
-											</a>
-										</li>
-										<!-- youtube -->
-										<li class="on">
-											<a href="#" target="blank">
-												<img src="<?=G5_URL ?>/images/youtube_on.png" alt="">
-											</a>
-										</li>
-									</ul>
-								</div>
-								<!-- 공유하기 -->
-
-								<div class="share">
-								   <span class="link_copy">
-									  <a href="#" onclick="clip(); return false;">
-										 <i class="fas fa-external-link-alt"></i> 공유하기
-									  </a>
-								   </span>
-								</div>
-								<script type="text/javascript">
-									function clip(){
-									   var url = '';
-									   var textarea = document.createElement("textarea");
-									   document.body.appendChild(textarea);
-									   url = window.document.location.href;
-									   textarea.value = url;
-									   textarea.select();
-									   document.execCommand("copy");
-									   document.body.removeChild(textarea);
-									   alert("http://<?php echo $_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI];?> \n주소가 복사되었습니다.")
-									}
-								</script>
+				<!-- 본문 내용 시작 { -->
+				<table id="bo_v_table">
+					<tbody>
+						<tr>
+							<th>카테고리</th>
+							<td class="brand_name">
+								<?php if ($category_name) echo $view['ca_name']; // 분류 출력 끝 ?>     
+								<div class="inner">
+									<!-- media아이콘 -->
+							<div class="media">
+								<ul>
+									<!-- instagram -->
+									<li>
+										<a target="blank" 
+											v-if="isCompInsta"
+											:href="skinViews.cdc.wr_comp_insta_link">
+										<img src="<?=G5_URL ?>/images/instagram_on.png" />
+										</a>
+										<span v-else style="margin-left:2px;"> <img src="<?=G5_URL ?>/images/instagram.png" /></span>
+									</li>
+									<!-- naver -->
+									<li>
+										<a target="blank"
+											v-if="isCompBlog"
+											:href="skinViews.cdc.wr_comp_blog_link">
+										<img src="<?=G5_URL ?>/images/blog_on.png" alt="">
+										</a>
+										<span v-else style="margin-left:2px;"> <img src="<?=G5_URL ?>/images/blog.png" /></span>
+									</li>
+									<!-- youtube -->
+									<li>
+										<a target="blank"
+										v-if="isCompYoutube"
+										:href="skinViews.cdc.wr_comp_youtube_link">
+										<img src="<?=G5_URL ?>/images/youtube_on.png" alt="">
+										</a>
+										<span v-else style="margin-left:2px;"><img src="<?=G5_URL ?>/images/youtube.png" /></span>
+									</li>
+								</ul>
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<th>브랜드명</th>
-						<td>
-							<?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?>
-						</td>
-					</tr>
-					<tr>
-						<th>업종</th>
-						<td>
-							<?php echo $view['wr_8']; ?>
-						</td>
-					</tr>
-					<!--
-					<tr>
-						<th>업체이미지</th>
-						<td>
-							<?php
-							// 파일 출력
-							$v_img_count = count($view['file']);
-							if($v_img_count) {
-								echo "<div id=\"bo_v_img\">\n";
+									<!-- 공유하기 -->
 
-								for ($i=0; $i<=count($view['file']); $i++) {
-									if ($view['file'][$i]['view']) {
-										//echo $view['file'][$i]['view'];
-										echo get_view_thumbnail($view['file'][$i]['view'], 300);
+									<div class="share">
+									<span class="link_copy">
+										<a href="#" onclick="clip(); return false;">
+											<i class="fas fa-external-link-alt"></i> 공유하기
+										</a>
+									</span>
+									</div>
+									<script type="text/javascript">
+										function clip(){
+										var url = '';
+										var textarea = document.createElement("textarea");
+										document.body.appendChild(textarea);
+										url = window.document.location.href;
+										textarea.value = url;
+										textarea.select();
+										document.execCommand("copy");
+										document.body.removeChild(textarea);
+										alert("http://<?php echo $_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI];?> \n주소가 복사되었습니다.")
+										}
+									</script>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>브랜드명</th>
+							<td>
+								<?php echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력 ?>
+							</td>
+						</tr>
+						<tr>
+							<th>업종</th>
+							<td>
+								<?php echo $view['wr_8']; ?>
+							</td>
+						</tr>
+						<!--
+						<tr>
+							<th>업체이미지</th>
+							<td>
+								<?php
+								// 파일 출력
+								$v_img_count = count($view['file']);
+								if($v_img_count) {
+									echo "<div id=\"bo_v_img\">\n";
+
+									for ($i=0; $i<=count($view['file']); $i++) {
+										if ($view['file'][$i]['view']) {
+											//echo $view['file'][$i]['view'];
+											echo get_view_thumbnail($view['file'][$i]['view'], 300);
+										}
 									}
+
+									echo "</div>\n";
 								}
+								?>
+							
+							</td>
+						</tr>
+						-->
+						<tr>
+							<th>마케팅KPI</th>
+							<td><?=$view['wr_1']?></td>
+						</tr>
+						<tr>
+							<th>집행매체</th>
+							<td><?=$view['wr_2']?></td>
+						</tr>
+						<tr>
+							<th>집행성과</th>
+							<td><?=$view['wr_3']?></td>
+						</tr>
+						<tr>
+							<th>홈페이지</th>
+							<td><?=$view['wr_4']?></td>
+						</tr>
 
-								echo "</div>\n";
-							}
-							?>
-						
-						</td>
-					</tr>
-					-->
-					<tr>
-						<th>마케팅KPI</th>
-						<td><?=$view['wr_1']?></td>
-					</tr>
-					<tr>
-						<th>집행매체</th>
-						<td><?=$view['wr_2']?></td>
-					</tr>
-					<tr>
-						<th>집행성과</th>
-						<td><?=$view['wr_3']?></td>
-					</tr>
-					<tr>
-						<th>홈페이지</th>
-						<td><?=$view['wr_4']?></td>
-					</tr>
-
-					<tr>
-						<th>집행내용</th>
-						<td><div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div></td>
-					</tr>
-				</tbody>
-			</table>
-			<!-- } 본문 내용 끝 -->
-
-			<!-- 본문 밑 마케터 네임카드 출력 -->
-			<?php include(G5_PATH.'/inc/_inc_namecard.php'); ?>       
-
-
-		<!-- 게시물 상단 버튼 시작 { -->
-		<div id="bo_v_top">
-			<?php ob_start(); ?>
-
-			<?php if ($prev_href || $next_href) { ?>
-			<ul class="bo_v_nb">
-				<?php if ($prev_href) { ?><li><a href="<?php echo $prev_href ?>" class="btn_b03 btn">이전글</a></li><?php } ?>
-				<?php if ($next_href) { ?><li><a href="<?php echo $next_href ?>" class="btn_b03 btn">다음글</a></li><?php } ?>
-			</ul>
-			<?php } ?>
-
-			<ul class="bo_v_com">
-				<?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b02 btn">수정</a></li><?php } ?>
-				<?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b02 btn" onclick="del(this.href); return false;">삭제</a></li><?php } ?>
-				<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn">글쓰기</a></li><?php } ?>
-				<li><a href="<?php echo $list_href ?>" class="btn_b03 btn">목록</a></li>
-				<?php if ($member['ampmkey'] == 'Y') { ?><li class="btn_view btn"><?=codeToName($code_hide, $view['wr_19'])?><?php } ?>
-			</ul>
-		   <?php
-			  $link_buttons = ob_get_contents();
-			  ob_end_flush();
-		   ?>
-		</div>
-		<!-- } 게시물 상단 버튼 끝 -->
+						<tr>
+							<th>집행내용</th>
+							<td><div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div></td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- } 본문 내용 끝 -->
+				<!-- CDC 내용 -->
+				<?php include_once(CDC_PATH."/view.skin.cdc.php"); ?>
+				<!-- //CDC 내용 -->
+				<!-- 본문 밑 마케터 네임카드 출력 -->
+				<?php include(G5_PATH.'/inc/_inc_namecard.php'); ?>       
 
 
-         <?php
-         //include_once(G5_SNS_PATH."/view.sns.skin.php");
-         ?>
+			<!-- 게시물 상단 버튼 시작 { -->
+			<div id="bo_v_top">
+				<?php ob_start(); ?>
 
-         <?php
-         // 코멘트 입출력
-         include_once('./view_comment.php');
-         ?>
+				<?php if ($prev_href || $next_href) { ?>
+				<ul class="bo_v_nb">
+					<?php if ($prev_href) { ?><li><a href="<?php echo $prev_href ?>" class="btn_b03 btn">이전글</a></li><?php } ?>
+					<?php if ($next_href) { ?><li><a href="<?php echo $next_href ?>" class="btn_b03 btn">다음글</a></li><?php } ?>
+				</ul>
+				<?php } ?>
 
-      </article>
-      <!-- } 게시판 읽기 끝 -->
+				<ul class="bo_v_com">
+					<?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b02 btn">수정</a></li><?php } ?>
+					<?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b02 btn" onclick="del(this.href); return false;">삭제</a></li><?php } ?>
+					<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn">글쓰기</a></li><?php } ?>
+					<li><a href="<?php echo $list_href ?>" class="btn_b03 btn">목록</a></li>
+					<?php if ($member['ampmkey'] == 'Y') { ?><li class="btn_view btn"><?=codeToName($code_hide, $view['wr_19'])?><?php } ?>
+				</ul>
+			<?php
+				$link_buttons = ob_get_contents();
+				ob_end_flush();
+			?>
+			</div>
+			<!-- } 게시물 상단 버튼 끝 -->
 
 
-   </section>
+			<?php
+			//include_once(G5_SNS_PATH."/view.sns.skin.php");
+			?>
 
+			<?php
+			// 코멘트 입출력
+			include_once('./view_comment.php');
+			?>
+
+		</article>
+		<!-- } 게시판 읽기 끝 -->
+
+
+	</section>
+   </div>  	
+    <!-- // v-app  -->
 	<!-- 우측 side 영역 -->
 	<?php include(G5_PATH.'/inc/aside.php'); ?>
 </div>
+<script src="<?= CDC_JS_URL ?>/cdcCommon.js?v=<?= CDC_VER ?>"></script>
+<!-- CDC 모듈 -->
+<script src="<?= CDC_JS_URL ?>/read/cdcReadVue.js?v=<?= CDC_VER ?>"></script>
+<script>
+	const viewData = <?php echo json_encode($view) ?>;
+	vm.setupView(viewData);
+</script>
 
 <script>
 <?php if ($board['bo_download_point'] < 0) { ?>

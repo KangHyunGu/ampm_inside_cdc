@@ -41,7 +41,7 @@ if (isset($_POST['wr_content'])) {
     $wr_content = substr(trim($_POST['wr_content']),0,65536);
     $wr_content = preg_replace("#[\\\]+$#", "", $wr_content);
 }
-if ($wr_content == '') {
+if ($bo_table == 'insight' && $wr_content == '') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';
 }
 
@@ -441,7 +441,6 @@ if ($w == '' || $w == 'r') {
                      {$sql_password}
               where wr_id = '{$wr['wr_id']}' ";
     sql_query($sql);
-
     // 분류가 수정되는 경우 해당되는 코멘트의 분류명도 모두 수정함
     // 코멘트의 분류를 수정하지 않으면 검색이 제대로 되지 않음
     $sql = " update {$write_table} set ca_name = '{$ca_name}' where wr_parent = '{$wr['wr_id']}' ";
@@ -789,7 +788,6 @@ run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else{
-    if($bo_table == 'insight_cdc'){echo($redirect_url);} 
-    else {goto_url($redirect_url);}
+   goto_url($redirect_url);
 }
     

@@ -31,6 +31,7 @@ function autosave() {
                 type: "POST",
                 success: function(data){
                     if (data) {
+                        console.log('data : ', data);
                         $("#autosave_count").html(data);
                     }
                 }

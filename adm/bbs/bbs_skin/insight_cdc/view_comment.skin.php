@@ -7,6 +7,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 var char_min = parseInt(<?php echo $comment_min ?>); // 최소
 var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 </script>
+
+<div id="admin_vc">
 <!-- 댓글 시작 { -->
 <section id="bo_vc">
     <h2>댓글<span class="total"><?php echo $view['wr_comment']; ?></span></h2>
@@ -30,7 +32,10 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 		///////////////////////////////////////////////////////////////////////
 		// AMPM 사원인 경우 팀 정보 노출
 		///////////////////////////////////////////////////////////////////////
-		include(G5_PATH.'/inc/_commentWriterInfo.php'); 
+		$mk = get_viewNamecardInfo($bo_table, $comment_id);
+		$nick = $mk['nick'];
+		$mb_images = $mk['mb_images'];
+		$mb_team_text = $mk['mb_team_text'];
 	?>
 
 	<article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
@@ -162,6 +167,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
     </div>
     </form>
 </aside>
+</div>
 
 <script>
 var save_before = '';

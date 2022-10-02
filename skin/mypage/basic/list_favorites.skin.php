@@ -63,12 +63,14 @@ include(G5_PATH.'/inc/top.php');
 				<thead>
 					<tr>
 						<th scope="col">No.</th>
+                  <?php if($member['ampmkey'] == 'Y'){	//마케터 ?>
 						<?php if ($is_checkbox) { ?>
 						<th scope="col">
 							<label for="all_chk" class="sound_only">현재 페이지 게시물 전체</label>
 							<input type="checkbox" id="all_chk">
 						</th>
 						<?php } ?>
+                  <?php } ?>
 						<th scope="col">게시판</th>
 						<th scope="col">구분</th>
 						<?php if($member['ampmkey'] == 'Y'){	//마케터 ?>
@@ -79,8 +81,9 @@ include(G5_PATH.'/inc/top.php');
 						<th scope="col">작성자</th>
 						<?php } ?>
 						<th scope="col">담당자</th>
-						<th scope="col">등록일</th>
-						<th scope="col">조회수</th>
+                  <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일 <i class="fas fa-sort style"></i></a></th>
+						<th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회수 <i class="fas fa-sort style"></i></a></th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -103,6 +106,7 @@ include(G5_PATH.'/inc/top.php');
 						?>
 						</td>
 
+                  <?php if ($member['ampmkey'] == 'Y') {  ?>
 						<?php if ($is_checkbox) { ?>
  						<td class="td_chk">
 							<label for="chk_bn_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
@@ -111,6 +115,7 @@ include(G5_PATH.'/inc/top.php');
 							<input type="hidden" name="wr_id[<?php echo $i; ?>]" value="<?php echo $list[$i]['wr_id']; ?>">
 						</td>
 						<?php } ?>
+                  <?php } ?>
 						<td class="td_board"><a href="<?php echo get_pretty_url($list[$i]['bo_table']); ?>"><?php echo $bo_subject ?></a></td>
 						<td class="td_category">
                             <?php if ($list[$i]['ca_name']) { ?>
@@ -128,7 +133,7 @@ include(G5_PATH.'/inc/top.php');
                                 <?php echo cut_str(get_text($wr_subject),30) ?>
                             </a>
                             <?php if ($list[$i]['icon_new']){ ?>
-                                <span class="new_co_icon">N<span class="sound_only">새글</span></span>
+                                <span class="new_icon">N<span class="sound_only">새글</span></span>
                             <?php } ?>
 							<?php if ($list[$i]['comment_cnt']) { ?>
 								<span><?=$list[$i]['comment_cnt']?></span>
@@ -160,23 +165,26 @@ include(G5_PATH.'/inc/top.php');
 							<?php if ($member['ampmkey'] == 'Y') {  ?>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택숨김" onclick="document.pressed=this.value">선택숨김</button></li>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택노출" onclick="document.pressed=this.value">선택노출</button></li>
-						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value">선택삭제</button></li>
+                  <li><button class="btn_b02" type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value">선택삭제</button></li>
 							<?php }  ?>
 						<?php }  ?>
+					</ul>
 
- 						<?php if ($member['ampmkey'] == 'Y') {  ?>
+               <ul class="btn_bo_adm">
+                  <?php if ($member['ampmkey'] == 'Y') {  ?>
 						<li><a href="<?=G5_BBS_URL?>/write.php?bo_table=insight" class="btn_b04">인사이트 글쓰기</a></li>
                         <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=video" class="btn_b04">영상교육 글쓰기</a></li>
                         <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=reference" class="btn_b04">레퍼런스 글쓰기</a></li>
 						<?php }else{  ?>
 						<li><a href="<?=G5_BBS_URL?>/write.php?bo_table=qna" class="btn_b04">질문답변 글쓰기</a></li>
 						<?php }  ?>
-					</ul>
+               </ul>
 
 				</div>
 
 			</div> 
 			<!-- } 검색, 글쓰기 버튼 -->
+         
 
 			<!-- 페이지 -->
 			<?php echo $write_pages;  ?>
@@ -210,7 +218,7 @@ include(G5_PATH.'/inc/top.php');
 				<option value="wr_18,1"<?php echo get_selected($sfl, 'wr_18,1'); ?>>담당자</option>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input frm_input required" size="15" maxlength="20">
+            <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>"  id="stx" class="sch_input frm_input " size="15" maxlength="20">
             <input type="submit" value="검색" class="sch_btn">
             </form>
 			</fieldset>   

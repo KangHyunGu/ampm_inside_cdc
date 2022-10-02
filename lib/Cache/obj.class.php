@@ -7,7 +7,6 @@ Class G5_object_cache {
     public $etcs = array();
 
 	function get($type, $key, $group ='default') {
-
         switch ($type) {
             case 'bbs':
                 $datas = $this->writes;

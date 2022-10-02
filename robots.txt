@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: http://inside.ampm.co.kr/sitemap.xml
+#DaumWebMasterTool:a0aec23d1d8a8217dea596fa73ce51b1ec4a7c223627b00cad9d27b2f512031f:20lZ14Tya1JsNiR4iDeSmA==

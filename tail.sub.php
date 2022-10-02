@@ -16,8 +16,8 @@ if (G5_IS_MOBILE) {	//모바일인 경우
 
 <?php
 }else {	//PC인 경우
+	if($bodyok){
 ?>
-
 
 <footer id="footer">
    <div class="wrapper">
@@ -39,6 +39,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
 
 
 <?php
+	}
 }
 ?>
 

@@ -137,7 +137,7 @@ if(($total_count < 1) && ($sear_mkcheck != '') && ($stx == '')){
                 </h2>
                 <div class="main-link">
                     <a href="#section3" class="move">'우리'와 맞는 마케터 찾기</a>
-                    <a href="<?=G5_URL?>/sub/sub5-1.php<?=$teamLinkPara?>" target="_blank">마케터가 되고 싶다면?</a>
+                    <a href="<?=G5_AMPM_URL?>/sub/sub5-1.php<?=$teamLinkPara?>" target="_blank">마케터가 되고 싶다면?</a>
                 </div>
             </div>
 

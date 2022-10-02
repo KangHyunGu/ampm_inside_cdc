@@ -1,0 +1,695 @@
+ /*-- 정보수정 -- */
+
+ .register {
+    padding: 30px 0 !important;
+ }
+ 
+ .register .wrap {
+    width: 100%;
+    padding: 0 20px ;
+ }
+
+ .register .register_title {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+ }
+
+ .register p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+ }
+
+
+ /*-- 회원가입-정보입력 --*/
+ #register_form {
+    margin: 20px 0 0;
+ }
+
+ #register_form li {
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    list-style: none;
+ }
+
+ #register_form li:last-child {
+    border-bottom: 0;
+ }
+
+
+ #register_form li label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: 500;
+ }
+
+ #register_form li input[type="text"],
+ #register_form li input[type="password"],
+ #register_form li input[type="file"] {
+    padding: 0 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    line-height: 40px;
+    height: 40px;
+    background: none !important;
+    font-size: 14px;
+    color: #888;
+ }
+
+ #register_form li .s_input {
+    display: flex;
+ }
+
+ #register_form li.marketer_img .img{
+    display: flex;
+ }
+
+ #register_form li.marketer_img img{
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
+ }
+
+ #register_form li.marketer_img .img .box{
+    background-color: #f8f8f8;
+    padding: 5px;
+    margin-right: 10px;
+ }
+
+ #register_form li.marketer_img .s_notice{
+    min-width: calc(100% - 100px);
+    max-width: 100%;
+ }
+
+ #register_form .s_notice {
+   margin: 3px 0 0;
+ }
+
+ #register_form .s_notice input{
+    display: flex;
+    align-items: center;
+    padding-top: 10px !important;
+  }
+
+ #register_form .s_notice .tooltips {
+    font-size: 13px;
+    color: #ff254e;
+    margin-top: 5px;
+    line-height: 16px;
+}
+
+#register_form li .align{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+ }
+
+ #register_form li .align .chk_option{
+    width: 50%;
+    margin-bottom: 5px;
+ }
+
+.reg_mb_img_file input{
+    display: flex;
+    align-items: center;
+    align-content: space-around;
+    padding-top: 10px !important;
+}
+
+ .marketer .s_notice2 {
+    background: #fefbef;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+#register_form .option {
+    border-top: 1px solid #888;
+    position: relative;
+    display: flex;
+    padding: 20px 0 0;
+}
+
+#register_form .option .option_box {
+    margin-left: auto;
+}
+
+#register_form .option .option_box span {
+    font-size: 14px;
+    color: #888;
+}
+
+.register .btn_confirm {
+    margin: 20px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.register .btn_confirm a{
+    width: 48%;
+    height: 46px;
+    line-height: 46px;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0;
+    border-radius: 0;
+    border: 1px solid #ddd;
+}
+
+.register .btn_submit {
+    width: 48%;
+    height: 46px;
+    line-height: 46px;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0;
+    border-radius: 0;
+    margin-left: auto;
+    background: #333;
+    color: #fff;
+}
+
+.register .register_step {
+    margin: 30px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+ }
+ 
+ .register .register_step .step_box {
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    width: 33.33333%;
+    text-align: center;
+    border-right: 1px solid #ddd;
+ }
+ 
+ .register .register_step .step_box:nth-child(1) {
+    border-radius: 8px 0 0 8px;
+ }
+ 
+ .register .register_step .step_box:nth-last-child() {
+    border-right: 0;
+    border-radius: 0 8px 8px 0;
+ }
+ 
+ .register .register_step .step_box.active {
+    background: #1acb86;
+    color: #fff;
+    font-weight: 600;
+ }
+ 
+ .register .register_step .step_box.active:after {
+    line-height: 0;
+    font-size: 18px;
+    display: block;
+    content: "▼";
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%,0);
+    color: #1acb86;
+ }
+
+ #register_form .ctf_btn button {
+    height: 40px;
+    width: 80px;
+    margin-left: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+/*-- 회원가입-가입완료 --*/
+.register_result {
+    padding: 60px 0 0;
+    position: relative;
+    text-align: center;
+ }
+ .register_result h1{
+    font-size: 24px;
+ }
+ .register_result h1 i {
+    border-radius: 100%;
+    background: #1acb86;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    margin-bottom: 10px;
+ }
+ 
+ .register_result .result_txt {
+    line-height: 22px;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 10px;
+    background: #f5f5f5;
+ }
+ 
+ .btn_confirm .btn_submit {
+    margin-left: auto;
+    background: #333;
+    color: #fff;
+ }
+ 
+ /*-- 회원가입-ID/PW 찾기 --*/
+.lost_pw {
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
+    padding: 10% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ 
+ .register .new_win_con {
+    margin: 40px 0 0;
+ }
+ 
+ .register #info_fs {
+    padding: 20px;
+    border: 0;
+    background: #f5f5f5;
+ }
+ 
+ .register #info_fs input {
+    font-weight: 300;
+    font-size: 16px;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
+    color: #aaa;
+    padding: 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff !important;
+ }
+ 
+ #captcha_audio{
+    display: none !important;
+ }
+ #register_form_2 #captcha { 
+    display: flex;
+    border: 0;
+    flex-wrap: wrap;
+    position: relative;
+    margin-top: 20px;
+ }
+ 
+ #register_form_2 #captcha label {
+    display: none;
+ }
+ 
+ #captcha #captcha_key {
+    margin: 0 0 0 35px;
+    width: 479px;
+    height: 39px;
+    border: 1px solid #ddd;
+ }
+
+ #register_form_2 #captcha #captcha_img{
+    width: 86px;
+ }
+
+ #register_form_2 #captcha input{
+    width: calc(100% - 136px);
+    margin-left: auto;
+ }
+
+ #captcha #captcha_reload {
+   overflow: visible;
+ }
+
+ #captcha #captcha_reload span {
+   position: absolute;
+   top: -20px;
+   left: 0;
+   width: 40px;
+   height: 40px;
+   background-size: 40px 40px;
+}
+ #captcha #captcha_info {
+    display: block;
+    margin: 5px 0 5px;
+    font-size: 14px;
+    letter-spacing: -0.1em;
+}
+
+ /*-- 로그인 페이지 --*/
+#mb_login {
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
+    padding: 10% 8%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ 
+ #mb_login h1 {
+    font-size: 24px;
+    text-align: center;
+ }
+ 
+ #mb_login .notice {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+ }
+ 
+ #mb_login .tab_wrapper {
+    margin: 30px 0 0;
+ }
+ 
+ #mb_login .login_tab {
+     display: flex;
+    box-sizing: border-box;
+ }
+ 
+ #mb_login .login_tab li {
+    background: #f8f8f8;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #888;
+    box-sizing: border-box;
+    text-align: center;
+    width: 50%;
+    height: 50px;
+    line-height: 50px;
+     color: #222;
+     cursor: pointer;
+    font-size: 16px;
+ }
+ 
+ #mb_login .login_tab li.on {
+    border-top: 1px solid #888;
+    border-left: 1px solid #888;
+    border-right: 1px solid #888;
+    border-bottom: 0;
+     background: #fff;
+    font-weight: 500;
+ }
+ 
+ #mb_login .login_tab li:nth-child(1) {
+    border-radius: 5px 0 0 0;
+ }
+ 
+ #mb_login .login_tab li:nth-child(2) {
+    border-radius: 0 5px 0 0;
+ }
+ 
+ #mb_login .con_box {
+     display: none;
+ }
+ 
+ #mb_login .con_box.on {
+     display: inherit;
+ }
+ 
+ #login_fs {
+    border: 0;
+    margin: 20px 0 0;
+ }
+ 
+ #login_fs .frm_input {
+    font-weight: 300;
+    font-size: 16px;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
+    color: #aaa;
+    padding: 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: none !important;
+ }
+ 
+ #login_fs #login_id {
+    margin-bottom: 10px;
+ }
+ 
+ #login_fs .btn_submit {
+    width: 100%;
+    height: 50px;
+    margin: 20px 0 0;
+    border-radius: 8px;
+    background: #1acb86;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+ }
+ 
+ #login_fs #login_info {
+    display: flex;
+    justify-content: center;
+ }
+ 
+ #login_fs #login_info .login_if_auto .selec_chk {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #ddd;
+ }
+ 
+ #login_fs #login_info .login_if_auto label {
+    color: #888;
+    font-size: 16px;
+    position: relative;
+    top: -1px;
+    left: 1px;
+    font-weight: 300;
+ }
+ 
+ #login_fs #login_info .login_if_lpl a {
+    position: relative;
+    font-size: 15px;
+    color: #888;
+    font-weight: 300;
+ }
+ 
+ #login_fs #login_info .login_if_lpl .join::before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    width: 1px;
+    height: 14px;
+    background: #dcdcdc;
+    margin: 0 4px;
+    top: 2px;
+ }
+ 
+ #sns_login .sns-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+ 
+ #sns_login .sns-wrap div {
+    width: 100%;
+    height: 42px;
+    text-align: center;
+ }
+ 
+ #sns_login .sns-wrap div:nth-of-type(2n) {
+    margin-top: 5px;
+ }
+ 
+ #sns_login .sns-wrap a {
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #fff;
+    line-height: 42px;
+    display: block;
+    width: 100%;
+    height: 100%;
+ }
+ 
+ #sns_login .sns-wrap .sns-naver,
+ #sns_register .sns-wrap .sns-naver {
+    background: #1ec800;
+ }
+ 
+ #sns_login .sns-wrap .sns-kakao,
+ #sns_register .sns-wrap .sns-kakao {
+    background: #fee500;
+    color: #381e1f;
+ }
+ 
+ #sns_login .sns-wrap .sns-facebook,
+ #sns_register .sns-wrap .sns-facebook {
+    background: #3959a0;
+ }
+ 
+ #sns_login .sns-wrap .sns-google,
+ #sns_register .sns-wrap .sns-google {
+    background: #ea4335;
+ }
+ 
+ #sns_login .sns-wrap a img {
+    position: relative;
+    top: -1px;
+    margin-right: 3px;
+ }
+ 
+ 
+
+/*-- 회원가입-SNS 기존계정 연동 --*/
+
+ #sns-link-pnl .connect-fg .connect-title {
+   font-size: 26px;
+   font-weight: bold;
+   text-align: center;
+}
+
+#sns-link-pnl .connect-fg .connect-desc {
+   margin:20px 0;
+   font-size: 14px;
+   padding:15px;
+   border:1px solid #d6e9c6;
+   background:#dff0d8;
+   color:#333;
+}
+
+#sns-link-pnl #login_fs {
+   margin:0 auto;
+   width:100%;
+   text-align:left
+}
+
+#sns-link-pnl #login_fs label {
+   display:block;
+   font-size:16px;
+   color:#333;
+   margin:10px 0 5px 0;
+}
+
+#sns-link-pnl #login_fs .login_submit {
+   width:100%;
+   font-size:16px;
+   margin:20px auto 0;
+   font-weight:bold;
+   cursor:pointer;
+   display:block
+}
+
+#sns-link-pnl .connect-close {
+   position:absolute;
+   top:20px;
+   right:20px;
+   margin:0;
+   padding:0;
+   width:30px;
+   height:30px;
+   border:0;
+   background:transparent;
+   color:#383838;
+   cursor:pointer;
+   font-size:30px
+}
+
+#sns-link-pnl .connect-close .txt {
+   position:absolute;
+   line-height:0;
+   font-size:0;
+   overflow:hidden
+}
+
+/*-- 회원가입-PW 한번더 입력 --*/
+#mb_confirm{
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
+    padding: 10% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mb_confirm h1{
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+}
+
+#mb_confirm p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+}
+
+#mb_confirm strong {
+    display: block;
+    font-weight: 500;
+    font-size: 18px;
+ }
+ 
+ #mb_confirm fieldset {
+    margin: 40px 0 0;
+    border: 0;
+    background: #f5f5f5;
+    padding: 20px;
+ }
+ 
+ #mb_confirm fieldset .field_line {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+ }
+ 
+#mb_confirm fieldset .field_line div {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+}
+
+#mb_confirm fieldset .field_line div .confirm_id{
+    margin-right: 5px;
+}
+
+ #mb_confirm fieldset .field_line input {
+    font-weight: 300;
+    font-size: 16px;
+    width: 100%;
+    height: 50px;
+    color: #aaa;
+    padding: 0 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff !important;
+ }
+ 
+ #mb_confirm fieldset .btn_submit {
+    display: block;
+    width: 50%;
+    margin: 20px auto 0;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background: #333;
+    color: #fff;
+    font-size: 16px;
+ }
+ 

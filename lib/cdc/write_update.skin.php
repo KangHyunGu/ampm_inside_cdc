@@ -4,6 +4,9 @@
 //echo json_encode($_POST);
 //print_r2($_POST);
 // DB 처리 default INSERT 처리(해당 게시글을 수정하지만 CDC 관련 정보가 없는경우가 존재)
+
+//2022.09.29 파일 처리 개선 필요(처리시간 지연 문제 발생)
+// 임시 bf_source 개선 완료 후 bf_file로 변경 예정
 $cdc_sql = "insert into {$g5['cdc_table']} set bo_table = '${bo_table}', wr_id = '$wr_id', {fieldSet}";
 if($w == 'u'){
     // 해당 게시글에 CDC 관련 정보 존재유무 확인 후 update 처리(error 확인 필요)
@@ -37,7 +40,9 @@ $commonSql = "is_youtube = '{$_POST['is_youtube']}',
                     wr_playlist_link = '{$_POST['wr_playlist_link']}',
                     wr_cdc_content = '$wr_content',
                     wr_cdc_title = '$wr_subject',
-                    wr_cdc_file = '$file_size'";
+                    wr_cdc_file = '$file_size',
+                    wr_mhash = '{$_POST['wr_mhash']}',
+                    wr_shash = '{$_POST['wr_shash']}'";
                     
     $cdc_sql = str_replace("{fieldSet}", $commonSql, $cdc_sql);
     sql_query($cdc_sql);
@@ -88,8 +93,9 @@ $commonSql = "is_youtube = '{$_POST['is_youtube']}',
  if($w == 'u' && isset($_FILES['cdc_remove_files']['name'])){
     for ($i=0; $i<count($_FILES['cdc_remove_files']['name']); $i++){
         $bf_file = $_FILES['cdc_remove_files']['name'][$i];
-        $row = sql_fetch(" select * from {$g5['cdc_file']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_file = '{$bf_file}' ");
-      
+
+        $row = sql_fetch(" select * from {$g5['cdc_file']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_source = '{$bf_file}' ");
+
         $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
 
         if( file_exists($delete_file) ){
@@ -117,7 +123,7 @@ $commonSql = "is_youtube = '{$_POST['is_youtube']}',
              bf_datetime = '".G5_TIME_YMDHIS."'
         where bo_table = '{$bo_table}'
                 and wr_id = '{$wr_id}'
-                and bf_file = '{$bf_file}' ";
+                and bf_source = '{$bf_file}' ";
         sql_query($sql);
     }
  }
@@ -139,7 +145,7 @@ $commonSql = "is_youtube = '{$_POST['is_youtube']}',
          if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
              $upload[$i]['del_check'] = true;
 
-             $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+             $row = sql_fetch(" select * from {$g5['cdc_file']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 
              $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
              if( file_exists($delete_file) ){

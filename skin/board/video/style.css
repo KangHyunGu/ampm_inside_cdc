@@ -57,6 +57,45 @@ input[type='radio']:checked {
    background: url(../../../images/sel-cate.png) 50% 50% no-repeat;
 }
 
+.inner .media ul li {
+   display: inline-block;
+}
+
+.inner .media ul li a {
+   display: block;
+   width: 20px;
+   height: 20px;
+}
+
+.inner .media ul .instagram a {
+   background: url(/images/instagram.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .instagram.on a {
+   background: url(/images/instagram_on.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .blog a {
+   background: url(/images/blog.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .blog.on a {
+   background: url(/images/blog_on.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .youtube a {
+   background: url(/images/youtube.png) no-repeat;
+   background-size: 100%;
+}
+
+.inner .media ul .youtube.on a {
+   background: url(/images/youtube_on.png) no-repeat;
+   background-size: 100%;
+}
 
 /* 게시판 버튼 */
 /* 목록 버튼 */
@@ -317,14 +356,16 @@ input[type='radio']:checked {
 
 #gall_ul .gall_li .gall_img img {
    width: 100%;
+   height: 100%;
 }
 
 #gall_ul .gall_li .gall_text_href {
    margin: 10px 0 6px 0;
    min-height: 60px;
+   position: relative;
 }
 
-#gall_ul .gall_li .gall_text_href span {
+#gall_ul .gall_li .gall_text_href span.category {
    display: inline-block;
    padding: 3px 5px;
    background: #ff4172;
@@ -332,14 +373,26 @@ input[type='radio']:checked {
 }
 
 #gall_ul .gall_li .gall_text_href span.view {
+   position: absolute;
    background: #efefef;
    color: #333;
+   top: 0;
+   right: 0;
+}
+
+#gall_ul .gall_li .gall_text_href span.view span {
+   padding: 3px 5px;
 }
 
 #gall_ul .gall_li .gall_text_href p {
-   margin: 5px 0 0;
+   margin: 6px 0 0;
    font-weight: 500;
    font-size: 15px;
+}
+
+#gall_ul .gall_li .gall_text_href p img {
+   position: relative;
+   top: 2px;
 }
 
 #gall_ul .gall_li .gall_text_href .cnt_cmt {

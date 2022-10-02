@@ -69,18 +69,36 @@ if (isset($next['wr_id']) && $next['wr_id']) {
 $write_href = '';
 if ($member['mb_level'] >= $board['bo_write_level']) {
     $write_href = short_url_clean(G5_ADMBBS_URL.'/write.php?bo_table='.$bo_table);
+
+	///////////////////////////////////////////////////////////////////
+	//인사이트 영상교육 레퍼런스 AMPM 사원만 등록  - feeris
+	///////////////////////////////////////////////////////////////////
+	if($is_admin !='super' && $member['ampmkey'] != 'Y' && ($bo_table == 'insight' || $bo_table == 'video' || $bo_table == 'reference')){ // 일반회원
+		$write_href = '';
+	}
 }
 
 // 답변 링크
 $reply_href = '';
 if ($member['mb_level'] >= $board['bo_reply_level']) {
     $reply_href = short_url_clean(G5_ADMBBS_URL.'/write.php?w=r&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
+
+	///////////////////////////////////////////////////////////////////
+	//인사이트 영상교육 레퍼런스 AMPM 사원만 등록  - feeris
+	///////////////////////////////////////////////////////////////////
+	if($is_admin !='super' && $member['ampmkey'] != 'Y' && ($bo_table == 'insight' || $bo_table == 'video' || $bo_table == 'reference')){ // 일반회원
+		$reply_href = '';
+	}
 }
 
 // 수정, 삭제 링크
 $update_href = $delete_href = '';
 // 로그인중이고 자신의 글이라면 또는 관리자라면 비밀번호를 묻지 않고 바로 수정, 삭제 가능
-if (($member['mb_id'] && ($member['mb_id'] === $write['mb_id'])) || $is_admin) {
+
+///////////////////////////////////////////////////////////////////
+//AMPM 사원도 관리권한이 있어 is_admin 구체적 명시 - feeris
+///////////////////////////////////////////////////////////////////
+if (($member['mb_id'] && ($member['mb_id'] === $write['mb_id'])) || ($is_admin =='super' || $is_admin =='manager' || $is_admin =='ma_admin')) {
     $update_href = short_url_clean(G5_ADMBBS_URL.'/write.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
     set_session('ss_delete_token', $token = uniqid(time()));
     $delete_href = G5_ADMBBS_URL.'/delete.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;token='.$token.'&amp;page='.$page.urldecode($qstr);
@@ -153,8 +171,8 @@ if ($board['bo_use_signature'] && $view['mb_id']) {
 // 담당자 변경 시에 노출 ID,이름을 변경하여 적용한다.
 ///////////////////////////////////////////////////////////////////////
 if($view['wr_17']){
-	$view['mb_id'] = $view['wr_17'];
-	$view['wr_name'] = $view['wr_18'];
+	//$view['mb_id'] = $view['wr_17'];
+	//$view['wr_name'] = $view['wr_18'];
 	$view['name'] = $view['wr_18'];
 }
 

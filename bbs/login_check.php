@@ -91,11 +91,12 @@ if($mb_ampmkey && $mb_ampmkey == 'G'){
 
 	//인트라넷 사원 로그인 시 프로필정보 갱신 - 상하직하관계를 구성하기위해
 	$md = get_marketer($mb_id);
-	if($md['mb_id']){
+	$mk = get_marketer_detail($mb_id);
+	if($mk['mb_id']){
 		$sql= " update g5_marketer_detail set mb_part = '{$md['mb_part']}', mb_team = '{$md['mb_team']}', mb_post = '{$md['mb_post']}' where mb_id = '{$md['mb_id']}' ";
 		sql_query($sql);
 	}else{
-		$sql= " insert into g5_marketer_detail  set mb_id = '{$md['mb_id']}', mb_part = '{$md['mb_part']}', mb_team = '{$md['mdb_team']}', mb_post = '{$md['mb_post']}' ";
+		$sql= " insert into g5_marketer_detail  set mb_id = '{$md['mb_id']}', mb_part = '{$md['mb_part']}', mb_team = '{$md['mb_team']}', mb_post = '{$md['mb_post']}' ";
 		sql_query($sql);
 	}
 }

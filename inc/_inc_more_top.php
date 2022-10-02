@@ -20,7 +20,7 @@ $cn_favo = get_favoMarketer($member['mb_id'], $mk_id);
 /////////////////////////////////////////////////////////////////////////
 $go_reqeust_edit = ($is_member)?G5_BBS_URL.'/write.php?bo_table=request&mk_id='.$mk_id:G5_BBS_URL.'/login.php?url='.$uri;
 $go_content		 = ($is_member)?G5_BBS_URL.'/mypage.php?go_table=more&view=w&mk_id='.$mk_id:G5_BBS_URL.'/login.php?url='.$uri;
-$go_qna_edit	 = ($is_member)?G5_BBS_URL.'/write.php?bo_table=qna&mk_id='.$mk_id:G5_BBS_URL.'/login.php?url='.$uri;
+$go_qna_edit	 = G5_BBS_URL.'/write.php?bo_table=qna&mk_id='.$mk_id;
 $go_marketer	 = G5_URL.'/ae-'.$mk_id.'/member/';
 ?>
 		<!-- 컨텐츠더보기 네임카드 -->

@@ -13,7 +13,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
 
 <header id="m_header">
     <div class="logo">
-        <a href="<?=G5_MARKETER_URL?>"></a>
+        <a href="<?=G5_URL?>"></a>
     </div>
 </header>
 
@@ -25,7 +25,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
     <div id="mk-gnb">
         <div class="wrap">
             <div class="logo">
-                <a href="<?=G5_MARKETER_URL?>"><img src="<?=G5_MARKETER_URL ?>/images/logo-mkt.png"></a>
+                <a href="<?=G5_URL?>"><img src="<?=G5_URL ?>/images/logo.png"></a>
             </div>
             <nav>
                 <ul class="gnb">
@@ -34,7 +34,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
                 </ul>
             </nav>
             <div class="other-link">
-                <a href="<?=G5_URL?>/sub/sub2-2-1.php<?=$teamLinkPara?>" target="_blank">‘우리’에게 맞는 광고 매체는?</a>
+                <a href="http://ampm.co.kr/sub/sub2-2-1.php<?=$teamLinkPara?>" target="_blank">‘우리’에게 맞는 광고 매체는?</a>
             </div>
         </div>
     </div>

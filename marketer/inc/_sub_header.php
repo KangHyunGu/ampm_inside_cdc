@@ -21,8 +21,11 @@ if (G5_IS_MOBILE) {	//모바일인 경우
     </div>
 
     <div class="head-nav">
+      <!--
          <a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>" class="logo">
-            <img src="<?=G5_MARKETER_URL?>/images/logo-mkt.png" title="로고">
+-->
+         <a href="<?=G5_URL?>" class="logo">
+            <img src="<?=G5_URL?>/images/logo.png" title="로고">
         </a>
         <div class="menu_icon">
             <span></span>
@@ -87,7 +90,10 @@ if (G5_IS_MOBILE) {	//모바일인 경우
     <div class="head-nav">
         <div class="wrap">
             <div class="logo">
-                <a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>"><img src="<?=G5_MARKETER_URL ?>/images/logo-mkt.png"></a>
+               <!--
+                <a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>"><img src="<?=G5_URL ?>/images/logo.png"></a>
+                  -->
+                  <a href="<?=G5_URL?>"><img src="<?=G5_URL ?>/images/logo.png"></a>
             </div>
             <ul class="gnb">
                 <li><a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>">마케터 소개</a></li>

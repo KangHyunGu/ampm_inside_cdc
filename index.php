@@ -80,19 +80,6 @@ include(G5_PATH.'/inc/top.php');
 					<?php include_once(G5_PATH.'/inc/_marketerInfo.php'); ?>
 					<?php echo latest_maketer(8); ?>
 
-                    <!-- 클릭시 해당 마케터 페이지로 이동 -->
-					<!--
-					<a href="#">
-                        <div class="mkt">
-                            <div class="mkt_img">
-                                <img src="<? G5_URL ?>/images/profile_ex.jpg" alt="마케터 프로필 예시">
-                            </div>
-                            <div class="mkt_name">
-                                김가영
-                            </div>
-                        </div>
-                    </a>
-					-->
                  </div>
                 <div class="pager">
                     <div class="prev pager_btn">

@@ -12,6 +12,9 @@ $mb_images = $mk['mb_images'];
 $mb_team_text = $mk['mb_team_text'];
 $mb_slogan = $mk['mb_slogan'];
 
+$mb_tel = $mk['mb_tel'];
+$mb_email = $mk['mb_email'];
+
 //마케터가 즐겨찾기에 포함되었는가?
 $favo = get_favoMarketer($member['mb_id'], $mk_id);
 
@@ -21,7 +24,7 @@ $favo = get_favoMarketer($member['mb_id'], $mk_id);
 /////////////////////////////////////////////////////////////////////////
 $go_reqeust_edit	= ($is_member)?G5_BBS_URL.'/write.php?bo_table=request&mk_id='.$mk_id:G5_BBS_URL.'/login.php?url='.$uri;
 $go_content			= ($is_member)?G5_BBS_URL.'/mypage.php?go_table=more&view=w&mk_id='.$mk_id:G5_BBS_URL.'/login.php?url='.$uri;
-$go_qna_edit		= ($is_member)?G5_BBS_URL.'/write.php?bo_table=qna&mk_id='.$mk_id:G5_BBS_URL.'/login.php?url='.$uri;
+$go_qna_edit		= G5_BBS_URL.'/write.php?bo_table=qna&mk_id='.$mk_id;
 $go_marketer		= G5_URL.'/ae-'.$mk_id.'/member/';
 ?>
 <?php
@@ -39,12 +42,15 @@ if (G5_IS_MOBILE) {	//모바일인 경우
                 <div class="nc_img">
                     <?php echo $mb_images; ?>
                 </div>
-            <div class="nc_info">
-                <!-- 마케터 문구 -->
-                <div class="nc_comm"><?php echo get_text($mb_slogan); ?></div>
-                <!-- 마케터 이름 -->
-                <h3><?php echo get_text($nick); ?></h3>
-            </div>
+                <div class="nc_info">
+                    <!-- 마케터 문구 -->
+                    <div class="nc_comm"><?php echo get_text($mb_slogan); ?></div>
+                    <!-- 마케터 이름 -->
+                    <h3><?php echo get_text($nick); ?></h3>
+                    <!-- 마케터 전화번호 / 이메일 -->
+                    <h6><b>Contact.</b> <span><!--전화번호--><?=$mb_tel?></span> <span class="mail"><!--이메일--><?=$mb_email?></span></h6>
+
+                </div>
 
             </div>
             <div class="nc_btn">
@@ -59,12 +65,14 @@ if (G5_IS_MOBILE) {	//모바일인 경우
                 <p>Written By. <?php echo get_text($nick); ?></p>
 
         </div>
+		<!-- 일반회원만 즐겨찾기 기능 사용 -->
+		<?php if($member['ampmkey'] != 'Y'){	?>
         <div class="bookmark">
-                <!-- 즐겨찾기 전 -->
-                <button class="bm-btn"><i class="fas fa-star <?=($favo['cnt'])?'bookmark_af':''?>"></i></button>
-
-                <!-- 즐겨찾기 후 boookmark_af 클래스 추가 -->
+			<!-- 즐겨찾기 전 -->
+			<button class="bm-btn"><i class="fas fa-star <?=($favo['cnt'])?'bookmark_af':''?>"></i></button>
+			<!-- 즐겨찾기 후 boookmark_af 클래스 추가 -->
         </div>
+		<?php } ?>
     </div>
 
 <?php
@@ -82,6 +90,8 @@ if (G5_IS_MOBILE) {	//모바일인 경우
                 <div class="nc_comm"><?php echo get_text($mb_slogan); ?></div>
                 <!-- 마케터 이름 -->
                 <h3><?php echo get_text($nick); ?></h3>
+                <!-- 마케터 전화번호 / 이메일 -->
+                <h5><b>Contact.</b> <span><!--전화번호--><?=$mb_tel?></span> <span class="mail"><!--이메일--><?=$mb_email?></span></h5>
 
                 <div class="nc_btn">
                     <ul>

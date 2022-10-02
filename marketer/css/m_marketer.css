@@ -264,9 +264,9 @@ select {
 }
 
 #m_header .logo{
-    width: 120px;
+    width: 160px;
     height: 100%;
-    background: url(/marketer/images/logo-mkt.png) no-repeat center;
+    background: url(/images/logo.png) no-repeat center;
     background-size: contain;
     margin: 0 !important;
 }

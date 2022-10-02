@@ -51,7 +51,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $ss_name = 'ss_secret_comment_'.$bo_table.'_'.$list[$i]['wr_id'];
 
         if(!get_session($ss_name))
-            $list[$i]['content'] = '<a href="'.G5_BBS_URL.'/password.php?w=sc&amp;bo_table='.$bo_table.'&amp;wr_id='.$list[$i]['wr_id'].$qstr.'" class="s_cmt">댓글내용 확인</a>';
+            $list[$i]['content'] = '<a href="'.G5_ADMBBS_URL.'/password.php?w=sc&amp;bo_table='.$bo_table.'&amp;wr_id='.$list[$i]['wr_id'].$qstr.'" class="s_cmt">댓글내용 확인</a>';
         else {
             $list[$i]['content'] = conv_content($row['wr_content'], 0, 'wr_content');
             $list[$i]['content'] = search_font($stx, $list[$i]['content']);
@@ -77,7 +77,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
             if ($row['mb_id'] === $member['mb_id'] || $is_admin)
             {
                 set_session('ss_delete_comment_'.$row['wr_id'].'_token', $token = uniqid(time()));
-                $list[$i]['del_link']  = G5_BBS_URL.'/delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
+                $list[$i]['del_link']  = G5_ADMBBS_URL.'/delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
                 $list[$i]['is_edit']   = true;
                 $list[$i]['is_del']    = true;
             }
@@ -85,7 +85,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         else
         {
             if (!$row['mb_id']) {
-                $list[$i]['del_link'] = G5_BBS_URL.'/password.php?w=x&amp;bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;page='.$page.$qstr;
+                $list[$i]['del_link'] = G5_ADMBBS_URL.'/password.php?w=x&amp;bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;page='.$page.$qstr;
                 $list[$i]['is_del']   = true;
             }
         }
@@ -121,8 +121,8 @@ else
     $comment_max = (int)$board['bo_comment_max'];
 }
 
-$comment_action_url = https_url(G5_BBS_DIR)."/write_comment_update.php";
-$comment_common_url = short_url_clean(G5_BBS_URL.'/board.php?'.clean_query_string($_SERVER['QUERY_STRING']));
+$comment_action_url = https_url(G5_ADMBBS_DIR)."/write_comment_update.php";
+$comment_common_url = short_url_clean(G5_ADMBBS_URL.'/board.php?'.clean_query_string($_SERVER['QUERY_STRING']));
 
 include_once($board_skin_path.'/view_comment.skin.php');
 

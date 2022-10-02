@@ -32,7 +32,9 @@ include(G5_MARKETER_PATH.'/inc/_marketer_info.php');
 ////////////////////
 $bo_table = 'video';
 $write_table = 'g5_write_'.$bo_table;
-$mk_sql_search = " ( mb_id = '{$utm_member}' OR mb_id = 'ampm' )";
+
+//$mk_sql_search = " ( mb_id = '{$utm_member}' OR mb_id = 'ampm' )";
+$mk_sql_search = " ( wr_17 = '{$utm_member}' OR mb_id = 'ampm' )";
 
 //////////////////////////////////////////////
 //공통자료 비노출 찾아서 제외하기

@@ -422,7 +422,8 @@
 
 .main_video .type_video .video_thumbnail img {
    width: 100%;
-   height: 100%;
+   position: relative;
+   top: -20.2px;
 }
 
 .main_video .type_video .con_title {
@@ -1735,6 +1736,13 @@ html.remodal-is-locked {overflow-y:scroll !important}
    border-radius: 3px;
 }
 
+i.style {
+   position: relative;
+   top: -1px;
+   font-size: 11px;
+   color: #909090;
+}
+
 .bt_wrap {
    margin: 10px 0 0;
    display: flex;
@@ -2010,388 +2018,6 @@ html.remodal-is-locked {overflow-y:scroll !important}
 }
 
 
-/*-- 마케터 조회 모달 css --*/
-#mkt-modal {
-   display: none;
-   width: 100%;
-   height: 100vh;
-   position: fixed;
-   background: rgba(0,0,0,0.4);
-   z-index: 101;
-   top: 0;
-   left: 0;
-}
-
-#mkt-modal .content{
-   padding: 40px;
-   width: 700px;
-   height: 560px;
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%,-50%);
-   background: #fff;
-   overflow-y: scroll;
-}
-
-#mkt-modal .content::-webkit-scrollbar {
-   width: 10px;
-   background: #fff;
-}
-
-#mkt-modal .content::-webkit-scrollbar-thumb {
-   background: #1acb86;
-   border-radius: 6px;
-}
-
-#mkt-modal h1 {
-   font-size: 26px;
-   font-weight: 700;
-}
-
-#mkt-modal h1 span {
-   font-weight: 300;
-}
-
-#mkt-modal .close-btn {
-   position: absolute;
-   top: 40px;
-   right: 40px;
-   font-size: 20px;
-   font-weight: 700;
-   cursor: pointer;
-}
-
-#mkt-modal .close-btn img {
-   position: relative;
-   top: 4px;
-}
-
-#mkt-modal .top-bar {
-   margin: 20px 0 0;
-}
-
-#mkt-modal #bo_sch {
-   width: 65%;
-   border-bottom: 2px solid #000;
-   overflow: hidden;
-   border-top: 0;
-   border-left: 0;
-   border-right: 0;
-}
-
-#mkt-modal #bo_sch .sound_only {
-   display: none;
-}	
-
-#mkt-modal #bo_sch legend {
-   position:absolute;
-   margin:0;
-   padding:0;
-   font-size:0;
-   line-height:0;
-   text-indent:-9999em;
-   overflow:hidden
-}		
-
-#mkt-modal #bo_sch select {
-   padding: 0 10px;
-   font-size: 14px;
-   border: 0;
-   width: 150px;
-   height: 42px;
-   float: left;
-   background: url(../images/mkt-select.png) no-repeat 90% 50%;
-   -webkit-appearance: none;
-   -moz-appearance: none;
-   appearance: none;
-}
-
-#mkt-modal #bo_sch select option {
-   width: 100px;
-   background: #fff;
-}
-
-#mkt-modal #bo_sch .sch_input {
-   max-width:200px;
-   color: #888;
-   font-size: 14px;
-   height: 42px;
-   border: 0;
-   padding: 0 20px;
-   background-color: transparent;
-   float: left;
-}		
-
-#mkt-modal #bo_sch .sch_btn {
-   background: url('/images/btn_sch.png') center center no-repeat;
-   height: 42px;
-   float: right;
-   border: 0;
-   width: 42px;
-}
-
-#mkt-modal .cate-btn .mkt-toggle {
-   cursor: pointer;
-   font-weight: 500;
-   display: inline-block;
-   line-height: 42px;
-   padding: 0 20px;
-   height: 42px;
-   background: #1acb86;
-   color: #fff;
-   border-radius: 30px;
-   font-size: 16px;
-   position: absolute;
-   top: 90px;
-   right: 40px;
-}
-
-#mkt-modal .mkt-category {
-   margin: 30px 0 0;
-   display: none;
-}
-
-#mkt-modal .option-box {
-   margin: 0 auto;
-}
-
-#mkt-modal .option-box:after {
-   content: '';
-   display: block;
-   clear: both;
-}
-
-#mkt-modal input[type=radio]{
-   display: none;
-}
-
-#mkt-modal input[type=radio] + div {
-   float: left;
-   border-radius: 8px;
-   overflow: hidden; 
-   width: 114px;
-   background: #333;
-   text-align: center;
-   height: 45px;
-   line-height: 45px;
-   cursor:pointer;
-   color: #fff;
-   transition: all 0.3s ease-in-out;
-   box-sizing: border-box;
-   margin: 0 8px 8px 0;
-   position: relative;
-}
-
-#mkt-modal .marketer_option:nth-child(1) input[type=radio] + div {
-   background: url(/images/option-all.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(2) input[type=radio] + div {
-   background: url(/images/option-1.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(3) input[type=radio] + div {
-   background: url(/images/option-2.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(4) input[type=radio] + div {
-   background: url(/images/option-3.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(5) input[type=radio] + div {
-   background: url(/images/option-4.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(6) input[type=radio] + div {
-   background: url(/images/option-5.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(7) input[type=radio] + div {
-   background: url(/images/option-6.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(8) input[type=radio] + div {
-   background: url(/images/option-7.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(9) input[type=radio] + div {
-   background: url(/images/option-8.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(10) input[type=radio] + div {
-   background: url(/images/option-9.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(11) input[type=radio] + div {
-   background: url(/images/option-10.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(12) input[type=radio] + div {
-   background: url(/images/option-11.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(13) input[type=radio] + div {
-   background: url(/images/option-12.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(14) input[type=radio] + div {
-   background: url(/images/option-13.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(15) input[type=radio] + div {
-   background: url(/images/option-14.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(16) input[type=radio] + div {
-   background: url(/images/option-15.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(17) input[type=radio] + div {
-   background: url(/images/option-16.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(18) input[type=radio] + div {
-   background: url(/images/option-17.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(19) input[type=radio] + div {
-   background: url(/images/option-18.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(20) input[type=radio] + div {
-   background: url(/images/option-19.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(21) input[type=radio] + div {
-   background: url(/images/option-20.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(22) input[type=radio] + div {
-   background: url(/images/option-21.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(23) input[type=radio] + div {
-   background: url(/images/option-22.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(24) input[type=radio] + div {
-   background: url(/images/option-23.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(25) input[type=radio] + div {
-   background: url(/images/option-24.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(26) input[type=radio] + div {
-   background: url(/images/option-25.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(27) input[type=radio] + div {
-   background: url(/images/option-26.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(28) input[type=radio] + div {
-   background: url(/images/option-27.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(29) input[type=radio] + div {
-   background: url(/images/option-30.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(30) input[type=radio] + div {
-   background: url(/images/option-28.jpg) center center no-repeat;
-}
-#mkt-modal .marketer_option:nth-child(31) input[type=radio] + div {
-   background: url(/images/option-29.jpg) center center no-repeat;
-}
-
-.marketer_option:nth-of-type(5n) .op-name{
-   margin-right: 0 !important;
-}
-
-#mkt-modal input[type=radio] + div:after {
-   content: '';
-   width: 100%;
-   height: 100%;
-   background: rgba(0, 0, 0, 0.8);
-   position: absolute;
-   top: 0;
-   left: 0;
-   z-index: 0;
-   transition: all .3s ease-in-out;
-}
-
-#mkt-modal input[type=radio] + div p {
-   width: 100%;
-   height: 100%;
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%,-50%);
-   font-size: 14px;
-   color: #fff;
-   z-index: 1;
-}
-
-#mkt-modal input[type=radio] + div:hover:after {
-   background: rgba(0, 0, 0, 0.35);
-}
-
-#mkt-modal input[type=radio]:checked + div{
-   font-weight: 700;
-}
-
-#mkt-modal input[type=radio]:checked + div:after {
-   background: rgba(26, 203, 134, 0.8);
-}
-
-#mkt-modal .cate-btn::after {
-   display: block;
-   content: '';
-   clear: both;
-}
-
-#mkt-modal .marketer_list {
-   margin: 30px 0 0;
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-around;
-}
-
-#mkt-modal .mkt-choice {
-   position: relative;
-   margin-bottom: 12px;
-   width: 24%;
-}
-
-#mkt-modal .mkt-choice input[type=radio] {
-   display: block;
-   position: absolute;
-}
-
-#mkt-modal .mkt-choice input[type=radio]:checked + li {
-   border: 2.5px solid #1acb86;
-}
-
-#mkt-modal .marketer_list li {
-   box-sizing: border-box;
-   cursor: pointer;
-   position: relative;
-   overflow: hidden;
-   box-sizing: border-box;
-   border: 1px solid #ddd;
-   border-radius: 8px;
-   transition: all .2s ease-in-out;
-}
-
-#mkt-modal .marketer_list li:nth-child(3n) {
-   margin-right: 0;
-}
-
-#mkt-modal .marketer_list li img {
-   width: 100%;
-   height: 145px;
-}
-
-#mkt-modal .marketer_list li:hover {
-   border:1px solid #1acb86;
-}
-
-#mkt-modal .mkt-choice input[type=radio]:checked + li .marketer-name {
-   color: #1acb86;
-   font-weight: 600;
-}
-
-#mkt-modal .marketer_list li .marketer-name {
-   margin: -3px 0 0;
-   width: 100%;
-   height: 40px;
-   border-top:1px solid #ddd;
-   text-align: center;
-   line-height: 40px;
-   font-size: 15px;
-}
-
-#mkt-modal .marketer_list .none {
-   width: 100%;
-   line-height: 300px;
-   font-size: 16px;
-   text-align: center;
-}
-
-
 /*-- 마케터 프로필 네임카드 --*/
 #namecard {
    margin: 50px auto 40px;
@@ -2409,7 +2035,7 @@ html.remodal-is-locked {overflow-y:scroll !important}
    height: 26px;
    background: url(../images/profile_writer.png) no-repeat;
    position: absolute;
-   top: 10px;
+   top: 20px;
    left: -5px;
 }
 
@@ -2418,8 +2044,8 @@ html.remodal-is-locked {overflow-y:scroll !important}
 }
 
 #namecard .nc_img {
-   width: 150px;
-   height: 150px;
+   width: 180px;
+   height: 180px;
    border: 1px solid #ccc;
    box-sizing: border-box;
 }
@@ -2430,7 +2056,7 @@ html.remodal-is-locked {overflow-y:scroll !important}
 }
 
 #namecard .nc_info {
-   width: 510px;
+   width: 500px;
    margin-left: 30px;
    position: relative;
 }
@@ -2448,6 +2074,40 @@ html.remodal-is-locked {overflow-y:scroll !important}
 
 #namecard .nc_info h3 span {
    color: #000;
+}
+
+#namecard .nc_info h5 {
+   margin: 10px 0 0;
+   font-size: 15px;
+   font-weight: 400;
+}
+
+#namecard .nc_info h5 b {
+   color: #886fe3;
+}
+
+#namecard .nc_info h5 span {
+   color: #555;
+   font-size: 14px;
+   display: inline-block;
+   margin-left: 5px;
+   position: relative;
+}
+
+#namecard .nc_info h5 span.mail {
+   margin-left: 12px;
+}
+
+#namecard .nc_info h5 span.mail:before {
+   position: absolute;
+   top: 0;
+   left: -7px;
+   width: 1px;
+   height: 100%;
+   display: inline-block;
+   background: #ccc;
+   content: '';
+   margin-right: 5px;
 }
 
 #namecard .nc_info .nc_btn {
@@ -2609,133 +2269,4 @@ html.remodal-is-locked {overflow-y:scroll !important}
    line-height: 24px;
 }
 
-
-/* 컨텐츠 더보기 페이지 */
-.content_nc{
-   padding-top: 40px;
-}
-
-.content_nc h3{
-   font-size: 20px;
-   font-weight: 700;
-}
-
-.content_nc ul{
-   margin-top: 15px;
-   border-top: 1px solid #dcdcdc;
-   border-bottom: 1px solid #dcdcdc;
-   padding: 10px 0;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-}
-
-.content_nc li{
-   display: flex;
-   height: 75px;
-}
-
-.content_nc .nc_img{
-   width: 75px;
-   height: 75px;
-   overflow: hidden;
-}
-
-.content_nc .nc_img img{
-   width: 100%;
-}
-
-.content_nc .title{
-   margin-left: 15px;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-evenly;
-}
-
-.content_nc .title h2{
-   font-size: 20px;
-   font-weight: 400;
-   color: #121212;
-}
-
-.content_nc .title h3{
-   font-size: 30px;
-   font-weight: 600;
-}
-
-.content_nc .button div{
-   width: 78px;
-   height: 75px;
-   border: 1px solid #ccc;
-   border-radius: 5px;
-   background: #fff;
-   text-align: center;
-   margin-left: 8px;
-   font-size: 13px;
-   font-weight: 500; 
-}
-
-.content_nc .button div a{
-   padding: 17px 0;
-   display: block;
-}
-
-.content_nc .button div i{
-   display: block;
-    font-size: 20px;
-    margin-bottom: 5px;
-}
-
-.content_nc .button .bookmark i {
-   border: none;
-   background: none;
-}
-
-.content_nc .button i.bookmark_af {
-   color: #ffd016;
-}
-
-
-.mkp_board{
-    padding-bottom: 60px;
-}
-
-.mkp_board .bo_cate_top .bo_count {
-    font-size: 16px;
-    color: #333;
-}
-
-.mkp_board .bo_table .td_num2{
-    width: 50px;
-}
-
-.mkp_board .bo_table .td_board_category{
-    width: 80px;
-}
-
-.mkp_board .bo_table .td_category{
-    width: 90px;
-}
-
-.mkp_board .bo_table .td_subject{
-    width: 260px;
-    text-align: left;
-    padding: 0 10px;
-}
-
-.mkp_board .bo_table .td_w_name{
-    width: 100px;
-}
-
-.mkp_board .bo_table .td_date{
-    width: 100px;
-}
-
-.mkp_board .bo_table .td_num{
-    width: 50px;
-}
-
-.mkp_board .pg_wrap{
-    margin: 20px 0;
-}
 

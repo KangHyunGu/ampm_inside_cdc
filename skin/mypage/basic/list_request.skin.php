@@ -82,7 +82,8 @@ include(G5_PATH.'/inc/top.php');
 						<th scope="col">제목</th>
 						<th scope="col">대행의뢰자</th>
 						<th scope="col">담당마케터</th>
-						<th scope="col">등록일</th>
+                  <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일 <i class="fas fa-sort style"></i></a></th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -114,9 +115,9 @@ include(G5_PATH.'/inc/top.php');
 						</td>
 						<?php } ?>
 						
-						<td class="td_board">
-						    <!-- 여기에 미확인, 확인에 대한 컬러값을 적용해놓으시오 -->
-                            <span class="qnaIco qnaIco<?=($list[$i]['wr_16'] == 'N' || $list[$i]['wr_16']=='')?'2':'3'?>"><?=(codeToName($code_check, ($list[$i]['wr_16'])?$list[$i]['wr_16']:'N'))?></span>
+						<td class="td_ok">
+						   <!-- 여기에 미확인, 확인에 대한 컬러값을 적용해놓으시오 -->
+                     <span><?=(codeToName($code_check, ($list[$i]['wr_16'])?$list[$i]['wr_16']:'N'))?></span>
 						</td>
 						
 						<?php if($member['ampmkey'] == 'Y'){	//마케터 ?>
@@ -155,15 +156,23 @@ include(G5_PATH.'/inc/top.php');
 
 					<ul class="btn_bo_user">
 						<?php if ($is_checkbox) {  ?>
+							<?php if ($member['ampmkey'] == 'Y') {  ?>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택숨김" onclick="document.pressed=this.value">선택숨김</button></li>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택노출" onclick="document.pressed=this.value">선택노출</button></li>
+							<?php }  ?>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value">선택삭제</button></li>
 						<?php }  ?>
+					</ul>
 
-                        <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=insight" class="btn_b04">인사이트 글쓰기</a></li>
+               <ul class="btn_bo_adm">
+                  <?php if ($member['ampmkey'] == 'Y') {  ?>
+						<li><a href="<?=G5_BBS_URL?>/write.php?bo_table=insight" class="btn_b04">인사이트 글쓰기</a></li>
                         <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=video" class="btn_b04">영상교육 글쓰기</a></li>
                         <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=reference" class="btn_b04">레퍼런스 글쓰기</a></li>
-					</ul>
+						<?php }else{  ?>
+						<li><a href="<?=G5_BBS_URL?>/write.php?bo_table=qna" class="btn_b04">질문답변 글쓰기</a></li>
+						<?php }  ?>
+               </ul>
 
 				</div>
 
@@ -192,11 +201,11 @@ include(G5_PATH.'/inc/top.php');
 				<option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
 				<option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
 				<option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
-				<option value="wr_name,1"<?php echo get_selected($sfl, 'wr_name,1'); ?>>작성자</option>
-				<option value="wr_18,1"<?php echo get_selected($sfl, 'wr_18,1'); ?>>담당자</option>
+				<option value="wr_name,1"<?php echo get_selected($sfl, 'wr_name,1'); ?>>대행의뢰자</option>
+				<option value="wr_12,1"<?php echo get_selected($sfl, 'wr_12,1'); ?>>담당마케터</option>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input frm_input required" size="15" maxlength="20">
+            <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>"  id="stx" class="sch_input frm_input " size="15" maxlength="20">
             <input type="submit" value="검색" class="sch_btn">
             </form>
 			</fieldset>   

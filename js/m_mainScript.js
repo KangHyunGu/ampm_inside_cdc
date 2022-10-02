@@ -87,6 +87,17 @@ $(document).ready(function(){
         else sticky.removeClass('ca_fixed');
     });
 
+    $(window).scroll(function(){
+        var sticky = $('.mp_ca_sticky'),
+            bottom = $('.b_mp_ca'),
+            scroll = $(window).scrollTop();
+
+        if (scroll >= 100){ sticky.show(),
+                           bottom.hide();
+        }else{sticky.hide(),
+              bottom.show();
+        } 
+    });
 
     /* sub 인기글 슬라이드 */
     $(document).ready(function(){

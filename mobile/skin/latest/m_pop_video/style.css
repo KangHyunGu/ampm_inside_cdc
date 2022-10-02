@@ -1,0 +1,42 @@
+/* 영상교육 최신/인기 */
+.main_video{
+  width: 100%;
+  background-color: #fff;
+}
+
+.main_video .main_tab_con{
+  width: 100%;
+  padding: 10px;
+}
+
+.main_video .con_box.active{
+  display: block;
+}
+
+.main_video .con_box{
+  display: none;
+}
+
+.main_video .con_box ul{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.main_video .con_box li{
+  padding: 1%;
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+}
+
+.main_video .con_box img{
+  width: 100%;
+  margin-bottom: 5px;
+  border: 1px solid #ededed;
+}
+
+.main_video .main_tab_con p{
+  color: #121212;
+  font-size: 16px;
+}

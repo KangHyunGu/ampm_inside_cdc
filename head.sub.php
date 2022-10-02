@@ -53,6 +53,7 @@ if (G5_IS_MOBILE) {
     echo '<meta name="HandheldFriendly" content="true">'.PHP_EOL;
     echo '<meta name="format-detection" content="telephone=no">'.PHP_EOL;
 } else {
+    echo '<meta name="viewport" content="width=device-width, initial-scale=1">'.PHP_EOL;
     echo '<meta http-equiv="imagetoolbar" content="no">'.PHP_EOL;
     echo '<meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">'.PHP_EOL;
 }
@@ -69,14 +70,14 @@ if (defined('G5_IS_ADMIN')) {
 	if($bodyok){ 
 		if (G5_IS_MOBILE) {
             echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/m_layout.css">'.PHP_EOL;
-            echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/mobile.css">'.PHP_EOL;
+            // echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/mobile.css">'.PHP_EOL;
 		}else{
          echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/default.css">'.PHP_EOL;
          echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/layout.css">'.PHP_EOL;
 		}
     }
-    echo '<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"">'.PHP_EOL;
     echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">'.PHP_EOL;
+    echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/slick.css">'.PHP_EOL;
 }
 ?>
 
@@ -113,16 +114,23 @@ if (defined('G5_IS_ADMIN')) {
 ?>
 
    <script src="<?php echo G5_JS_URL ?>/m_mainScript.js"></script>
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
+   <script src="<?php echo G5_JS_URL ?>/slick.min.js"></script>
 
 <?php
 	}else{
 ?>
+   <?php
+   if($bodyok){ // adm 폴더도 아니고 로그인 페이지도 아니다.
+   ?>
 
-   <script src="<?php echo G5_JS_URL ?>/mainScript.js"></script>
+      <script src="<?php echo G5_JS_URL ?>/mainScript.js"></script>
+      
+   <?php
+   } //if($bodyok){  
+   ?>
+
    <script src="<?php echo G5_JS_URL ?>/subScript.js"></script>
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+   <script src="<?php echo G5_JS_URL ?>/slick.min.js"></script>
 
 <?php
 	}
@@ -136,6 +144,34 @@ if(G5_IS_MOBILE) {
 if(!defined('G5_IS_ADMIN'))
     echo $config['cf_add_script'];
 ?>
+
+
+<?php
+//매체스크립트 삽입
+if($bodyok){ // adm 폴더도 아니고 로그인 페이지도 아니다.
+?>
+<script>
+	(function(i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function() {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+	ga('create', 'UA-87097306-2', 'auto');
+	ga('require', 'displayfeatures');
+	ga('send', 'pageview');
+
+</script>
+<?php
+}
+?>
+
 </head>
 
 <body>

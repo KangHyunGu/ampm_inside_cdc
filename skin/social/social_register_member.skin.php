@@ -65,23 +65,27 @@ include(G5_PATH.'/inc/top.php');
          <div class="sns_tbl">
             <h3>개인정보 입력</h3>
             <ul>
-               <li>
-               <label for="reg_mb_email">아이디<strong class="sound_only">필수</strong></label>
-                  <div class="s_input">
-                     <div class="box">
-						  <input type="text" name="mb_email" value="<?php echo isset($user_email)?$user_email:''; ?>" id="reg_mb_email" required class="frm_input email required" size="70" maxlength="100" placeholder="이메일 형태로 작성하세요." >
-						  <p class="email_msg"><?php echo $email_msg; ?></p>
-                     </div>
-                     <div class="ctf_btn">
-                        <button class="email_certify" id="id_check">중복확인</button>
-                     </div>
-                  </div>
-                  <div class="s_notice">
-                     <span class="tooltips">
+				<li>
+					<label for="reg_mb_email">아이디<strong class="sound_only">필수</strong></label>
+					<div class="s_input">
+						<div class="box">
+							<input type="text" name="mb_email" value="<?php echo isset($user_email)?$user_email:''; ?>" id="reg_mb_email" required class="frm_input email required" size="70" maxlength="100" placeholder="이메일 형태로 작성하세요." >
+							<p class="email_msg"><?php echo $email_msg; ?></p>
+						</div>
+						<div class="ctf_btn">
+							<button class="email_certify" id="id_check">중복확인</button>
+						</div>
+					</div>
+					<div class="s_notice">
+						<span class="tooltips">
                         *이메일 주소를 입력하세요. 아이디는 이메일 주소로 사용됩니다.
-                     </span>
-                  </div>
-               </li>
+						</span>
+					</div>
+				</li>
+				<li>
+                  <label for="reg_mb_profile">소개글<strong class="sound_only">필수</strong></label>
+                  <input type="text" name="mb_profile" value="<?php echo get_text($member['mb_profile']) ?>" id="reg_mb_profile" class="frm_input full_input" size="10" maxlength="30" placeholder="소개글을 입력하세요.">                
+	            </li>
             </ul>
          </div>
 
@@ -150,7 +154,12 @@ include(G5_PATH.'/inc/top.php');
 					alert(result);
 					$("#reg_mb_email").focus();
 					return false;
-				}
+			}else{
+				alert("사용가능한 이메일입니다.");
+				$(".email_msg").html('');
+				$("#reg_mb_profile").focus();
+				return false;
+			}
 			}
 		});
 	});
@@ -181,6 +190,15 @@ include(G5_PATH.'/inc/top.php');
                 return false;
             }
         }
+
+		// 소개글 검사
+		if (f.w.value=="") {
+			if (f.mb_profile.value.length < 1) {
+				alert("소개글을 입력하십시오.");
+				f.mb_profile.focus();
+				return false;
+			}
+		}
 
         document.getElementById("btn_submit").disabled = "disabled";
 

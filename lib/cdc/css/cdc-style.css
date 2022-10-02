@@ -41,3 +41,9 @@ hr .split{
     border-top: 2px solid black;
     border-bottom: 1px solid gray;
 }
+
+.my-card{
+    width: 100%;
+    max-width: 300px;
+}
+ 

@@ -2,6 +2,9 @@
 /*******************************************************************************
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
+set_time_limit(120);
+ini_set("memory_limit", "512M");
+
 error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING );
 
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
@@ -736,6 +739,7 @@ $member['mb_part_text'] = ($member['mb_part'])?codeToName($code_part3, get_text(
 $member['mb_team_text'] = ($member['mb_team'])?codeToName($code_team, get_text($member['mb_team']))." 팀":"";
 $member['ampmkey'] = $_SESSION['ss_mb_ampm'];
 $uri = $_SERVER['REQUEST_URI'];
+ob_start('ob_gzhandler');
 ob_start();
 
 // 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면

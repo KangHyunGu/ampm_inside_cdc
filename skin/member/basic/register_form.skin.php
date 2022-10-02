@@ -35,7 +35,7 @@ include(G5_PATH.'/inc/top.php');
 	<input type="hidden" name="cert_no" value="">
 	<?php if (isset($member['mb_sex'])) {  ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php }  ?>
 	<?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 닉네임수정일이 지나지 않았다면  ?>
-	<input type="hidden" name="mb_nick_default" value="<?php echo get_text($member['mb_nick']) ?>">
+	<input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>">
 	<input type="hidden" name="mb_nick" value="<?php echo get_text($member['mb_nick']) ?>">
 	<?php }  ?>
 	
@@ -103,7 +103,7 @@ include(G5_PATH.'/inc/top.php');
 
 				<li>
                   <label for="reg_mb_profile">소개글<strong class="sound_only">필수</strong></label>
-                  <input type="text" name="mb_profile" value="<?php echo get_text($member['mb_profile']) ?>" id="reg_mb_profile" class="frm_input full_input" size="10" maxlength="30" placeholder="소개글을 입력하세요.">                
+                  <input type="text" name="mb_profile" value="<?php echo get_text($member['mb_profile']) ?>" id="reg_mb_profile" required class="frm_input full_input" size="10" maxlength="30" placeholder="소개글을 입력하세요.">                
 	            </li>
 
                <?php if ($member['mb_level'] >= $config['cf_icon_level'] && $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height']) {  ?>
@@ -190,6 +190,10 @@ $('#id_check').click(function() {
 				alert(result);
 				$("#reg_mb_id").focus();
 				return false;
+			}else{
+				alert("사용가능한 아이디입니다.");
+				$("#reg_mb_password").focus();
+				return false;
 			}
 		}
 	});
@@ -210,6 +214,10 @@ $('#nick_check').click(function() {
         
 			if(result){
 				alert(result);
+				$("#reg_mb_nick").focus();
+				return false;
+			}else{
+				alert("사용가능한 닉네임입니다.");
 				$("#reg_mb_nick").focus();
 				return false;
 			}
@@ -284,6 +292,14 @@ function fregisterform_submit(f)
         }
     }
 
+    // 소개글 검사
+    if (f.w.value == "") {
+        if (f.mb_profile.value.length < 1) {
+            alert("소개글을 입력하십시오.");
+            f.mb_profile.focus();
+            return false;
+        }
+    }
 /*
     // E-mail 검사
     if ((f.w.value == "") || (f.w.value == "u" && f.mb_email.defaultValue != f.mb_email.value)) {

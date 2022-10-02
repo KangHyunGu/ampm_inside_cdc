@@ -1,44 +1,31 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+//sql_query(" ALTER TABLE `{$write_table}` CHANGE `wr_content` `wr_content` LONGTEXT NOT NULL ");
 // 선택옵션으로 인해 셀합치기가 가변적으로 변함
-$colspan = 12;
+$colspan = 10;
 
 if ($is_checkbox) $colspan++;
 if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board['bo_skin'].'/style.css">', 0);
-
+add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 ?>
-
-<link rel="stylesheet" href="<?=$board_skin_url?>/style.css">
-
+<?php
+//소속처리
+include(G5_PATH.'/inc/_inc_adm_belong.php');
+?>
 <h2 id="container_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2>
 
 <!-- 게시판 목록 시작 { -->
 <div id="bo_list" style="width:<?php echo $width; ?>">
 
-    <!-- 검색 -->
-   <div class="top_sch">
-      <select name="sear_part" id="sear_part" class="form-control">
-         <option value=''> 본부 </option>
-         <?=codeToHtml($code_part4, $sear_part, "cbo", "")?>
-      </select>
-      <select name="sear_team" id="sear_team" class="form-control">
-         <option value=''> 팀 </option>
-         <?=codeToHtml($code_team, $sear_team, "cbo", "")?>
-      </select>
-      <select name="sfl" id="sfl" class="form-control">
-         <option value=''>검색항목</option>
-         <?=codeToHtml($member_search, $sfl, "cbo", "")?>
-      </select>
-      <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" class="form-control" placeholder="검색어를 입력하세요.">
-      <button type="button" id="btn_submit" class="btn btn-primary">검색</button>
-      <button type="button" id="reset" class="btn btn-secondary">초기화</button>
-      <!--<a href="<? G5_URL ?>/bbs/board.php?bo_table=insight" class="btn btn-link">대행의뢰 바로가기</a>-->
-   </div>
+	<!-- 검색 -->
+	<?php
+	//검색폼
+	include(G5_PATH.'/inc/_inc_adm_belong_search.php');
+	?>
 
     <!-- 게시판 카테고리 시작 { -->
     <?php if ($is_category) { ?>
@@ -51,12 +38,22 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
     <?php } ?>
     <!-- } 게시판 카테고리 끝 -->
 
-     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
+    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div class="bo_fx">
         <div id="bo_list_total">
             <span>Total <?php echo number_format($total_count) ?>건</span>
             <?php echo $page ?> 페이지
         </div>
+
+        <?php if ($rss_href || $write_href) { ?>
+        <ul class="btn_bo_user">
+            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01">RSS</a></li><?php } ?>
+            <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin">관리자</a></li><?php } ?>
+            <!--
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02">글쓰기</a></li><?php } ?>
+        -->
+        </ul>
+        <?php } ?>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
 
@@ -66,8 +63,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
     <input type="hidden" name="stx" value="<?php echo $stx ?>">
     <input type="hidden" name="spt" value="<?php echo $spt ?>">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="sw" value="">
 
     <div class="tbl_head01 tbl_wrap">
         <table>
@@ -81,25 +79,26 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
             </th>
             <?php } ?>
             <th scope="col">번호</th>
-            <th scope="col">노출여부</th>
-            <th scope="col">확인여부</th>
-            <th scope="col">업체명</th>
+            <th scope="col"><?php echo subject_sort_link('wr_16', $qstr2, 1) ?>확인여부</a></th>
+            <th scope="col"><?php echo subject_sort_link('wr_19', $qstr2, 1) ?>노출여부</a></th>
+            <th scope="col">관심매체</th>
+            <th scope="col">제목</th>
             <th scope="col">관심매체</th>
             <th scope="col">대행의뢰자</th>
             <th scope="col">담당마케터</th>
             <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일</a></th>
-            <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회수</a></th>
         </tr>
         </thead>
         <tbody>
         <?php
         for ($i=0; $i<count($list); $i++) {
-         ?>
+        ?>
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?>">
             <?php if ($is_checkbox) { ?>
             <td class="td_chk">
-                <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-                <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
+                <label for="chk_bn_id<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
+				<input type="checkbox" name="chk_bn_id[]" value="<?php echo $i; ?>" id="chk_bn_id_<?php echo $i ?>">
+				<input type="hidden" name="wr_id[<?php echo $i; ?>]" value="<?php echo $list[$i]['wr_id']; ?>">
             </td>
             <?php } ?>
             <td class="td_num">
@@ -112,9 +111,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
                 echo $list[$i]['num'];
              ?>
             </td>
+            <td class="td_hide"><?=(codeToName($code_check, ($list[$i]['wr_16'])?$list[$i]['wr_16']:'N'))?></td>
             <td class="td_hide"><?=codeToName($code_hide, $list[$i]['wr_19'])?></td>
-            <td class="td_hide"><?=(codeToName($code_check, ($list[$i]['wr_10'])?$list[$i]['wr_10']:'N'))?></td>
-            <td class="td_subject">
+ 			<td class="td_media"><?=codeToName($code_selltype, $list[$i]['wr_3'])?></td>
+			<td class="td_subject">
 
                 <a href="<?php echo $list[$i]['href'] ?>">
                     <?=$list[$i]['subject']?>
@@ -138,7 +138,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
             <td class="td_name sv_use"><?php echo $list[$i]['name'] ?></td>
             <td class="td_hide"><?php echo ($list[$i]['wr_12'])?$list[$i]['wr_12']:'전체' ?></td>
 			<td class="td_datetime"><?php echo $list[$i]['datetime'] ?></td>
-            <td class="td_num"><?php echo $list[$i]['wr_hit'] ?></td>
         </tr>
         <?php } ?>
         <?php if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
@@ -150,9 +149,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_ADMBBS_URL.'/bbs_form/'.$board
     <div class="bo_fx">
         <?php if ($is_checkbox) { ?>
         <ul class="btn_bo_adm">
-                <li><input type="submit" name="btn btn_submit" value="선택삭제" onclick="document.pressed=this.value"></li>
-                <li><input type="submit" name="btn btn_submit2" value="담당자변경"></li>
-                <li><input type="submit" name="btn btn_submit3" value="게시물숨김"></li>
+            <li><input type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"></li>
+            <li><input type="submit" name="btn_submit" value="선택노출" onclick="document.pressed=this.value"></li>
+            <li><input type="submit" name="btn_submit" value="선택숨김" onclick="document.pressed=this.value"></li>
         </ul>
         <?php } ?>
 
@@ -185,7 +184,7 @@ function all_checked(sw) {
     var f = document.fboardlist;
 
     for (var i=0; i<f.length; i++) {
-        if (f.elements[i].name == "chk_wr_id[]")
+        if (f.elements[i].name == "chk_bn_id[]")
             f.elements[i].checked = sw;
     }
 }
@@ -194,7 +193,7 @@ function fboardlist_submit(f) {
     var chk_count = 0;
 
     for (var i=0; i<f.length; i++) {
-        if (f.elements[i].name == "chk_wr_id[]" && f.elements[i].checked)
+        if (f.elements[i].name == "chk_bn_id[]" && f.elements[i].checked)
             chk_count++;
     }
 

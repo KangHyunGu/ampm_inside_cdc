@@ -82,9 +82,10 @@ include(G5_PATH.'/inc/top.php');
 						<th scope="col">관심매체</th>
 						
 						<th scope="col">연락처</th>
-						<th scope="col">스펜딩</th>
+						<th scope="col">월 예상 광고비</th>
 						<th scope="col">지정마케터</th>
-						<th scope="col">등록일</th>
+                  <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>등록일 <i class="fas fa-sort style"></i></a></th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -116,9 +117,9 @@ include(G5_PATH.'/inc/top.php');
 						</td>
 						<?php } ?>
 						
-						<td class="td_board">
-						    <!-- 여기에 미확인, 확인에 대한 컬러값을 적용해놓으시오 -->
-                            <span class="qnaIco qnaIco<?=($list[$i]['wr_16'] == 'N' || $list[$i]['wr_16']=='')?'2':'3'?>"><?=(codeToName($code_check, ($list[$i]['wr_16'])?$list[$i]['wr_16']:'N'))?></span>
+						<td class="td_ok">
+						   <!-- 여기에 미확인, 확인에 대한 컬러값을 적용해놓으시오 -->
+                     <span><?=(codeToName($code_check, ($list[$i]['wr_16'])?$list[$i]['wr_16']:'N'))?></span>
 						</td>
 						<?php if($member['ampmkey'] == 'Y'){	//마케터 ?>
 						<td class="td_hide"><?=codeToName($code_hide, ($list[$i]['wr_19'])?$list[$i]['wr_19']:'Y')?></td>
@@ -133,7 +134,7 @@ include(G5_PATH.'/inc/top.php');
 						<td class="td_subject">
                             <a href="<?php echo $list[$i]['href'] ?>" class="new_tit">
                                 <?php echo $list[$i]['comment'] ?>
-                                <?php echo cut_str(get_text($list[$i]['wr_1']),10) ?>
+                                <?php echo cut_str(get_text($list[$i]['wr_1']),6) ?>
                             </a>
                             <?php if ($list[$i]['icon_new']){ ?> <span class="new_icon">N<span class="sound_only">새글</span></span> <?php } ?>
 							<?php if ($list[$i]['comment_cnt']) { ?>
@@ -164,16 +165,24 @@ include(G5_PATH.'/inc/top.php');
 
 					<ul class="btn_bo_user">
 						<?php if ($is_checkbox) {  ?>
+							<?php if ($member['ampmkey'] == 'Y') {  ?>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택숨김" onclick="document.pressed=this.value">선택숨김</button></li>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택노출" onclick="document.pressed=this.value">선택노출</button></li>
-						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택처리" onclick="document.pressed=this.value">선택처리</button></li>
+                        <li><button class="btn_b02" type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value">선택처리</button></li>
+							<?php }  ?>
 						<li><button class="btn_b02" type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value">선택삭제</button></li>
 						<?php }  ?>
+					</ul>
 
-                        <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=insight" class="btn_b04">인사이트 글쓰기</a></li>
+               <ul class="btn_bo_adm">
+                  <?php if ($member['ampmkey'] == 'Y') {  ?>
+						<li><a href="<?=G5_BBS_URL?>/write.php?bo_table=insight" class="btn_b04">인사이트 글쓰기</a></li>
                         <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=video" class="btn_b04">영상교육 글쓰기</a></li>
                         <li><a href="<?=G5_BBS_URL?>/write.php?bo_table=reference" class="btn_b04">레퍼런스 글쓰기</a></li>
-					</ul>
+						<?php }else{  ?>
+						<li><a href="<?=G5_BBS_URL?>/write.php?bo_table=qna" class="btn_b04">질문답변 글쓰기</a></li>
+						<?php }  ?>
+               </ul>
 
 				</div>
 
@@ -206,7 +215,7 @@ include(G5_PATH.'/inc/top.php');
 				<option value="wr_18,1"<?php echo get_selected($sfl, 'wr_18,1'); ?>>담당자</option>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input frm_input required" size="15" maxlength="20">
+            <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>"  id="stx" class="sch_input frm_input " size="15" maxlength="20">
             <input type="submit" value="검색" class="sch_btn">
             </form>
 			</fieldset>   

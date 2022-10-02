@@ -1,0 +1,500 @@
+/* BASIC css start */
+
+
+.text {
+            display: none;
+            position: fixed;
+        }
+
+        /*국문 noto sans 폰트*/
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;500;700;900&display=swap');
+        /*영문 moneserrat 폰트*/
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@900&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .noto_font100 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 100;
+        }
+
+        .noto_font400 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 400;
+        }
+
+        .noto_font500 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 500;
+        }
+
+        .noto_font700 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 700;
+        }
+
+        .noto_font900 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 900;
+        }
+
+        .monts_fontB {
+            font-family: 'Fira Sans', sans-serif;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        /*---------------------------------//공통----------------------------*/
+
+        .wrap1 {
+            z-index: 2;
+            position: fixed;
+            width: 142px;
+            height: 132px;
+    right: 240px;
+    bottom: 170px;
+        }
+
+        .wrap1 img {
+            display: block;
+            animation: rotate_image 6s linear infinite;
+            transform-origin: 50% 50%;
+        }
+
+        @keyframes rotate_image {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .wrap1 a span {
+            color: #000;
+            border: 2px solid #000;
+    font-size: 40px;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 900;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    bottom: 50%;
+    background-color: red;
+    width: 80px;
+    line-height: 71px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    height: 80px;
+    box-shadow: 1px 1px 5px 3px #00000045;
+        }
+
+
+        /*---------------------------------//버튼-----------------------------*/
+
+
+        .main {
+            width: 100%;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            position: relative;
+            background-size: cover;
+        }
+
+        .main img.bg {
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main .wrappp {
+            width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main .logo {
+            height: 100px;
+            position: absolute;
+            z-index: 3;
+            top: 90px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1200px;
+        }
+
+        .main .logo img:nth-child(2) {
+            float: right;
+        }
+
+        .main .mainBg {
+            width: 100%;
+            height: 780px;
+            background: url('https://mulawear.jpg3.kr/man/event/220822olympia/main-img.jpg') 0 0 no-repeat;
+            background-size: cover;
+
+        }
+
+        .main .wrappp .maintitle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 38%);
+        }
+
+        .main .wrappp .maintitle p {
+            text-align: center;
+            color: #7c7c7c;
+            font-size: 18px;
+            line-height: 33px;
+            margin-top: 36px;
+            font-family: 'Raleway', Sans-serif;
+        }
+
+
+
+        .kenburns-top {
+            -webkit-animation: kenburns-top 5s ease-out both;
+            animation: kenburns-top 5s ease-out both;
+        }
+
+        @-webkit-keyframes kenburns-top {
+            0% {
+                -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0);
+                -webkit-transform-origin: 50% 16%;
+                transform-origin: 50% 16%;
+            }
+
+            100% {
+                -webkit-transform: scale(1.25) translateY(-15px);
+                transform: scale(1.25) translateY(-15px);
+                -webkit-transform-origin: top;
+                transform-origin: top;
+            }
+        }
+
+        @keyframes kenburns-top {
+            0% {
+                -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0);
+                -webkit-transform-origin: 50% 16%;
+                transform-origin: 50% 16%;
+            }
+
+            100% {
+                -webkit-transform: scale(1.25) translateY(-15px);
+                transform: scale(1.25) translateY(-15px);
+                -webkit-transform-origin: top;
+                transform-origin: top;
+            }
+        }
+
+        
+                /* 움직이는 텍스트 */
+        .textslide {
+            z-index: 2;
+            text-align: center;
+            font-size: 117px;
+    font-weight: 900;
+    font-family: 'Raleway', Sans-serif;
+    position: absolute;
+    width: 100%;
+    right: 0;
+    bottom: -12px;
+    color: #ffffff0f;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    box-sizing: border-box;
+        }
+
+        .textslide .track {
+            /* position: absolute; */
+            white-space: nowrap;
+            /* right: -802px; */
+            /* bottom: -630px; */
+            z-index: 4;
+            will-change: transform;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (hover: hover) and (min-width: 700px) .animated-title .Tcontent {
+            -webkit-transform: translateY(calc(100% - 8rem));
+            transform: translateY(calc(100% - 8rem));
+        }
+
+        /*-------------------------------------//메인 ---------------------------------------------*/
+
+        path {
+            stroke: #090808;
+            fill: #090808;
+            stroke-dasharray: 1800;
+            opacity: 10;
+            animation: animate 2s cubic-bezier(0, 0.23, 1, .1);
+        }
+
+        @keyframes animate {
+            0% {
+                opacity: 0;
+                fill: none;
+                stroke-dashoffset: 1800;
+            }
+
+            30% {
+                opacity: 10;
+                fill: none;
+                stroke-dashoffset: 1800;
+            }
+
+            90% {
+                fill: rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                opacity: 10;
+                fill: rgba(0, 0, 0, 1);
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .container {
+            width: 100%;
+            position: relative;
+            height: 850px;
+        }
+
+        .wrap2 {
+            width: 100%;
+            height: 850px;
+            background: url(https://mulawear.jpg3.kr/man/event/220822olympia/con1Bg.png) 0 0 no-repeat;
+            background-size: cover;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .wrap2 .content2 {
+            width: 1200px;
+            height: 850px;
+            margin: 140px auto 0;
+            position: relative;
+        }
+
+        .wrap2 .content2 svg {
+            width: 47%;
+            position: absolute;
+            top: -116px;
+        }
+
+        .right-text {
+            position: absolute;
+    z-index: 1;
+    right: 420px;
+    top: 217px;
+    width: 547px;
+        }
+
+        .right-text h2.text2 {
+            font-size: 55px;
+    color: #fff;
+    line-height: 56px;  color: #fff;
+   margin-bottom:40px;
+   }
+
+        .right-text img {
+            width: 86%;
+        }
+
+        .right-text p {
+            font-size: 27px;
+            line-height: 40px;
+            color: #fff;
+            box-sizing: border-box;
+            margin-bottom:28px;
+        }
+
+        .right-text p span {
+            box-sizing: border-box;
+            letter-spacing: -0.05em;
+        }
+
+        .right-text p:nth-child(3) {
+            line-height: 30px;
+    font-size: 23px;
+    font-family: 'Fira Sans', sans-serif;
+        }
+
+
+        /* 움직이는 텍스트 */
+        .animated-title {
+            font-size: 20px;
+            font-family: 'Raleway', Sans-serif;
+            font-weight: 600;
+            position: absolute;
+            /* width: 400px; */
+            max-width: 400px;
+            right: 0;
+            color: #8f8f8f;
+            height: auto;
+            overflow-x: hidden;
+            bottom: -817px;
+            overflow-y: hidden;
+            box-sizing: border-box;
+            background-color: #000;
+        }
+
+        .animated-title .track {
+            /* position: absolute; */
+            white-space: nowrap;
+            /* right: -802px; */
+            /* bottom: -630px; */
+            z-index: 4;
+            will-change: transform;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (hover: hover) and (min-width: 700px) .animated-title .Tcontent {
+            -webkit-transform: translateY(calc(100% - 8rem));
+            transform: translateY(calc(100% - 8rem));
+        }
+
+
+        /*------------------------------------//con2--------------------------------------------------*/
+
+        .wrap3 {
+            width: 100%;
+            height: 990px;
+            position: relative;
+            background-color: #000;
+            clear: both;
+            display: block;
+            content: "";
+        }
+
+
+        .bannerMove {
+            width: 100%;
+            height: 600px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            /* margin-left: -510px; */
+            /* background-color: #ddd; */
+            overflow: hidden;
+            transform: translate(-50%, -50%);
+            margin: 0 auto;
+            opacity: 0.1;
+
+        }
+
+        .bannerMove:after {
+            width: 3000px;
+            height: auto;
+            margin: 0 auto;
+            flex-wrap: nowrap;
+            animation: bannermove 40s linear infinite;
+            background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+        }
+
+        .bannerMove_inner {
+            width: 2025px;
+            height: auto;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: nowrap;
+            animation: bannermove 40s linear infinite;
+        }
+
+        @keyframes bannermove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .bannerMove_inner img {
+            margin-left: 5px;
+        }
+
+
+        .content3 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .content3 div p:nth-child(1) {
+            font-size: 50px;
+            font-weight: 900;
+
+            letter-spacing: -0.05em;
+            line-height: 60px;
+            color: #ec2428;
+            margin:50px 0;
+
+        }
+
+        .content3 div p:nth-child(1) span {
+            font-size: 35px;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .content3 div p:nth-child(2) {
+            font-size: 20px;
+            font-weight: 300;
+
+            letter-spacing: -0.05em;
+            line-height: 39px;
+            color: #aaaaaa;
+
+        }
+
+        .content3 div p:nth-child(2) span {
+            font-size: 20px;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .banner{
+            width: 100%;
+            background-color: #000;
+        }
+        .banner a img{
+            width: 100%;
+        }
+/* BASIC css end */
+

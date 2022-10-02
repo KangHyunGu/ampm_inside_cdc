@@ -34,6 +34,11 @@
    font-weight: 500;
 }
 
+.top_sch select {
+   min-width: 150px;
+}
+
+
 .top_sch .btn-primary {
    background: #353535;
    color: #fff;
@@ -81,6 +86,12 @@
 .td_manager {
    width: 140px;
 }
+
+.td_manager input {
+   background: #fffcf5;
+   border: 1px solid #ffd320;
+}
+
 
 .td_datetime {
    width: 180px;
@@ -452,6 +463,12 @@ input[type='radio']:checked {
    float: left;
    margin-right: 5px
 }
+
+.btn_bo_adm li .btn_bg {
+   background: #c54c4c;
+   border: #c54c4c;
+}
+
 .btn_bo_adm input {
    font-size: 14px;
 	display: inline-block;
@@ -523,6 +540,10 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
    font-size: 16px;
    color: #343e4e;
    font-weight: 500;
+}
+
+#view_notice ul li p {
+   padding: 5px 0 0;
 }
 
 #bo_v {
@@ -711,10 +732,10 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
     position: relative;
 }
 
-#bo_vc .left{
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ccc;
+#bo_vc .left .pf_img{
+   width: 40px;
+   height: 40px;
+   border: 1px solid #ccc;
 }
 
 #bo_vc .left img{
