@@ -199,13 +199,9 @@ include(G5_PATH.'/inc/top.php');
 	<!-- 우측 side 영역 -->
 	<?php include(G5_PATH.'/inc/aside.php'); ?>
 </div>
-<script src="<?= CDC_JS_URL ?>/cdcCommon.js?v=<?= CDC_VER ?>"></script>
-<!-- CDC 모듈 -->
-<script src="<?= CDC_JS_URL ?>/read/cdcReadVue.js?v=<?= CDC_VER ?>"></script>
-<script>
-	const viewData = <?php echo json_encode($view) ?>;
-	vm.setupView(viewData);
-</script>
+
+<!-- CDC JS 모듈 -->
+<?php include(CDC_PATH. "/cdcViewFormSetting.php"); ?>
 
 <script>
 <?php if ($board['bo_download_point'] < 0) { ?>

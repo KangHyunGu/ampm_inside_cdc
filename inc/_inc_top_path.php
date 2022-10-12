@@ -133,7 +133,7 @@ $para1 = $path_dep1;
 $para2 = $path_dep2;
 $para3 = ($path_dep1 == '2')?$path_dep3:'0';
 
-$chkPath = $path_dep0."-".$path_dep1."-".$path_dep2."-".$path_dep3;
+//$chkPath = $path_dep0."-".$path_dep1."-".$path_dep2."-".$path_dep3;
 //echo "chkPath=> ".$chkPath;
 
 ////////////////////////////////////////

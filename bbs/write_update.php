@@ -362,7 +362,8 @@ if ($w == '' || $w == 'r') {
         else if ($member['mb_level'] < $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
             alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.', $return_url);
     } else if ($member['mb_id']) {
-        if ($member['mb_id'] != $write['mb_id'])
+		//본인작성글이거나 담당자인경우 -feeris
+        if ($member['mb_id'] != $write['mb_id'] && $member['mb_id'] != $write['wr_17'] )
             alert('자신의 글이 아니므로 수정할 수 없습니다.', $return_url);
     } else {
         if ($write['mb_id'])
@@ -370,13 +371,19 @@ if ($w == '' || $w == 'r') {
     }
 
     if ($member['mb_id']) {
-        // 자신의 글이라면
-        if ($member['mb_id'] === $wr['mb_id']) {
-            $mb_id = $member['mb_id'];
-            $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
-            $wr_email = addslashes($member['mb_email']);
-            $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
-        } else {
+        // 자신의 글이거나 담당자인경우라면 - feeris
+        if ($member['mb_id'] === $wr['mb_id'] || $member['mb_id'] === $wr['wr_17'] ) {
+            //$mb_id = $member['mb_id'];
+	        //$wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : ($member['ampmkey'] == 'Y')?$member['mb_name']:$member['mb_nick']));
+			//$wr_email = addslashes($member['mb_email']);
+            //$wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
+
+            $mb_id = $wr['mb_id'];
+	        $wr_name = $wr['wr_name'];
+			$wr_email = $wr['wr_email'];
+            $wr_homepage = $wr['wr_homepage'];
+
+		} else {
             $mb_id = $wr['mb_id'];
             if(isset($_POST['wr_name']) && $_POST['wr_name'])
                 $wr_name = clean_xss_tags(trim($_POST['wr_name']));

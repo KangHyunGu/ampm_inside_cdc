@@ -91,8 +91,9 @@ $update_href = $delete_href = '';
 
 ///////////////////////////////////////////////////////////////////
 //AMPM 사원도 관리권한이 있어 is_admin 구체적 명시 - feeris
+//담당자변경으로 지정된 경우도 수정권한 부여
 ///////////////////////////////////////////////////////////////////
-if (($member['mb_id'] && ($member['mb_id'] === $write['mb_id'])) || ($is_admin =='super' || $is_admin =='manager')) {
+if (($member['mb_id'] && ($member['mb_id'] === $write['mb_id'] || $member['mb_id'] === $write['wr_17'])) || ($is_admin =='super' || $is_admin =='manager')) {
     $update_href = short_url_clean(G5_BBS_URL.'/write.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
     set_session('ss_delete_token', $token = uniqid(time()));
     $delete_href = G5_BBS_URL.'/delete.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;token='.$token.'&amp;page='.$page.urldecode($qstr);
@@ -163,7 +164,7 @@ if ($board['bo_use_signature'] && $view['mb_id']) {
 ///////////////////////////////////////////////////////////////////////
 if($view['wr_17']){
 	$view['mb_id'] = $view['wr_17'];
-	$view['wr_name'] = $view['wr_18'];
+	//$view['wr_name'] = $view['wr_18'];
 	$view['name'] = $view['wr_18'];
 }
 

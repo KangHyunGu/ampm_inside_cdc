@@ -16,6 +16,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
 
 	   if($thumb['src']) {
 		  $img = $thumb['src'];
+		  $thumb['alt'] = $list[$i]['subject'];
 	   } else {
 		  $img = G5_IMG_URL.'/no_img.png';
 		  $thumb['alt'] = '이미지가 없습니다.';

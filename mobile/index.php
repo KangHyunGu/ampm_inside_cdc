@@ -99,7 +99,7 @@ include_once(G5_MOBILE_PATH.'/head.php');
         </div>
 
         <div class="to_board">
-            <a href="<?=G5_BBS_URL?>/board.php?bo_table=video">마케팅 레퍼런스 더보기 ></a>
+            <a href="<?=G5_BBS_URL?>/board.php?bo_table=reference">마케팅 레퍼런스 더보기 ></a>
         </div>
     </div>
 
@@ -118,12 +118,12 @@ include_once(G5_MOBILE_PATH.'/head.php');
             
             <div id="tab-7" class="type_popular con_box active">
                 <!-- 인기순 -->
-                <?php echo latest_popular("m_pop_qa", 'qa', 8, 18, 1, 'wr_hit desc', 'Y');?>
+                <?php echo latest_popular("m_pop_qa", 'qna', 8, 18, 1, 'wr_hit desc', 'Y');?>
             </div>
 
             <div id="tab-8" class="type_new con_box">
                 <!-- 최신순 -->
-                <?php echo latest('m_new_qa', 'qa', 8, 18);?>
+                <?php echo latest('m_new_qa', 'qna', 8, 18);?>
             </div>
 
         </div>

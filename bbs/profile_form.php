@@ -118,8 +118,8 @@ if ($w == "") {
     $mkt['mb_media'] 			= get_text($mkt['mb_media']);
     $mkt['mb_sectors'] 			= get_text($mkt['mb_sectors']);
     $mkt['mb_slogan'] 			= get_text($mkt['mb_slogan']);
-    $mkt['mb_profile'] 			= get_text($mkt['mb_profile']);
-    $mkt['mb_message'] 			= get_text($mkt['mb_message']);
+    $mkt['mb_profile'] 			= get_text($mkt['mb_profile'], 0);
+    $mkt['mb_message'] 			= get_text($mkt['mb_message'], 0);
     
 	$mkt['mb_kakaochat'] 		= get_text($mkt['mb_kakaochat']);
 

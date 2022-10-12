@@ -729,6 +729,10 @@ h2 {
    min-width: 200px;
 }
 
+.cdc_table .td_view {
+   width: 80px;
+}
+
 .cdc_table .td_upload {
    width: 100px;
 }
@@ -845,7 +849,7 @@ h2 {
 
 /* CDC 매체등록 모달 */
 .cdc-modal {
-   display: none; 
+   display: flex; 
    position: fixed; 
    z-index: 99;
    left: 0;
@@ -858,9 +862,9 @@ h2 {
    align-items: center;
 }
 
-.cdc-modal.on {
+/* .cdc-modal.on {
    display: flex;
-}
+} */
 
 #cdcModal .cdc-modal-con {
    background-color: #fefefe;
@@ -869,7 +873,7 @@ h2 {
    border: 1px solid #888;
    width: 700px;    
    position: relative;
-   min-height: 500px;
+   min-height: 540px;
    height: 40%;            
 }
 

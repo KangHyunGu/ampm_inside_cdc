@@ -23,7 +23,12 @@
 .lt_info .lt_nick {}
 .lt_info .lt_date {color:#888}
 
-.lat .empty_li {line-height:145px;color:#666;text-align:center;padding:0}
+.empty_li {
+   width: 100%;
+   font-size: 14px;
+   line-height: 100px;
+   text-align: center;
+}
 .lat .empty_li:before {background:none;padding:0}
 
 .lat .lt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}

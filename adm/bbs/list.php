@@ -216,7 +216,7 @@ if (!$is_search_bbs) {
 		///////////////////////////////////////////////////////////////////////
 		if($list[$i]['wr_17']){
 			$list[$i]['mb_id'] = $list[$i]['wr_17'];
-			$list[$i]['wr_name'] = $list[$i]['wr_18'];
+			//$list[$i]['wr_name'] = $list[$i]['wr_18'];
 			$list[$i]['name'] = $list[$i]['wr_18'];
 		}
 
@@ -322,7 +322,7 @@ if($page_rows > 0) {
 		///////////////////////////////////////////////////////////////////////
 		if($list[$i]['wr_17']){
 			$list[$i]['mb_id'] = $list[$i]['wr_17'];
-			$list[$i]['wr_name'] = $list[$i]['wr_18'];
+			//$list[$i]['wr_name'] = $list[$i]['wr_18'];
 			$list[$i]['name'] = $list[$i]['wr_18'];
 		}
 

@@ -7,14 +7,14 @@
     </div>
     <ul class="icon">
          <li>
-           <a href="tel:<?=G5_PHONENUMBER?>"><span>전화상담</span><img src="<?=G5_MARKETER_URL?>/images/quick_icon2.png" alt=""></a>
+           <a href="tel:<?=G5_PHONENUMBER?>"><span>전화상담</span><img src="<?=G5_MARKETER_URL?>/images/quick_icon2.png" alt="전화상담"></a>
          </li>
          <li>
-            <a href="/ae-<?=$utm_member?>/estimate/<?php if($team_code){ echo "&team_code=".$team_code; }?>"><span>문의하기</span><img src="<?=G5_MARKETER_URL?>/images/quick_icon3.png" alt=""></a>
+            <a href="/ae-<?=$utm_member?>/estimate/<?php if($team_code){ echo "&team_code=".$team_code; }?>"><span>문의하기</span><img src="<?=G5_MARKETER_URL?>/images/quick_icon3.png" alt="문의하기"></a>
          </li>
     </ul>
     <div class="close">
-        <img src="<?=G5_URL?>/images/quick_icon4.png" alt="">
+        <img src="<?=G5_MARKETER_URL?>/images/quick_icon4.png" alt="닫기">
     </div>
 </div>
 

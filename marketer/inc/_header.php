@@ -25,7 +25,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
     <div id="mk-gnb">
         <div class="wrap">
             <div class="logo">
-                <a href="<?=G5_URL?>"><img src="<?=G5_URL ?>/images/logo.png"></a>
+                <a href="<?=G5_URL?>"><img src="<?=G5_URL ?>/images/logo.png" alt="마케팅 인사이드 로고"></a>
             </div>
             <nav>
                 <ul class="gnb">

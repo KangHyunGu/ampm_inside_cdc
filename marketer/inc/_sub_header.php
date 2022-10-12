@@ -24,7 +24,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
       <!--
          <a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>" class="logo">
 -->
-         <a href="<?=G5_URL?>" class="logo">
+         <a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>" class="logo">
             <img src="<?=G5_URL?>/images/logo.png" title="로고">
         </a>
         <div class="menu_icon">
@@ -58,19 +58,21 @@ if (G5_IS_MOBILE) {	//모바일인 경우
 
         </script>
 
+        <!--
         <div class="sns-link">
             <a href="tel:02.6049-1158" alt="전화">
-                <img class="blog" src="<? G5_URL ?>/images/memu_call.png" alt="전화">
+                <img class="blog" src="/images/memu_call.png" alt="전화">
             </a>
 
             <a href="https://blog.naver.com/ampmglobal" target="_blank">
-                <img class="blog" src="<? G5_URL ?>/images/memu_sns1.png" alt="블로그">
+                <img class="blog" src="/images/memu_sns1.png" alt="블로그">
             </a>
 
             <a href="https://www.youtube.com/channel/UCCZEqe3-h1IKKsMLNIZmJ1A" target="_blank">
-                <img class="youtube" src="<? G5_URL ?>/images/memu_sns2.png" alt="유튜브">
+                <img class="youtube" src="/images/memu_sns2.png" alt="유튜브">
             </a>
         </div>
+      -->
     </aside>
 
 

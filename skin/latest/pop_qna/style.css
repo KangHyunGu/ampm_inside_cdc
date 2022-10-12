@@ -19,7 +19,7 @@
 
 #tab-5 .lat li .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
 
-#tab-5 .lat .empty_li {line-height:145px;color:#666;text-align:center;padding:0}
+#tab-5 .lat .empty_li {line-height:145px;color:#666;text-align:center;padding:0;font-size: 14px;}
 #tab-5 .lat .empty_li:before {background:none;padding:0}
 
 #tab-5 .type_line a{

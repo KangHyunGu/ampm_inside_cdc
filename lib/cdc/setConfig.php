@@ -29,23 +29,14 @@
     vm.$data.is_admin = '<?= $is_admin ?>';
     vm.$data.secret_checked = '<?= $secret_checked ?>'
     vm.$data.recv_email_checked = '<?= $reve_email_checked ?>';
-    vm.$data.is_category = '<?= $is_category ?>';
+
 
     vm.$data.editor = {
         write_min : '<?php $write_min ?>',
         write_max : '<?php $write_max ?>'
     }
 
-    const catNames = board_data.bo_category_list.split("|");
 
-    for(const val of catNames){
-        vm.$data.code_category.push({
-            label : val,
-            value : val,
-            name: 'ca_name',
-        })
-    }
-    
     console.log('vm.allData : ', vm.$data);
     console.log('Ruels : ', rules);
 </script>

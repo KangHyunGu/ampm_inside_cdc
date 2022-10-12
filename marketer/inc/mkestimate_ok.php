@@ -39,6 +39,9 @@ $mb_id		= $utm_member;								//마케터ID
 $wr_name	= $_MARKETER_NAME;							//마케터이름
 $wr_email	= $_MARKETER_EMAIL;							//마케터이메일
 
+$wr_11	= $utm_member;								//마케터ID
+$wr_12	= $_MARKETER_NAME;							//마케터이름
+$wr_19	= 'Y';
 
 $write_table = 'g5_write_'.$bo_table;
 $wr_num = get_next_num($write_table);

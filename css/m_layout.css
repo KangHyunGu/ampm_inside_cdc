@@ -940,7 +940,7 @@ select::-ms-expand {
  }
  
  #namecard .nc_img img {
-    height: auto;
+    height: 100%;
     width: 100%;
  }
  
@@ -976,7 +976,7 @@ select::-ms-expand {
 
 #namecard h6 span {
     color: #555;
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
     margin-left: 5px;
     position: relative;
@@ -985,17 +985,17 @@ select::-ms-expand {
 #namecard h6 span.mail:before {
     position: absolute;
     top: 0;
-    left: -7px;
+    left: -6px;
     width: 1px;
     height: 100%;
     display: inline-block;
     background: #ccc;
     content: '';
-    margin-right: 5px;
+    margin-right: 1px;
 }
 
 #namecard h6 span.mail {
-    margin-left: 12px;
+    margin-left: 7px;
 }
 
 #namecard .nc_btn {

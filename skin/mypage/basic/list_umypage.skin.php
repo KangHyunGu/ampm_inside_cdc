@@ -208,8 +208,8 @@ include(G5_PATH.'/inc/top.php');
 				<option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
 				<option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
 				<option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
-				<option value="wr_name,1"<?php echo get_selected($sfl, 'wr_name,1'); ?>>작성자</option>
-				<option value="wr_12,1"<?php echo get_selected($sfl, 'wr_12,1'); ?>>지정마케터</option>
+				<option value="wr_name"<?php echo get_selected($sfl, 'wr_name'); ?>>작성자</option>
+				<option value="wr_12"<?php echo get_selected($sfl, 'wr_12'); ?>>지정마케터</option>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
             <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>"  id="stx" class="sch_input frm_input " size="15" maxlength="20">

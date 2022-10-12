@@ -33,6 +33,7 @@ function get_youtubeid($url) {
     $id = str_replace("http://youtu.be/", "", $id);
     $id = str_replace("https://www.youtube.com/watch?v=", "", $id);
     $id = str_replace("http://www.youtube.com/watch?v=", "", $id);
+	$id = mb_substr($id,0,11,'utf-8');
     
     return $id;
 }

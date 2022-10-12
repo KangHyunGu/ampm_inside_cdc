@@ -36,7 +36,7 @@
                         default : $license_img = "license"; break;
                     }
 
-                    echo '<li><img src="'.G5_MARKETER_URL.'/images/'.$license_img.'.png">'.$arrLicense[$License_newKey].'</li>';
+                    echo '<li><img src="'.G5_MARKETER_URL.'/images/'.$license_img.'.png" alt="'.$License_newKey.'">'.$arrLicense[$License_newKey].'</li>';
                     
                     $i++;  
                 }

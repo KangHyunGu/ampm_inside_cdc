@@ -405,11 +405,16 @@ if ($w == '' || $w == 'r') {
     if ($member['mb_id']) {
         // 자신의 글이라면
         if ($member['mb_id'] === $wr['mb_id']) {
-            $mb_id = $member['mb_id'];
-			$wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : ($member['ampmkey'] == 'Y')?$member['mb_name']:$member['mb_nick']));
-            $wr_email = addslashes($member['mb_email']);
-            $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
-        } else {
+            //$mb_id = $member['mb_id'];
+			//$wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : ($member['ampmkey'] == 'Y')?$member['mb_name']:$member['mb_nick']));
+            //$wr_email = addslashes($member['mb_email']);
+            //$wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
+ 
+            $mb_id = $wr['mb_id'];
+	        $wr_name = $wr['wr_name'];
+			$wr_email = $wr['wr_email'];
+            $wr_homepage = $wr['wr_homepage'];
+       } else {
             $mb_id = $wr['mb_id'];
             if(isset($_POST['wr_name']) && $_POST['wr_name'])
                 $wr_name = clean_xss_tags(trim($_POST['wr_name']));

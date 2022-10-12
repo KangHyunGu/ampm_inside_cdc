@@ -13,6 +13,9 @@ $wr_17    = $_POST['wr_17'];
 $wr_18    = $_POST['wr_18'];
 
 
+$opener_href  = get_pretty_adm_url($bo_table,'','&amp;page='.$page.'&amp;'.$qstr);
+$opener_href1 = str_replace('&amp;', '&', $opener_href);
+
 /*
 print_r2($_POST);
 echo $post_btn_submit;
@@ -93,6 +96,8 @@ while ($row = sql_fetch_array($result))
 	
 	if($post_btn_submit == '담당자일괄변경') {
 		// 게시글 담당자 변경
+		if (!trim($wr_17)) page_reload("변경사원 선택이 잘못되었습니다. 필히 입력 후 드랍된 사원을 선택 하셔야 합니다.",$opener_href1);
+
 		//echo " update $write_table set wr_17 = '{$wr_17}', wr_18 = '{$wr_18}'  where wr_id = '{$row['wr_id']}' ";
 		sql_query(" update $write_table set wr_17 = '{$wr_17}', wr_18 = '{$wr_18}'  where wr_id = '{$row['wr_id']}' ");
 	
@@ -108,8 +113,6 @@ while ($row = sql_fetch_array($result))
 
 //exit;
 $msg = '해당 게시물을 수정하였습니다.';
-$opener_href  = get_pretty_adm_url($bo_table,'','&amp;page='.$page.'&amp;'.$qstr);
-$opener_href1 = str_replace('&amp;', '&', $opener_href);
 ?>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <script>

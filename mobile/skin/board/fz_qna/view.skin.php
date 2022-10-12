@@ -14,7 +14,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <!-- 비주얼 배너 -->
     <div class="visual_banner">
-        <img src="<? G5_URL ?>/images/sub_banner1.jpg" alt="마케터 인사이트 배너">
+        <img src="<? G5_URL ?>/images/sub_banner4.jpg" alt="마케터 인사이트 배너">
     </div>
     
 

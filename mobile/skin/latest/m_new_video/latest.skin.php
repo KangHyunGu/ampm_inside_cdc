@@ -15,11 +15,11 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
    for ($i=0; $i<$list_count; $i++) {
       if(preg_match("/youtu/", $list[$i]['wr_5'])) {
          $videoId = get_youtubeid($list[$i]['wr_5']);
-         $thumb = "<img src='http://img.youtube.com/vi/$videoId/mqdefault.jpg'  />";
+         $thumb = "<img src='http://img.youtube.com/vi/$videoId/mqdefault.jpg'  alt='".$list[$i]['subject']."' />";
       }else if(preg_match("/vimeo/", $list[$i]['wr_5'])) {
          $videoId = get_vimeoid($list[$i]['wr_5']);
          $thumb_Url = get_vimeoThumb($videoId);
-         $thumb = "<img src='$thumb_Url' />";
+         $thumb = "<img src='$thumb_Url' alt='".$list[$i]['subject']."' />";
       }
 
    $wr_href = get_pretty_url($bo_table, $list[$i]['wr_id']);

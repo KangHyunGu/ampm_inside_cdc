@@ -777,7 +777,7 @@ function move_page($url, $error=true)
     }
 
 	echo "<script type='text/javascript'>";
-	echo "location.href='".G5_URL.$url."'";
+	echo "location.href='".$url."'";
 	echo "</script>";
     exit;
 }
@@ -981,4 +981,24 @@ function get_favoMarketer($mb_id, $marketer){
 	$row = sql_fetch($sql);
 
 	return $row['cnt'];
+}
+
+function get_wr_content_size($bo_table){
+	global $g5;
+	$write_table = 'g5_write_'.$bo_table;
+
+    $sql = " SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS ";
+    $sql.= " WHERE TABLE_NAME = '{$write_table}' ";
+    $sql.= " AND COLUMN_NAME = 'wr_content' ";
+    $sql.= " AND TABLE_SCHEMA = '".G5_MYSQL_DB."' ";
+	//echo $sql; 
+    $row = sql_fetch($sql);
+	
+	switch (strtolower($row['COLUMN_TYPE'])) {
+		case 'tinytext': return 256;
+		case 'text': return 65535;
+		case 'mediumtext': return 16777215;
+		case 'longtext': return 4294967295;
+		default:  return 4294967295;
+	}
 }

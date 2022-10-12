@@ -11,29 +11,8 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include(G5_PATH.'/inc/top.php');
 ?>
 <?php
-	$is_dhtml_editor = false;
-	$is_dhtml_editor_use = false;
-	$editor_content_js = '';
-	if(!is_mobile() || defined('G5_IS_MOBILE_DHTML_USE') && G5_IS_MOBILE_DHTML_USE)
-		$is_dhtml_editor_use = true;
-
-	// 모바일에서는 G5_IS_MOBILE_DHTML_USE 설정에 따라 DHTML 에디터 적용
-	if ($config['cf_editor'] && $is_dhtml_editor_use && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
-		$is_dhtml_editor = true;
-
-		if(is_file(G5_EDITOR_PATH.'/'.$config['cf_editor'].'/autosave.editor.js'))
-			$editor_content_js = '<script src="'.G5_EDITOR_URL.'/'.$config['cf_editor'].'/autosave.editor.js"></script>'.PHP_EOL;
-	}
-
-	$editor_mb_profile_html = editor_html('mb_profile', $mkt['mb_profile']);
-	$editor_mb_profile_js = '';
-	$editor_mb_profile_js .= get_editor_js('mb_profile');
-	//$editor_mb_profile_js .= chk_editor_js('mb_profile');
-
-	$editor_mb_message_html = editor_html('mb_message', $mkt['mb_message']);
-	$editor_mb_message_js = '';
-	$editor_mb_message_js .= get_editor_js('mb_message');
-	//$editor_mb_message_js .= chk_editor_js('mb_message');
+	$is_dhtml_editor = true;
+	$is_dhtml_editor_use = true;
 ?>
 <!-- 회원정보 입력/수정 시작 { -->
 <div class="register">
@@ -149,7 +128,7 @@ include(G5_PATH.'/inc/top.php');
 					}
 				?>
 				<li class="marketer_job">
-                  <label for="mb_media">전문 직종<strong class="sound_only">필수</strong></label>
+                  <label for="mb_sectors">전문 직종<strong class="sound_only">필수</strong></label>
                   <div class="align">
                   <?=codeToHtml($code_sectors, $arrSectors, "chk4", "mb_sectors")?>
                   </div>
@@ -169,8 +148,8 @@ include(G5_PATH.'/inc/top.php');
                   </div>
 	            </li>
 				<li class="marketer_history">
-                  <label for="mb_media">마케터 이력<strong class="sound_only">필수</strong></label>
-                  <?php echo $editor_mb_profile_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+                  <label for="mb_profile">마케터 이력<strong class="sound_only">필수</strong></label>
+                  <?php echo editor_html("mb_profile", $mkt['mb_profile'], $is_dhtml_editor); ?>
                   <div class="s_notice2">
                      <span class="tooltips">
                         *ex) [업체명]네이버광고 및 캠페인 운영 19.05.20~진행중
@@ -178,8 +157,8 @@ include(G5_PATH.'/inc/top.php');
                   </div>
 	            </li>
 				<li class="marketer_msg">
-                  <label for="mb_media">클라이언트에게 던지는 메시지<strong class="sound_only">필수</strong></label>
-                  <?php echo $editor_mb_message_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+                  <label for="mb_message">클라이언트에게 던지는 메시지<strong class="sound_only">필수</strong></label>
+                  <?php echo editor_html("mb_message", $mkt['mb_message'], $is_dhtml_editor); ?>
                   <div class="s_notice2">
                      <span class="tooltips">
                         *광고주에게 어필할 수 있는 자신의 장점 및 광고 운영 포부를 적어주세요.
@@ -188,7 +167,7 @@ include(G5_PATH.'/inc/top.php');
 	            </li>
 
 				<li>
-                  <label for="mb_media">운영 블로그 주소<strong class="sound_only">필수</strong></label>
+                  <label for="mb_bloglink">운영 블로그 주소<strong class="sound_only">필수</strong></label>
                   <input type="text" name="mb_bloglink" value="<?php echo $mkt['mb_bloglink'] ?>" id="mb_bloglink" class="frm_input" size="150">
                   <div class="s_notice2">
                      <span class="tooltips">
@@ -197,7 +176,7 @@ include(G5_PATH.'/inc/top.php');
                   </div>
 	            </li>
 				<li>
-                  <label for="mb_media">운영 페이스북 주소<strong class="sound_only">필수</strong></label>
+                  <label for="mb_facebooklink">운영 페이스북 주소<strong class="sound_only">필수</strong></label>
                   <input type="text" name="mb_facebooklink" value="<?php echo $mkt['mb_facebooklink'] ?>" id="mb_facebooklink" class="frm_input" size="150">
                   <div class="s_notice2">
                      <span class="tooltips">
@@ -206,7 +185,7 @@ include(G5_PATH.'/inc/top.php');
                   </div>
 	            </li>
 				<li>
-                  <label for="mb_media">운영 인스타그램 주소<strong class="sound_only">필수</strong></label>
+                  <label for="mb_instagramlink">운영 인스타그램 주소<strong class="sound_only">필수</strong></label>
                   <input type="text" name="mb_instagramlink" value="<?php echo $mkt['mb_instagramlink'] ?>" id="mb_instagramlink" class="frm_input" size="150">
                   <div class="s_notice2">
                      <span class="tooltips">
@@ -215,7 +194,7 @@ include(G5_PATH.'/inc/top.php');
                   </div>
 	            </li>
 				<li>
-                  <label for="mb_media">운영 유튜브채널 주소<strong class="sound_only">필수</strong></label>
+                  <label for="mb_youtubelink">운영 유튜브채널 주소<strong class="sound_only">필수</strong></label>
                   <input type="text" name="mb_youtubelink" value="<?php echo $mkt['mb_youtubelink'] ?>" id="mb_youtubelink" class="frm_input" size="150">
                   <div class="s_notice2">
                      <span class="tooltips">
@@ -268,137 +247,16 @@ function count_ck(obj){
 // submit 최종 폼체크
 function fregisterform_submit(f)
 {
-    // 회원아이디 검사
-    if (f.w.value == "") {
-        var msg = reg_mb_id_check();
-        if (msg) {
-            alert(msg);
-            f.mb_id.select();
-            return false;
-        }else{
-			if ( isValid_Email($("#reg_mb_id").val()) == false ) { 
-				alert("이메일 형식이 유효하지 않습니다.\r\n다시 확인해 주세요!");	$("#reg_mb_id").focus(); 	return false; 
-			}
-		}
-    }
-
-    if (f.w.value == "") {
-        if (f.mb_password.value.length < 3) {
-            alert("비밀번호를 3글자 이상 입력하십시오.");
-            f.mb_password.focus();
-            return false;
-        }
-    }
-
-    if (f.mb_password.value != f.mb_password_re.value) {
-        alert("비밀번호가 같지 않습니다.");
-        f.mb_password_re.focus();
-        return false;
-    }
-
-    if (f.mb_password.value.length > 0) {
-        if (f.mb_password_re.value.length < 3) {
-            alert("비밀번호를 3글자 이상 입력하십시오.");
-            f.mb_password_re.focus();
-            return false;
-        }
-    }
-
-    // 이름 검사
-    if (f.w.value=="") {
-        if (f.mb_name.value.length < 1) {
-            alert("이름을 입력하십시오.");
-            f.mb_name.focus();
-            return false;
-        }
-
-        /*
-        var pattern = /([^가-힣\x20])/i;
-        if (pattern.test(f.mb_name.value)) {
-            alert("이름은 한글로 입력하십시오.");
-            f.mb_name.select();
-            return false;
-        }
-        */
-    }
-
-    <?php if($w == '' && $config['cf_cert_use'] && $config['cf_cert_req']) { ?>
-    // 본인확인 체크
-    if(f.cert_no.value=="") {
-        alert("회원가입을 위해서는 본인확인을 해주셔야 합니다.");
-        return false;
-    }
-    <?php } ?>
-
-    // 닉네임 검사
-    if ((f.w.value == "") || (f.w.value == "u" && f.mb_nick.defaultValue != f.mb_nick.value)) {
-        var msg = reg_mb_nick_check();
-        if (msg) {
-            alert(msg);
-            f.reg_mb_nick.select();
-            return false;
-        }
-    }
-
-/*
-    // E-mail 검사
-    if ((f.w.value == "") || (f.w.value == "u" && f.mb_email.defaultValue != f.mb_email.value)) {
-        var msg = reg_mb_email_check();
-        if (msg) {
-            alert(msg);
-            f.reg_mb_email.select();
-            return false;
-        }
-    }
-
-    <?php if (($config['cf_use_hp'] || $config['cf_cert_hp']) && $config['cf_req_hp']) {  ?>
-    // 휴대폰번호 체크
-    var msg = reg_mb_hp_check();
-    if (msg) {
-        alert(msg);
-        f.reg_mb_hp.select();
-        return false;
-    }
-    <?php } ?>
-
-    if (typeof f.mb_icon != "undefined") {
-        if (f.mb_icon.value) {
-            if (!f.mb_icon.value.toLowerCase().match(/.(gif|jpe?g|png)$/i)) {
-                alert("회원아이콘이 이미지 파일이 아닙니다.");
-                f.mb_icon.focus();
-                return false;
-            }
-        }
-    }
-
-    if (typeof f.mb_img != "undefined") {
-        if (f.mb_img.value) {
-            if (!f.mb_img.value.toLowerCase().match(/.(gif|jpe?g|png)$/i)) {
-                alert("회원이미지가 이미지 파일이 아닙니다.");
-                f.mb_img.focus();
-                return false;
-            }
-        }
-    }
-
-    if (typeof(f.mb_recommend) != "undefined" && f.mb_recommend.value) {
-        if (f.mb_id.value == f.mb_recommend.value) {
-            alert("본인을 추천할 수 없습니다.");
-            f.mb_recommend.focus();
-            return false;
-        }
-
-        var msg = reg_mb_recommend_check();
-        if (msg) {
-            alert(msg);
-            f.mb_recommend.select();
-            return false;
-        }
-    }
 
     <?php //echo chk_captcha_js();  ?>
-*/
-    document.getElementById("btn_submit").disabled = "disabled";
+
+	<?php echo get_editor_js("mb_profile"); ?> // 반드시 추가해야합니다.
+	<?php //echo chk_editor_js("mb_profile"); ?> // 추가하면 필수 입력 상태로 됩니다. 선택 입력으로 하고 싶으면 삭제
+	<?php echo get_editor_js("mb_message"); ?> // 반드시 추가해야합니다.
+	<?php //echo chk_editor_js("mb_message"); ?> // 추가하면 필수 입력 상태로 됩니다. 선택 입력으로 하고 싶으면 삭제
+
+	document.getElementById("btn_submit").disabled = "disabled";
+
 
     return true;
 }

@@ -268,18 +268,20 @@
  }
  
  /*-- 회원가입-ID/PW 찾기 --*/
-.lost_pw {
+.lost_pw,.mbskin {
     margin: 0 auto;
     width: 100%;
     height: 100vh;
     padding: 10% !important;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
  }
  
  .register .new_win_con {
     margin: 40px 0 0;
+    width: 100%;
  }
  
  .register #info_fs {

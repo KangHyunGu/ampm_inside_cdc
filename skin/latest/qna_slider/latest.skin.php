@@ -48,11 +48,11 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
                 </a>
             </div>
         <?php }  ?>
+      </div>
 
-        <?php if ($list_count == 0) { //게시물이 없을 때  ?>
-            <div class="empty_li">게시물이 없습니다.</div>
-        <?php }  ?>
-    </div>
+      <?php if ($list_count == 0) { //게시물이 없을 때  ?>
+         <div class="empty_li">게시물이 없습니다.</div>
+      <?php }  ?>
 
     <div class="lank_slider_btn">
       <div class="prev">

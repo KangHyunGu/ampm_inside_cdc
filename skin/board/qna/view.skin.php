@@ -42,30 +42,9 @@ include(G5_PATH.'/inc/top.php');
 					<strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
 					<strong><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong>
 					<strong>조회수 <?php echo number_format($view['wr_hit']) ?></strong>
-					<!--댓글<strong><?php echo number_format($view['wr_comment']) ?>건</strong>-->
 				</section>
 
 				<div class="inner">
-				   <!-- media아이콘
-				   <div class="media">
-					  <ul>
-						 <li>
-							<a href="#" target="blank">
-							   <img src="<?=G5_URL ?>/images/instagram_on.png" alt="">
-							</a>
-						 </li>
-						 <li>
-							<a href="#" target="blank">
-							   <img src="<?=G5_URL ?>/images/blog_on.png" alt="">
-							</a>
-						 </li>
-						 <li>
-							<a href="#" target="blank">
-							   <img src="<?=G5_URL ?>/images/youtube_on.png" alt="">
-							</a>
-						 </li>
-					  </ul>
-				   </div> -->
 				   <!-- 공유하기 -->
 				   <div class="share">
 					  <span class="link_copy">

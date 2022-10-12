@@ -1116,24 +1116,6 @@ select {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*-- footer --*/
 #m_footer {
     position: relative;
@@ -1323,7 +1305,7 @@ select {
     width: 91px;
     height: 19px;
     margin: 11px 0 0 15px;
-    background: url(http://renew.ampm.kr/marketer/images/logo-mkt.png) no-repeat center;
+    background: url(/images/logo.png) no-repeat center;
     background-size: contain;
 }
 
@@ -1556,7 +1538,7 @@ select {
     border: 1px solid #ddd;
     background: #fff;
     border-radius: 15px;
-    padding: 25px;
+    padding: 18px;
     width: 100%;
 }
 
@@ -1642,6 +1624,10 @@ select {
     margin: 30px 0 0;
 }
 
+.mb-box iframe {
+   width: 100%;
+}
+
 .mb-box:nth-of-type(1) {
     margin: 0;
 }
@@ -1652,7 +1638,7 @@ select {
 }
 
 .mb-box .mb-title {
-    font-size: 1.4em;
+    font-size: 1.3em;
     font-weight: 600;
 }
 

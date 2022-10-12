@@ -1,0 +1,15 @@
+.tbl_frm01 .tbl_wrap table tbody tr th{
+    text-align: center !important;
+}
+
+.col-left{
+    float: left;
+}
+
+.col-center{
+    float: center;
+}
+
+.col-right{
+    float: right;
+}

@@ -8,7 +8,7 @@
             <q-field :model-value="bf_file" ref="images" :rules="mandatory('cdc_files[]', '이미지')" :reactive-rules="true">
                 <template v-slot:control>
                     <div class="q-gutter-md row items-start">
-                        <imageform v-for="i in 10" :key="i" v-model="bf_file[i - 1]" :bf_file="bf_file[i - 1]" :add_icon_size="'60px'" @remove="removeFile" style="width:130px; height:100px;">
+                        <imageform v-for="i in 10" :key="i" v-model="bf_file[i - 1]" :bf_file="bf_file[i - 1]" :add_icon_size="'60px'" @remove="removeImageFile" style="width:130px; height:100px;">
                         </imageform>
                     </div>
                 </template>
@@ -20,7 +20,7 @@
     <tr v-show="isThumNail">
         <th scope="row"><label for="">썸네일</label></th>
         <td>
-            <imageform v-model="bf_file[10]" :bf_file="bf_file[10]" :add_icon_size="'150px'" @remove="removeFile" />
+            <imageform v-model="bf_file[10]" :bf_file="bf_file[10]" :add_icon_size="'150px'" @remove="removeImageFile" />
         </td>
     </tr>
 
@@ -28,7 +28,7 @@
     <tr v-show="isCtaVanner">
         <th scope="row"><label for="">CTA배너</label></th>
         <td>
-            <imageform v-model="bf_file[11]" :bf_file="bf_file[11]" :add_icon_size="'150px'" @remove="removeFile">
+            <imageform v-model="bf_file[11]" :bf_file="bf_file[11]" :add_icon_size="'150px'" @remove="removeImageFile">
             </imageform>
             <div v-if="bf_file[11]" class="q-gutter-md row items-start">
                 <q-input name="wr_cat_link" class="q-input" style="margin-top:20px;" outlined v-model="form.cdc.wr_cat_link" label="클릭 링크를 입력해주세요" dense size="100">
@@ -41,7 +41,7 @@
     <tr v-if="isShortVideo">
         <th scope="row">동영상(15~60초)</th>
         <td>
-            <inputvideo v-model="form.cdc.wr_video_link" ref="inputvideo" :bf_file="bf_file[12]" @uploader-video="uploaderVideo($event, 'bf_file', 12)" @remove="removeFile" />
+            <inputvideo v-model="form.cdc.wr_video_link" ref="inputvideo" :bf_file="bf_file[12]" @uploader-video="uploaderVideo($event, 'bf_file', 12)" :isMode="<?php echo $w == 'u' ?>" :file_info="videoFileInfos[0]" @file_state_video="uploadingFileControl" />
         </td>
     </tr>
 
@@ -52,7 +52,7 @@
             유튜브 동영상
         </th>
         <td>
-            <inputvideo :clcd="'youtube'" ref="inputvideoYoutube" v-model="form.cdc.wr_youtube_link" :bf_file="bf_file[13]" @uploader-video="uploaderVideo($event, 'bf_file', 13)" @remove="removeFile" />
+            <inputvideo :clcd="'youtube'" ref="inputvideoYoutube" v-model="form.cdc.wr_youtube_link" :bf_file="bf_file[13]" :isMode="<?php echo $w == 'u' ?>" :file_info="videoFileInfos[1]" @uploader-video="uploaderVideo($event, 'bf_file', 13)" @file_state_video="uploadingFileControl" />
         </td>
     </tr>
 
@@ -62,7 +62,7 @@
         <td>
             <div class="q-gutter-md">
                 <div class="row items-start">
-                    <q-select label="메인 해시태그(해시태그 구분시 Enter키를 이용해주시기 바랍니다.)" v-model="mhashs" :rules="[Rules.hashTagRules('wr_mhash')]" lazy-rules use-input use-chips outlined multiple hide-dropdown-icon input-debounce="0" @new-value="addMhash" dense size="90" />
+                    <q-select label="메인 해시태그(해시태그 구분시 Enter키를 이용해주시기 바랍니다.)" v-model="mhashs" use-input use-chips outlined multiple hide-dropdown-icon input-debounce="0" @new-value="addMhash" dense size="90" />
                 </div>
             </div>
 
@@ -76,7 +76,7 @@
         <td>
             <div class="q-gutter-md">
                 <div class="row items-start">
-                    <q-select label="서브 해시태그(해시태그 구분시 Enter키를 이용해주시기 바랍니다.)" v-model="shashs" :rules="[Rules.hashTagRules('wr_shash')]" lazy-rules use-input use-chips outlined multiple hide-dropdown-icon input-debounce="0" @new-value="addShash" dense size="90" />
+                    <q-select label="서브 해시태그(해시태그 구분시 Enter키를 이용해주시기 바랍니다.)" v-model="shashs" use-input use-chips outlined multiple hide-dropdown-icon input-debounce="0" @new-value="addShash" dense size="90" />
                 </div>
             </div>
         </td>
@@ -96,7 +96,7 @@
     </tr>
 
     <!-- 재생목록 -->
-    <tr v-if="isVideoList">
+    <tr v-if="isYoutubeVideo">
         <th scope="row">재생목록</th>
         <td>
             <div class="q-gutter-md row items-start" style="width:100%;">

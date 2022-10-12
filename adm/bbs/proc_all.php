@@ -16,16 +16,25 @@ include_once(G5_PATH.'/head.sub.php');
 $wr_id_list = '';
 $comma = '';
 
-$count_chk_bn_id = (isset($_POST['chk_bn_id']) && is_array($_POST['chk_bn_id'])) ? count($_POST['chk_bn_id']) : 0;
 
+$count_chk_bn_id = (isset($_POST['chk_bn_id']) && is_array($_POST['chk_bn_id'])) ? count($_POST['chk_bn_id']) : 0;
 
 for($i=0;$i<$count_chk_bn_id;$i++)
 {
-
-	$wr_id_val   = isset($_POST['wr_id'][$i]) ? preg_replace('/[^0-9]/i', '', $_POST['wr_id'][$i]) : 0;
+    // 실제 번호를 넘김
+    $k = isset($_POST['chk_bn_id'][$i]) ? (int) $_POST['chk_bn_id'][$i] : 0;
+	//echo $_POST['wr_id'][$k]."<br>";
+	$wr_id_val   = isset($_POST['wr_id'][$k]) ? preg_replace('/[^0-9]/i', '', $_POST['wr_id'][$k]) : 0;
 	$wr_id_list .= $comma . $wr_id_val;
 	$comma = ',';
 }
+
+/*
+echo $count_chk_bn_id."<br>";
+echo $wr_id_list;
+
+exit;
+*/
 ?>
 <link rel="stylesheet" href="<?php echo G5_JS_URL ?>/jquery-ui-1.11.4/jquery-ui.css"></link>
 <script src="<?php echo G5_JS_URL ?>/jquery-ui-1.11.4/jquery-ui.js"></script>

@@ -11,17 +11,18 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
 
 <ul class="type_ref">
    <?php
-   for ($i=0; $i<$list_count; $i++) {
-	   $thumb = get_list_thumbnail($bo_table, $list[$i]['wr_id'], $thumb_width, $thumb_height, false, true);
+	for ($i=0; $i<$list_count; $i++) {
+		$thumb = get_list_thumbnail($bo_table, $list[$i]['wr_id'], $thumb_width, $thumb_height, false, true);
 
-	   if($thumb['src']) {
-		  $img = $thumb['src'];
-	   } else {
-		  $img = G5_URL.'/mobile/skin/latest/m_pop_reference/img/no-img.jpg';
-		  $thumb['alt'] = '이미지가 없습니다.';
-	   }
-	   $img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" >';
-	   $wr_href = get_pretty_url($bo_table, $list[$i]['wr_id']);
+		if($thumb['src']) {
+			$img = $thumb['src'];
+ 			$thumb['alt'] = $list[$i]['subject'];
+		} else {
+			$img = G5_URL.'/mobile/skin/latest/m_pop_reference/img/no-img.jpg';
+			$thumb['alt'] = '이미지가 없습니다.';
+		}
+		$img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" >';
+		$wr_href = get_pretty_url($bo_table, $list[$i]['wr_id']);
    ?>
 
       <li>

@@ -18,11 +18,11 @@
          <div class="main_tab_con">
             <!-- 인기순 -->
             <div id="tab-5" class="tab_content active">
-                <?php echo latest_popular("pop_qna", 'qna', 8, 30, 1, 'wr_hit desc', 'Y');?>
+                <?php echo latest_popular("pop_qna", 'qna', 8, 23, 1, 'wr_hit desc', 'Y');?>
             </div>
             <!-- 최신순-->
             <div id="tab-6" class="tab_content">
-                <?php echo latest("list_qna", 'qna', 8, 30);?>
+                <?php echo latest("list_qna", 'qna', 8, 23);?>
             </div>
          </div>
       </div>

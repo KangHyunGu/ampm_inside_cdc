@@ -17,6 +17,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
 
 			if($thumb['src']) {
 				$img = $thumb['src'];
+ 				$thumb['alt'] = $list[$i]['subject'];
 			} else {
 				$img = '../skin/board/reference/img/no-img.jpg';
 				$thumb['alt'] = '이미지가 없습니다.';

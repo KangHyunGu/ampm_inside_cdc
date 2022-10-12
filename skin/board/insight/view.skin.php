@@ -141,7 +141,7 @@ include(G5_PATH . '/inc/top.php');
 
 					<!-- 본문 내용 시작 { -->
 					<div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
-					<? php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 
+					<?php //echo $view['rich_content']; // {이미지:0} 과 같은 코드를 사용할 경우 
 					?>
 					<!-- } 본문 내용 끝 -->
 
@@ -239,20 +239,14 @@ include(G5_PATH . '/inc/top.php');
 
 
 	</div>
+	<!-- // v-app -->
 	<!-- 우측 side 영역 -->
 	<?php include(G5_PATH . '/inc/aside.php'); ?>
 
-
-
 </div>
-<script src="<?= CDC_JS_URL ?>/cdcCommon.js?v=<?= CDC_VER ?>"></script>
-<!-- CDC 모듈 -->
-<script src="<?= CDC_JS_URL ?>/read/cdcReadVue.js?v=<?= CDC_VER ?>"></script>
-<script>
-	const viewData = <?php echo json_encode($view) ?>;
-	vm.setupView(viewData);
-</script>
 
+<!-- CDC JS 모듈 -->
+<?php include(CDC_PATH. "/cdcViewFormSetting.php"); ?>
 
 <script>
 	<?php if ($board['bo_download_point'] < 0) { ?>

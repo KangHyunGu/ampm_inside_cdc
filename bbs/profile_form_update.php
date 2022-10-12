@@ -23,6 +23,11 @@ if (!chk_captcha()) {
 }
 */
 
+/*
+print_r2($_REQUEST);
+exit;
+*/
+
 if($w == 'u'){
     $mb_id = isset($_SESSION['ss_mb_id']) ? trim($_SESSION['ss_mb_id']) : '';
 	
@@ -41,12 +46,12 @@ if(!$mb_id)
     alert('사원정보가 올바르지 않습니다. 올바른 방법으로 이용해 주십시오.');
 
 if (isset($_POST['mb_profile'])) {
-    $mb_profile = substr(trim($_POST['mb_profile']),0,65536);
+    //$mb_profile = substr(trim($_POST['mb_profile']),0,65536);
     $mb_profile = preg_replace("#[\\\]+$#", "", $mb_profile);
 }
 
 if (isset($_POST['mb_message'])) {
-    $mb_message = substr(trim($_POST['mb_message']),0,65536);
+    //$mb_message = substr(trim($_POST['mb_message']),0,65536);
     $mb_message = preg_replace("#[\\\]+$#", "", $mb_message);
 }
 
