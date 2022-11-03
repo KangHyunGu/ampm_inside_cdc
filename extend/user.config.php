@@ -968,19 +968,22 @@ function get_favoMarketer_info($mb_id){
 	global $g5;
 
 	$sql = " select * from g5_favo_info where mb_id = TRIM('$mb_id') ";
-	
 	return sql_fetch($sql);
 
 }
 
 function get_favoMarketer($mb_id, $marketer){
 	global $g5;
-
-	$sql = " select IFNULL(count(*), 0) as cnt from g5_favo_info where mb_id = TRIM('$mb_id') and fa_marketer like '%{$marketer}%' ";
 	
-	$row = sql_fetch($sql);
-
-	return $row['cnt'];
+	if($mb_id){
+		$sql = " select IFNULL(count(*), 0) as cnt from g5_favo_info where mb_id = TRIM('$mb_id') and fa_marketer like '%{$marketer}%' ";
+		//echo $sql;
+		$row = sql_fetch($sql);
+		return $row['cnt'];
+	}else{
+		return 0;
+	}
+	
 }
 
 function get_wr_content_size($bo_table){

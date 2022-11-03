@@ -8,6 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 2
 
 <?php
 include(G5_PATH.'/inc/top.php');
+include(CDC_PATH . '/cdc_cdn_include.php');
 ?>
 
 <div id="container" class="sub">
@@ -32,35 +33,7 @@ include(G5_PATH.'/inc/top.php');
 								<div class="inner">
 									<!-- media아이콘 -->
 							<div class="media">
-								<ul>
-									<!-- instagram -->
-									<li>
-										<a target="blank" 
-											v-if="isCompInsta"
-											:href="skinViews.cdc.wr_comp_insta_link">
-										<img src="<?=G5_URL ?>/images/instagram_on.png" />
-										</a>
-										<span v-else style="margin-left:2px;"> <img src="<?=G5_URL ?>/images/instagram.png" /></span>
-									</li>
-									<!-- naver -->
-									<li>
-										<a target="blank"
-											v-if="isCompBlog"
-											:href="skinViews.cdc.wr_comp_blog_link">
-										<img src="<?=G5_URL ?>/images/blog_on.png" alt="">
-										</a>
-										<span v-else style="margin-left:2px;"> <img src="<?=G5_URL ?>/images/blog.png" /></span>
-									</li>
-									<!-- youtube -->
-									<li>
-										<a target="blank"
-										v-if="isCompYoutube"
-										:href="skinViews.cdc.wr_comp_youtube_link">
-										<img src="<?=G5_URL ?>/images/youtube_on.png" alt="">
-										</a>
-										<span v-else style="margin-left:2px;"><img src="<?=G5_URL ?>/images/youtube.png" /></span>
-									</li>
-								</ul>
+								<?php include_once(CDC_PATH. '/cdc_media_icon.php'); ?>
 							</div>
 									<!-- 공유하기 -->
 

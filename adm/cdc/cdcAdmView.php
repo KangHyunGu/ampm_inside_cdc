@@ -41,7 +41,9 @@
                 <tr v-if="isCdcContentView">
                     <th style="text-align: center;"><label for="">내용</label></th>
                     <td class="row">
-                        <div class="col-md-11" v-html="curList.wr_cdc_content"></div>
+                        <div id="wr_cdc_content" class="col-md-11 bo_v_con">
+                            <div v-html="curList.wr_cdc_content"></div>
+                        </div>
                         <div class="col-md-1">
                             <q-btn @click="copy('wr_cdc_content', '컨텐츠 본문')" class="col-right" push color="white" text-color="primary" size="sm" round icon="content_copy">
                                 <q-tooltip>내용 Copy</q-tooltip>
@@ -68,6 +70,11 @@
                                     </q-carousel-control> -->
                             </template>
                         </q-carousel>
+                        <hr class="split" />
+                        <q-btn @click="allDownload" class="q-pa-md full-width">
+                            이미지 전체 다운로드
+                            <q-icon left size="sm" name="file_download" />
+                        </q-btn>
                         <hr class="split" />
                         <div class="q-gutter-sm row items-center">
                             <q-img v-for="(fileInfo, index) in curImgInfos" :src="fileInfo.imgSrc" outlined spinner-color="primary" spinner-size="82px" :ratio="16/9" width="100px" height="100px" fit="contain" style="border: 2px solid black;">
@@ -132,7 +139,7 @@
                         <div v-if="curList.wr_video_link">
                             <q-video :ratio="16/9" :src="enableVideo(curList.wr_video_link)" referrerpolicy="no-referrer">
                             </q-video>
-                            <div class="row">
+                            <div class="q-py-md row">
                                 <div class="col-md-11">
                                     <span>동영상 링크 :
                                         <a :href="curList.wr_video_link" target="blank">{{curList.wr_video_link}}</a>
@@ -146,11 +153,21 @@
                             </div>
                         </div>
 
-                        <q-field class="q-py-md" v-if="curVideoInfos[0] && curVideoInfos[0].file" filled square :dense="dense">
+                        <q-field class="q-py-md" v-if="curVideoInfos[0] && curVideoInfos[0].file" filled square>
                             <template v-slot:control>
                                 <div class="self-center full-width no-outline" tabindex="0">
                                     <h3>첨부파일</h3>
-                                    <a @click="imgDownload(curVideoInfos[0].src, curVideoInfos[0].source)">· {{curVideoInfos[0].source}}</a>
+                                    <!-- @click="imgDownload(curVideoInfos[0].src, curVideoInfos[0].source)" -->
+                                    <div class="row">
+                                        <div class="col-11">
+                                            <span>· {{curVideoInfos[0].source}}</span>
+                                        </div>
+                                        <div class="col-1">
+                                            <q-btn push color="white" class="absolute-bottom-right all-pointer-events" text-color="primary" size="sm" round icon="file_download" @click.stop="imgDownload(curVideoInfos[0].src, curVideoInfos[0].source)">
+                                                <q-tooltip>{{curVideoInfos[0].source}}} 다운로드</q-tooltip>
+                                            </q-btn>
+                                        </div>
+                                    </div>
                                 </div>
                             </template>
                         </q-field>

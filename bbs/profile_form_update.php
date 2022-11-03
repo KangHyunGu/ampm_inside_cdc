@@ -99,6 +99,7 @@ $sql_common = "  mb_license 		= '{$arrLicense}',
 $sql_common1 = " mb_13 	= '{$arrSectors}',
 				 mb_14 	= '{$arrMedia}',
 				 mb_16 	= '{$arrLicense}',
+				 mb_15 	= '{$mb_profile}',
 				 mb_12 	= '{$_POST['mb_slogan']}',
 				 mb_5 	= '{$_POST['mb_kakaoid']}'
 			  ";

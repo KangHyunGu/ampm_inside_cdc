@@ -17,7 +17,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
         
         $img_link_html = '';
         
-        $wr_href = get_pretty_url($bo_table, $list[$i]['wr_id']);
+        $wr_href = $list[$i]['href'];
 
         if( $i === 0 ) {
             $thumb = get_list_thumbnail($bo_table, $list[$i]['wr_id'], $thumb_width, $thumb_height, false, true);

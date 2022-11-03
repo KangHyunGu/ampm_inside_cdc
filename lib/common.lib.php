@@ -492,7 +492,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     // 분류명 링크
     $list['ca_name_href'] = get_pretty_url($board['bo_table'], '', 'sca='.urlencode($list['ca_name']));
 
-    $list['href'] = get_pretty_url($board['bo_table'], $list['wr_id'], $qstr);
+    $list['href'] = get_pretty_url($board['bo_table'], $list['wr_id'], '&amp;ae='.$list['wr_17'].$qstr);
     $list['comment_href'] = $list['href'];
 
     $list['icon_new'] = '';
@@ -868,7 +868,7 @@ function get_member($mb_id, $fields='*', $is_cache=false)
     $sql = " select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ";
 
     $cache[$mb_id][$key] = run_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
-
+    
     return $cache[$mb_id][$key];
 }
 

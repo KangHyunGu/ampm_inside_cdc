@@ -44,6 +44,10 @@ include(G5_PATH.'/inc/_inc_top_path.php');
             </a>
         </div>
 
+        <div id="sch_btn">
+            <img src="<? G5_URL ?>/images/sch_icon.png">
+        </div>
+
         <button type="button" id="menu_open" class="hd_opener">
             <span class="sound_only"> 메뉴열기</span>
             <div class="open_icon">
@@ -52,6 +56,27 @@ include(G5_PATH.'/inc/_inc_top_path.php');
                 <span></span>
             </div>
         </button>
+    </div>
+
+    <div id="hd_open_sch">
+      <div class="close_icon">
+         <span></span>
+         <span></span>
+      </div>
+
+      <form name="fsearchbox" method="get" action="<?=G5_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);" class="sidebar-form">
+         <input type="hidden" name="sfl" value="wr_subject||wr_content||wr_18||wr_12">
+         <input type="hidden" name="sop" value="and">
+         
+         <div class="input-group input-group-sm">
+         <label for="sch_stx" class="sound_only">검색어 필수</label>
+         <input type="text" name="stx" id="sch_stx" maxlength="20" class="form-control" placeholder="검색어를 입력하세요.">
+         <span class="input-group-btn">
+            <button type="submit" id="sch_submit" value="검색" class="btn btn-flat">검색</button>
+         </span>	
+         </div>
+      </form>
+
     </div>
 
     <div id="menu" class="hd_div">
@@ -70,7 +95,7 @@ include(G5_PATH.'/inc/_inc_top_path.php');
             <div class="menu_gnb">
                 <ul>
                     <li>
-                        <a href="<?=G5_BBS_URL?>/board.php?bo_table=insight">마케터 인사이트</a>
+                        <a href="<?=G5_BBS_URL?>/board.php?bo_table=insight">마케팅 인사이트</a>
                     </li>
                     <li>
                         <a href="<?=G5_BBS_URL?>/board.php?bo_table=video">영상 교육</a>
@@ -87,6 +112,50 @@ include(G5_PATH.'/inc/_inc_top_path.php');
                 </ul>
             </div>
 
+            
+            <div id="hd_sch">
+               <form name="fsearchbox" method="get" action="<?=G5_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);" class="sidebar-form">
+				  <input type="hidden" name="sfl" value="wr_subject||wr_content||wr_18||wr_12">
+                  <input type="hidden" name="sop" value="and">
+                  
+                  <div class="input-group input-group-sm">
+                  <label for="sch_stx" class="sound_only">검색어 필수</label>
+                  <input type="text" name="stx" id="sch_stx" maxlength="20" class="form-control" placeholder="검색어를 입력하세요.">
+                  <span class="input-group-btn">
+                     <button type="submit" id="sch_submit" value="검색" class="btn btn-flat"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                  </span>	
+                  </div>
+               </form>
+
+                <script>
+                function fsearchbox_submit(f)
+                {
+                    if (f.stx.value.length < 2) {
+                        alert("검색어는 두글자 이상 입력하십시오.");
+                        f.stx.select();
+                        f.stx.focus();
+                        return false;
+                    }
+
+                    // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
+                    var cnt = 0;
+                    for (var i=0; i<f.stx.value.length; i++) {
+                        if (f.stx.value.charAt(i) == ' ')
+                            cnt++;
+                    }
+
+                    if (cnt > 1) {
+                        alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
+                        f.stx.select();
+                        f.stx.focus();
+                        return false;
+                    }
+
+                    return true;
+                }
+                </script>
+            </div>
+               
         </div>
     </div>
 
@@ -124,6 +193,14 @@ include(G5_PATH.'/inc/_inc_top_path.php');
             $(".btn_gnb_op").click(function(){
                 $(this).toggleClass("btn_gnb_cl").next(".gnb_2dul").slideToggle(300);
                 
+            });
+
+            $("#sch_btn").on("click", function() {
+               $("#hd_open_sch").addClass("open");
+            });
+
+            $("#hd_open_sch .close_icon").on("click", function() {
+               $("#hd_open_sch").removeClass("open");
             });
 
         });

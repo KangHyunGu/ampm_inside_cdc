@@ -44,4 +44,6 @@ if(!$wr_comment) {  // 코멘일때는 저장하면 안됨
 	" ; 
 	sql_query($sql); 
 }
+// CDC 적용
+include_once(CDC_PATH.'/write_update.skin.php');
 ?>

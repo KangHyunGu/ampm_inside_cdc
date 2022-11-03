@@ -373,6 +373,15 @@ if (isset($_REQUEST['page'])) { // 리스트 페이지
 } else {
     $page = '';
 }
+/////////////////////////////////////////////////////////////
+if (isset($_REQUEST['ae']))  { // search operator (검색 or, and 오퍼레이터)
+    $ae = trim($_REQUEST['ae']);
+    if ($ae)
+        $qstr .= '&amp;ae=' . urlencode($ae);
+} else {
+    $ae = '';
+}
+/////////////////////////////////////////////////////////////
 
 if (isset($_REQUEST['w'])) {
     $w = substr($w, 0, 2);

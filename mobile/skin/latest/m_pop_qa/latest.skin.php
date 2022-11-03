@@ -15,7 +15,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
                 <?php
                     if ($list[$i]['icon_secret']) echo "<i class=\"fa fa-lock\" aria-hidden=\"true\"></i><span class=\"sound_only\">비밀글</span> ";
 
-                    echo "<a href=\"".get_pretty_url($bo_table, $list[$i]['wr_id'])."\"> ";
+                    echo "<a href=\"".$list[$i]['href']."\"> ";
                     if ($list[$i]['is_notice'])
                         echo "<p>".$list[$i]['subject']."</p>";
                     else

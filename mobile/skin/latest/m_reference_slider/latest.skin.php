@@ -24,7 +24,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
 			}
 			$img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" >';
 
-			$wr_href = get_pretty_url($bo_table, $list[$i]['wr_id']);
+			$wr_href = $list[$i]['href'];
          ?>
             <div class="lank">
                 <a href="<?php echo $list[$i]['href'] ?>">

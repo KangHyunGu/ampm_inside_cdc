@@ -1,3 +1,4 @@
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.js?v=<?= CDC_VER ?>"></script>
 <script>
     // vue setting
     // Vue 생성 전 setting 처리

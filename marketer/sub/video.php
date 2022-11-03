@@ -34,7 +34,7 @@ $bo_table = 'video';
 $write_table = 'g5_write_'.$bo_table;
 
 //$mk_sql_search = " ( mb_id = '{$utm_member}' OR mb_id = 'ampm' )";
-$mk_sql_search = " ( wr_17 = '{$utm_member}' OR mb_id = 'ampm' )";
+$mk_sql_search = " ( wr_17 = '{$utm_member}' )";
 
 //////////////////////////////////////////////
 //공통자료 비노출 찾아서 제외하기
@@ -189,7 +189,8 @@ include(G5_MARKETER_PATH.'/inc/_sub_header.php');
                         //////////////////////////////////////////////////////////////////////////
                         
                         $sql_search = "";
-                        $sql_search = "  AND wr_1 = '나의영상' ";	//나의영상만
+                        //$sql_search.= "  AND wr_1 = '나의영상' ";	//나의영상만
+                        $sql_search.= "  AND wr_20 = '' ";	//나의영상만
 
                         if($stx) {
                             $sql_search .= " and ";
@@ -256,7 +257,8 @@ include(G5_MARKETER_PATH.'/inc/_sub_header.php');
                         //////////////////////////////////////////////////////////////////////////
                         
                         $sql_search = "";
-                        $sql_search = "  AND wr_1 = '추천영상' ";	//추천영상만
+                        //$sql_search.= "  AND wr_1 = '추천영상' ";	//추천영상만
+                        $sql_search.= "  AND wr_20 != '' ";	//추천영상만
 
                         if($stx) {
                             $sql_search .= " and ";

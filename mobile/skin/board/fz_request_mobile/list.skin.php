@@ -160,6 +160,7 @@ include(G5_PATH.'/inc/m_menu.php');
         <option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
         <option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
         <option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
+		<option value="wr_18"<?php echo get_selected($sfl, 'wr_18'); ?>>작성자</option>
     </select>
 	</span>
 	<span class="placeholder">

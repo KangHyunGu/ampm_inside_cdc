@@ -18,10 +18,7 @@ if($bodyok){ // adm 폴더도 아니고 로그인 페이지도 아니다.
 				<!--gnb-->
 				<ul class="gnb clear">
 					<li>
-						<a href="<?=G5_BBS_URL?>/board.php?bo_table=insight_cdc">마케터 인사이트 CDC</a>
-					</li>
-					<li>
-						<a href="<?=G5_BBS_URL?>/board.php?bo_table=insight">마케터 인사이트</a>
+						<a href="<?=G5_BBS_URL?>/board.php?bo_table=insight">마케팅 인사이트</a>
 					</li>
 					<li>
 						<a href="<?=G5_BBS_URL?>/board.php?bo_table=video">영상 교육</a>
@@ -37,16 +34,23 @@ if($bodyok){ // adm 폴더도 아니고 로그인 페이지도 아니다.
 					</li>
 				</ul>
 			</nav>
-         <!--
+
+         
          <div class="top_sch">
             <fieldset id="hd_sch">
-                <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
-                <input type="hidden" name="sfl" value="wr_subject||wr_content">
-                <input type="hidden" name="sop" value="and">
-                <label for="sch_stx" class="sound_only">검색어 필수</label>
-                <input type="text" name="stx" id="sch_stx" maxlength="20" placeholder="검색어를 입력하세요">
-                <button type="submit" id="sch_submit" value="검색"><i class="fa fa-search"></i></button>
-                </form>
+                <form name="fsearchbox" method="get" action="<?=G5_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);" class="sidebar-form">
+                  <input type="hidden" name="sfl" value="wr_subject||wr_content||wr_18||wr_12">
+                  <input type="hidden" name="sop" value="and">
+                  
+                  <div class="input-group input-group-sm">
+                  <label for="sch_stx" class="sound_only">검색어 필수</label>
+                  <input type="text" name="stx" id="sch_stx" value="<?php echo $text_stx ?>" maxlength="20" class="form-control" placeholder="검색어를 입력하세요.">
+                  <span class="input-group-btn">
+                     <button type="submit" id="sch_submit" value="검색" class="btn btn-flat"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+                  </span>	
+                  </div>
+               </form>
+                
 
                 <script>
                 function fsearchbox_submit(f)
@@ -78,7 +82,8 @@ if($bodyok){ // adm 폴더도 아니고 로그인 페이지도 아니다.
 
             </fieldset>
          </div>
-         -->
+               
+
 		</div>
 	</header>
 

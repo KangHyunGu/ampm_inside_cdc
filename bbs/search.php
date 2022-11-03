@@ -17,12 +17,12 @@ if ($stx) {
     $stx = preg_replace('/\//', '\/', trim($stx));
     $sop = strtolower($sop);
     if (!$sop || !($sop == 'and' || $sop == 'or')) $sop = 'and'; // 연산자 and , or
-    $srows = isset($_GET['srows']) ? (int)preg_replace('#[^0-9]#', '', $_GET['srows']) : 10;
-    if (!$srows) $srows = 10; // 한페이지에 출력하는 검색 행수
+    $srows = isset($_GET['srows']) ? (int)preg_replace('#[^0-9]#', '', $_GET['srows']) : 1000;
+    if (!$srows) $srows = 1000; // 한페이지에 출력하는 검색 행수
 
     $g5_search['tables'] = Array();
     $g5_search['read_level'] = Array();
-    $sql = " select gr_id, bo_table, bo_read_level from {$g5['board_table']} where bo_use_search = 1 and bo_list_level <= '{$member['mb_level']}' ";
+    $sql = " select gr_id, bo_table, bo_read_level from {$g5['board_table']} where bo_use_search = 1 and bo_list_level <= '{$member['mb_level']}' AND gr_id in('inside', 'client') AND bo_table != 'request' ";
     if ($gr_id)
         $sql .= " and gr_id = '{$gr_id}' ";
     $onetable = isset($onetable) ? $onetable : "";
@@ -89,7 +89,15 @@ if ($stx) {
             $str .= $op2;
             switch ($field[$k]) {
                 case 'mb_id' :
+                case 'wr_17' :
+                case 'wr_11' :
                 case 'wr_name' :
+                    $str .= "$field[$k] = '$s[$i]'";
+                    break;
+                case 'wr_18' :
+                    $str .= "$field[$k] = '$s[$i]'";
+                    break;
+                case 'wr_12' :
                     $str .= "$field[$k] = '$s[$i]'";
                     break;
                 case 'wr_subject' :
@@ -113,6 +121,34 @@ if ($stx) {
 
     $sql_search = $str;
 
+	
+	///////////////////////////////////////////////////////////////////////
+	// 인사이트, 영상교육, 레퍼런스 게시판의 경우
+	// 숨김 게시물 노출하지 않는다.
+	// 퇴사자 게시물 노출하지 않는다.
+	///////////////////////////////////////////////////////////////////////
+	$marketer_search = "";
+	//숨김여부
+	$marketer_search = " and wr_19 = 'Y' ";
+	///////////////////////////////////////////////
+	//퇴사자여부
+	///////////////////////////////////////////////
+	//인트라넷 사원 퇴사자 정보가져오기
+	$sql = " select mb_id FROM g5_member WHERE mb_level > 1 ";
+	$result = sql_query_intra($sql);
+	$arr_intra_id = '';
+	while ($row = sql_fetch_array($result)) {
+		$intra_id = $row['mb_id'];
+		$arr_intra_id.= "'".$intra_id."',";
+	}
+	$arr_intra_id = substr($arr_intra_id, 0, -1);
+
+	//담당자 ID가 퇴사자가 아닌것만 가져온디.
+	$marketer_qna_search = $marketer_search."AND wr_11 IN({$arr_intra_id}) "; //질문답변용
+
+	$marketer_bbs_search = $marketer_search. "AND wr_17 IN({$arr_intra_id}) ";
+	
+
     $str_board_list = "";
     $board_count = 0;
 
@@ -122,9 +158,22 @@ if ($stx) {
     for ($i=0; $i<count($g5_search['tables']); $i++) {
         $tmp_write_table   = $g5['write_prefix'] . $g5_search['tables'][$i];
 
-        $sql = " select wr_id from {$tmp_write_table} where {$sql_search} ";
-        $result = sql_query($sql, false);
-        $row['cnt'] = @sql_num_rows($result);
+		if($g5_search['tables'][$i] == 'qna'){
+			$marketer_search = $marketer_qna_search;
+		}else{
+			$marketer_search = $marketer_bbs_search;
+		}
+
+        $sql = " select wr_id from {$tmp_write_table} where {$sql_search} {$marketer_search} ";
+        //$sql = " select wr_id from {$tmp_write_table} where {$sql_search} {$marketer_search}  limit 0, 5 ";
+        //echo $sql;
+		$result = sql_query($sql, false);
+        
+		//$row['cnt'] = @sql_num_rows($result);
+        
+		$sql = " select wr_id from {$tmp_write_table} where {$sql_search} {$marketer_search} ";
+		$result_total = sql_query($sql, false);
+		$row['cnt'] = @sql_num_rows($result_total);
 
         $total_count += $row['cnt'];
         if ($row['cnt']) {
@@ -144,9 +193,11 @@ if ($stx) {
     }
 
     $rows = $srows;
-    $total_page = ceil($total_count / $rows);  // 전체 페이지 계산
+    
+	$total_page = ceil($total_count / $rows);  // 전체 페이지 계산
     if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
-    $from_record = ($page - 1) * $rows; // 시작 열을 구함
+    //$from_record = ($page - 1) * $rows; // 시작 열을 구함
+    $from_record = ($onetable)?($page - 1) * $rows:0; // 시작 열을 구함
 
     for ($i=0; $i<count($search_table); $i++) {
         if ($from_record < $search_table_count[$i]) {
@@ -167,12 +218,23 @@ if ($stx) {
 
         $tmp_write_table = $g5['write_prefix'] . $search_table[$idx];
 
-        $sql = " select * from {$tmp_write_table} where {$sql_search} order by wr_id desc limit {$from_record}, {$rows} ";
-        $result = sql_query($sql);
+		if($search_table[$idx] == 'qna'){
+			$marketer_search = $marketer_qna_search;
+		}else{
+			$marketer_search = $marketer_bbs_search;
+		}
+
+		if($onetable){
+			$sql = " select * from {$tmp_write_table} where {$sql_search} {$marketer_search} order by wr_id desc limit {$from_record}, {$rows} ";
+		}else{
+	        $sql = " select * from {$tmp_write_table} where {$sql_search} {$marketer_search} order by wr_id desc limit 0, 5 ";
+		}
+        //echo $sql; 
+		$result = sql_query($sql);
         for ($i=0; $row=sql_fetch_array($result); $i++) {
             // 검색어까지 링크되면 게시판 부하가 일어남
             $list[$idx][$i] = $row;
-            $list[$idx][$i]['href'] = get_pretty_url($search_table[$idx], $row['wr_parent']);
+            $list[$idx][$i]['href'] = get_pretty_url($search_table[$idx], $row['wr_parent'], '&amp;ae='.$list[$idx][$i]['wr_17']);
 
             if ($row['wr_is_comment'])
             {
@@ -205,6 +267,14 @@ if ($stx) {
             else
                 $content = '';
 
+			// 당일인 경우 시간으로 표시함
+			$list[$idx][$i]['datetime'] = substr($list[$idx][$i]['wr_datetime'],0,10);
+			$list[$idx][$i]['datetime2'] = $list[$idx][$i]['wr_datetime'];
+			if ($list[$idx][$i]['datetime'] == G5_TIME_YMD)
+				$list[$idx][$i]['datetime2'] = substr($list[$idx][$i]['datetime2'],11,5);
+			else
+				$list[$idx][$i]['datetime2'] = substr($list[$idx][$i]['datetime2'],5,5);
+
             $list[$idx][$i]['subject'] = $subject;
             $list[$idx][$i]['content'] = $content;
             $list[$idx][$i]['name'] = get_sideview($row['mb_id'], get_text(cut_str($row['wr_name'], $config['cf_cut_name'])), $row['wr_email'], $row['wr_homepage']);
@@ -225,7 +295,7 @@ if ($stx) {
 }
 
 $group_select = '<label for="gr_id" class="sound_only">게시판 그룹선택</label><select name="gr_id" id="gr_id" class="select"><option value="">전체 분류';
-$sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_id ";
+$sql = " select gr_id, gr_subject from {$g5['group_table']} where 1 AND gr_id = 'inside' order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
     $group_select .= "<option value=\"".$row['gr_id']."\"".get_selected($gr_id, $row['gr_id']).">".$row['gr_subject']."</option>";

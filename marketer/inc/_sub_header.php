@@ -24,7 +24,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
       <!--
          <a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>" class="logo">
 -->
-         <a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>" class="logo">
+         <a href="<?=G5_URL?>" class="logo">
             <img src="<?=G5_URL?>/images/logo.png" title="로고">
         </a>
         <div class="menu_icon">
@@ -37,7 +37,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
 
     <aside id="m_menu">
         <h2 class="inner_logo">
-        <a href="/ae-<?=$utm_member?>/member/<?php if($team_code){ echo "&team_code=".$team_code; }?>"></a>
+        <a href="<?=G5_URL?>"></a>
         </h2>
 
         <ul class="gnb">

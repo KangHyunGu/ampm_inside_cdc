@@ -212,7 +212,7 @@ include(G5_PATH.'/inc/top.php');
 				<option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
 				<option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
 				<option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
-				<option value="wr_18,1"<?php echo get_selected($sfl, 'wr_18,1'); ?>>작성자</option>
+				<option value="wr_18"<?php echo get_selected($sfl, 'wr_18'); ?>>작성자</option>
             </select>
             <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
             <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input frm_input required" size="15" maxlength="20">

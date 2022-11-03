@@ -11,6 +11,7 @@ include_once($board_skin_path.'/gaburi.lib.php');
 
 <?php
 include(G5_PATH.'/inc/top.php');
+include(CDC_PATH . '/cdc_cdn_include.php');
 ?>
 
 <div id="container" class="sub">
@@ -44,23 +45,7 @@ include(G5_PATH.'/inc/top.php');
                <div class="inner">
                   <!-- media아이콘 -->
                   <div class="media">
-                     <ul>
-                        <!-- blog -->
-                        <li class="blog on"> <!-- 업로드 된 매체는 'on' class추가 -->
-                           <a href="#" target="blank">
-                           </a>
-                        </li>
-                        <!-- instagram -->
-                        <li class="instagram">
-                           <a href="#" target="blank">
-                           </a>
-                        </li>
-                        <!-- youtube -->
-                        <li class="youtube">
-                           <a href="#" target="blank">
-                           </a>
-                        </li>
-                     </ul>
+                     <?php include_once(CDC_PATH. '/cdc_media_icon.php'); ?>
                   </div>
                   <!-- 공유하기 -->
                   <div class="share">

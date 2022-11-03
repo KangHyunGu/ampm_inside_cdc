@@ -34,7 +34,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
                 </ul>
             </nav>
             <div class="other-link">
-                <a href="http://ampm.co.kr/sub/sub2-2-1.php<?=$teamLinkPara?>" target="_blank">‘우리’에게 맞는 광고 매체는?</a>
+                <a href="<?=G5_AMPM_URL?>/sub/sub2-2-1.php<?=$teamLinkPara?>" target="_blank">‘우리’에게 맞는 광고 매체는?</a>
             </div>
         </div>
     </div>

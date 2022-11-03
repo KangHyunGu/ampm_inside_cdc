@@ -100,7 +100,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
 			}
         }
         g5_latest_cache_data($bo_table, $list);
-
+//print_r2($list);
         if(G5_USE_CACHE) {
 
             $caches = array(

@@ -26,9 +26,6 @@ $sql_common = "
                     union
                     SELECT *, 'video' as bo_table
                     FROM g5_write_video
-                    union
-                    SELECT *, 'insight_cdc' as bo_table
-                    FROM g5_write_insight_cdc 
                 ) a
                 INNER JOIN g5_board b ON a.bo_table = b.bo_table
                 WHERE b.gr_id='inside'
@@ -350,14 +347,15 @@ $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['c
         </div>
     </div>
     <!-- //CDC 매체등록 모달 -->
-
-    <!-- CDC 모듈 src include -->
-    <?php include("./cdcAdmFormSetting.php"); ?>
 </div>
 <!-- //admin_cdc_app -->
 
+<!-- CDC 모듈 src include -->
+<?php include("./cdcAdmFormSetting.php"); ?>
+
 <script>
     jQuery(document).ready(function($) {
+
         //open popup
         // $('.cdc-modal-btn').on('click', function(event){
         //     event.preventDefault();

@@ -10,27 +10,28 @@ include(G5_PATH.'/inc/top.php');
 ?>
 
 
-<div id="sub_layout">
+<div id="sub_layout" class="sub_sch">
    <div class="wrap">
       <div class="sub-title">
-         통합검색 <strong><?php echo $stx ?></strong> 에 대한 검색결과는 총  <?php echo number_format($total_count) ?>건 입니다.
+         <strong class="main_color">'<?php echo $stx ?>'</strong> 에 대한 검색결과는 총 <?php echo number_format($total_count) ?>건 입니다.
       </div>
       <!-- 전체검색 시작 { -->
       <form name="fsearch" onsubmit="return fsearch_submit(this);" method="get">
       <input type="hidden" name="srows" value="<?php echo $srows ?>">
       <fieldset id="sch_res_detail">
          <legend>상세검색</legend>
-         <?php echo $group_select ?>
+         <?php //echo $group_select ?>
          <script>document.getElementById("gr_id").value = "<?php echo $gr_id ?>";</script>
-
+		 <!--
          <label for="sfl" class="sound_only">검색조건</label>
          <select name="sfl" id="sfl">
-            <option value="wr_subject||wr_content"<?php echo get_selected($sfl, "wr_subject||wr_content") ?>>제목+내용</option>
+            <option value="wr_subject||wr_content||wr_18"<?php echo get_selected($sfl, "wr_subject||wr_content||wr_18") ?>>제목+내용+마케터</option>
             <option value="wr_subject"<?php echo get_selected($sfl, "wr_subject") ?>>제목</option>
             <option value="wr_content"<?php echo get_selected($sfl, "wr_content") ?>>내용</option>
-            <option value="mb_id"<?php echo get_selected($sfl, "mb_id") ?>>회원아이디</option>
-            <option value="wr_name"<?php echo get_selected($sfl, "wr_name") ?>>이름</option>
+            <option value="wr_18"<?php echo get_selected($sfl, "wr_18") ?>>마케터</option>
          </select>
+		 -->
+		 <input type="hidden" name="sfl" value="wr_subject||wr_content||wr_18||wr_12">
 
          <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
          <span class="sch_wr">
@@ -66,13 +67,14 @@ include(G5_PATH.'/inc/top.php');
             return true;
          }
          </script>
-
+		<!--
          <div class="switch_field">
             <input type="radio" value="and" <?php echo ($sop == "and") ? "checked" : ""; ?> id="sop_and" name="sop">
             <label for="sop_and">AND</label>
             <input type="radio" value="or" <?php echo ($sop == "or") ? "checked" : ""; ?> id="sop_or" name="sop" >
             <label for="sop_or">OR</label>
          </div>
+		 -->
       </fieldset>
       </form>
 
@@ -108,7 +110,7 @@ include(G5_PATH.'/inc/top.php');
          <div class="empty_list">검색된 자료가 하나도 없습니다.</div>
          <?php } }  ?>
 
-         <hr>
+
 
          <?php if ($stx && $board_count) { ?><section class="sch_res_list"><?php }  ?>
          <?php
@@ -134,15 +136,28 @@ include(G5_PATH.'/inc/top.php');
                ?>
 
                   <li>
-                     <div class="sch_tit">
-                        <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
-                        <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank" class="pop_a"><i class="fa fa-window-restore" aria-hidden="true"></i><span class="sound_only">새창</span></a>
+                     <div class="sch_box">
+                        <div class="sch_tit">
+                           <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
+                           <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank" class="pop_a"><i class="fa fa-window-restore" aria-hidden="true"></i><span class="sound_only">새창</span></a>
+                        </div>
+                        <p><?php echo $list[$idx][$i]['content'] ?></p>
+                        <div class="sch_info">
+                     <?php if($search_table[$idx] == 'qna'){ ?>
+                        작성자 : <?php echo $list[$idx][$i]['wr_18'] ?>
+                     <?php }  ?>
+                        <span class="sch_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> 등록일 : <?php echo $list[$idx][$i]['datetime'] ?></span>
+                        </div>
                      </div>
-                     <p><?php echo $list[$idx][$i]['content'] ?></p>
-                     <div class="sch_info">
-                        <?php echo $list[$idx][$i]['name'] ?>
-                        <span class="sch_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$idx][$i]['wr_datetime'] ?></span>
-                     </div>
+					<?php 
+						if($search_table[$idx] !== 'qna'){
+					?>
+					<!-- 본문 밑 마케터 네임카드 출력 -->
+					<?php include(G5_PATH . '/inc/_inc_namecard_search.php'); ?>
+
+		            <?php }  ?>
+
+         
                   </li>
             <?php }  ?>
             </ul>

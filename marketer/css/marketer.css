@@ -247,7 +247,7 @@ select {
 
 #mk-header .logo {
     position: absolute;
-    top: 30px;
+    top: 22px;
     left: 0;
 }
 
@@ -1010,6 +1010,15 @@ select {
     color: #888;
 }
 
+#footer .ft-link a {
+   font-size: 14px;
+   display: inline-block;
+   margin-left: 10px;
+   padding: 3px 8px;
+   background: #fafafa;
+   border: 1px solid #ddd;
+}
+
 #footer .ft-sns {
     margin: 20px 0;
 }
@@ -1124,7 +1133,7 @@ select {
 
 #sub-header .head-nav .logo {
     position: absolute;
-    top: 22px;
+    top: 16px;
     left: 0;
 }
 

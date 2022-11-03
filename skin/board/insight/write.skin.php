@@ -219,25 +219,25 @@ if ($board['bo_use_category']) {
 									</tr>
 								<?php } ?>
 
-								<q-input type="hidden" name="wr_1" id="wr_1" v-model="form.wr_1" value="<?php echo $write['wr_2']; ?>">
-								<q-input type="hidden" name="wr_2" id="wr_2" v-model="form.wr_2" value="<?php echo $write['wr_2']; ?>">
-								<q-input type="hidden" name="wr_3" id="wr_3" v-model="form.wr_3" value="<?php echo $write['wr_3']; ?>">
-								<q-input type="hidden" name="wr_4" id="wr_4" v-model="form.wr_4" value="<?php echo $write['wr_4']; ?>">
-								<q-input type="hidden" name="wr_5" id="wr_5" v-model="form.wr_5" value="<?php echo $write['wr_5']; ?>">
-								<q-input type="hidden" name="wr_6" id="wr_6" v-model="form.wr_6" value="<?php echo $write['wr_6']; ?>">
-								<q-input type="hidden" name="wr_7" id="wr_7" v-model="form.wr_7" value="<?php echo $write['wr_7']; ?>">
-								<q-input type="hidden" name="wr_8" id="wr_8" v-model="form.wr_8" value="<?php echo $write['wr_8']; ?>">
-								<q-input type="hidden" name="wr_9" id="wr_9" v-model="form.wr_9" value="<?php echo $write['wr_9']; ?>">
-								<q-input type="hidden" name="wr_10" id="wr_10" v-model="form.wr_10" value="<?php echo $write['wr_10']; ?>">
-								<q-input type="hidden" name="wr_11" id="wr_11" v-model="form.wr_11" value="<?php echo $write['wr_11']; ?>">
-								<q-input type="hidden" name="wr_12" id="wr_12" v-model="form.wr_12" value="<?php echo $write['wr_12']; ?>">
-								<q-input type="hidden" name="wr_13" id="wr_13" v-model="form.wr_13" value="<?php echo $write['wr_13']; ?>">
-								<q-input type="hidden" name="wr_14" id="wr_14" v-model="form.wr_14" value="<?php echo $write['wr_14']; ?>">
-								<q-input type="hidden" name="wr_15" id="wr_15" v-model="form.wr_15" value="<?php echo $write['wr_15']; ?>">
-								<q-input type="hidden" name="wr_16" id="wr_16" v-model="form.wr_16" value="<?php echo $write['wr_16']; ?>">
-								<q-input type="hidden" name="wr_17" id="wr_17" v-model="form.wr_17" value="<?php echo $write['wr_17']; ?>">
-								<q-input type="hidden" name="wr_18" id="wr_18" v-model="form.wr_18" value="<?php echo $write['wr_18']; ?>">
-								<q-input type="hidden" name="wr_20" id="wr_20" v-model="form.wr_20" value="<?php echo $write['wr_20']; ?>">
+								<input type="hidden" name="wr_1" id="wr_1" v-model="form.wr_1" value="<?php echo $write['wr_2']; ?>">
+								<input type="hidden" name="wr_2" id="wr_2" v-model="form.wr_2" value="<?php echo $write['wr_2']; ?>">
+								<input type="hidden" name="wr_3" id="wr_3" v-model="form.wr_3" value="<?php echo $write['wr_3']; ?>">
+								<input type="hidden" name="wr_4" id="wr_4" v-model="form.wr_4" value="<?php echo $write['wr_4']; ?>">
+								<input type="hidden" name="wr_5" id="wr_5" v-model="form.wr_5" value="<?php echo $write['wr_5']; ?>">
+								<input type="hidden" name="wr_6" id="wr_6" v-model="form.wr_6" value="<?php echo $write['wr_6']; ?>">
+								<input type="hidden" name="wr_7" id="wr_7" v-model="form.wr_7" value="<?php echo $write['wr_7']; ?>">
+								<input type="hidden" name="wr_8" id="wr_8" v-model="form.wr_8" value="<?php echo $write['wr_8']; ?>">
+								<input type="hidden" name="wr_9" id="wr_9" v-model="form.wr_9" value="<?php echo $write['wr_9']; ?>">
+								<input type="hidden" name="wr_10" id="wr_10" v-model="form.wr_10" value="<?php echo $write['wr_10']; ?>">
+								<input type="hidden" name="wr_11" id="wr_11" v-model="form.wr_11" value="<?php echo $write['wr_11']; ?>">
+								<input type="hidden" name="wr_12" id="wr_12" v-model="form.wr_12" value="<?php echo $write['wr_12']; ?>">
+								<input type="hidden" name="wr_13" id="wr_13" v-model="form.wr_13" value="<?php echo $write['wr_13']; ?>">
+								<input type="hidden" name="wr_14" id="wr_14" v-model="form.wr_14" value="<?php echo $write['wr_14']; ?>">
+								<input type="hidden" name="wr_15" id="wr_15" v-model="form.wr_15" value="<?php echo $write['wr_15']; ?>">
+								<input type="hidden" name="wr_16" id="wr_16" v-model="form.wr_16" value="<?php echo $write['wr_16']; ?>">
+								<input type="hidden" name="wr_17" id="wr_17" v-model="form.wr_17" value="<?php echo $write['wr_17']; ?>">
+								<input type="hidden" name="wr_18" id="wr_18" v-model="form.wr_18" value="<?php echo $write['wr_18']; ?>">
+							<input type="hidden" name="wr_20" id="wr_20" v-model="form.wr_20" value="<?php echo $write['wr_20']; ?>">
 
 								<tr>
 									<th scope="row"><label for="wr_19">게시물 숨김 여부<strong class="sound_only">필수</strong></label></th>

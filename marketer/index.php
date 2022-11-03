@@ -108,7 +108,7 @@ if(($total_count < 1) && ($sear_mkcheck != '') && ($stx == '')){
 	$result = sql_query_intra($sql);
 }
 
- // echo "sql: ".$sql;
+//echo "sql: ".$sql;
 ?>
 
 <?php
@@ -349,7 +349,7 @@ if(($total_count < 1) && ($sear_mkcheck != '') && ($stx == '')){
                 <p>에이엠피엠글로벌에서는 마케터를 상시 모집하고 있습니다.</p>
             </div>
             <div class="con-link">
-                <a href="<?=G5_URL?>/sub/sub5-1.php<?=$teamLinkPara?>#tab-3" target="_blank">마케터 지원하기</a>
+                <a href="<?=G5_AMPM_URL?>/sub/sub5-1.php<?=$teamLinkPara?>#tab-3" target="_blank">마케터 지원하기</a>
             </div>
         </div>
     </div>

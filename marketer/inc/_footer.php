@@ -13,8 +13,9 @@ if (G5_IS_MOBILE) {	//모바일인 경우
             <span>통신판매업신고번호. 제 2020-서울금천-2858호</span>
 
             <p>Copyright © 2019 AMPM Global. All rights reserved.</p>
+
+            <a href="<?=G5_MARKETER_URL ?>/?device=pc">PC버전 확인하기</a>
         </div>
-        
     </div>
 </footer>
 
@@ -34,7 +35,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
             <span>사업자등록번호. 105-86-67746</span>
             <span>통신판매업신고번호. 제 2020-서울금천-2858호</span>
 
-            <p>Copyright © 2019 AMPM Global. All rights reserved.</p>
+            <p>Copyright © 2019 AMPM Global. All rights reserved. <a href="<?=G5_MARKETER_URL ?>/?device=mobile">모바일버전</a></p>
         </div>
         
         <div class="ft-site">
@@ -51,6 +52,8 @@ if (G5_IS_MOBILE) {	//모바일인 경우
                 </a>
             </div>
         </div>
+
+
     </div>
 </footer>
 

@@ -30,6 +30,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
                관리자페이지
             </a>
          <?php }  ?>
+         <a href="<? G5_URL ?>/?device=mobile">모바일버전</a>
       </div>
       <div class="ft_copy">
          <p>Copyright © 2022 AMPM Global. All rights reserved.</p>

@@ -21,7 +21,10 @@ if(defined('G5_THEME_PATH')) {
             <a href="<? G5_URL ?>/mobile/sub/clause.php">이용약관</a>
             <a href="<? G5_URL ?>/mobile/sub/email.php">이메일무단수집거부</a>
         </div>
-        Copyright © 2022 AMPM Global. All rights reserved.<br>
+        Copyright © 2022 AMPM Global. All rights reserved.
+        <div class="pc_btn">
+            <a href="<? G5_URL ?>/?device=pc">PC버전 확인하기</a>
+        </div>
     </div>
 
     <button type="button" id="top_btn">

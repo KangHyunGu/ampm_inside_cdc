@@ -26,7 +26,10 @@ include(G5_PATH.'/inc/top.php');
     <section class="section_left">
         <!-- 비주얼 배너 -->
         <div class="visual_banner">
-            <img src="<? G5_URL ?>/images/banner1.jpg" alt="비주얼배너1">
+            <a href="https://www.youtube.com/c/%EB%A7%88%EC%BC%80%ED%8C%85%ED%95%99%EA%B5%90AMPM" target="_blank">
+               <!--<img src="<? G5_URL ?>/images/main_banner.jpg" alt="마케팅학교 유튜브 바로가기">-->
+               <img src="<? G5_URL ?>/images/main_banner.gif" alt="마케팅학교 유튜브 바로가기">
+            </a>
         </div>
 
 

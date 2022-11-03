@@ -1,7 +1,3 @@
-<?php
-include(CDC_PATH . '/cdc_cdn_include.php');
-?>
-
 <div class="q-gutter-md">
   <!-- 주제 별 매체 
     인사이트 : 이미지
@@ -11,10 +7,10 @@ include(CDC_PATH . '/cdc_cdn_include.php');
   <div v-if="imgSrcs.length && 
             (bo_table == 'insight' || bo_table == 'insight_cdc')">
        <!-- 이미지(인사이트) -->
-      <q-carousel v-model="slide2" transition-prev="slide-right" transition-next="slide-left" swipeable animated control-color="primary" navigation padding arrows infinite :fullscreen="fullscreen" height="300px" class="bg-grey-1 shadow-2 rounded-borders">
+      <q-carousel v-model="slide2" transition-prev="slide-right" transition-next="slide-left" swipeable animated control-color="primary" navigation padding arrows infinite :fullscreen="fullscreen" class="bg-grey-1 shadow-2 rounded-borders">
         <q-carousel-slide v-for="(imgSrc, index) in imgSrcs" :key="index" :name="index + 1" class="column no-wrap">
           <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-            <q-img :ratio="1" fit="contain" class="full-width full-height" :src="imgSrc" />
+            <q-img :ratio="1" fit="contain" class="full-width full-height" :src="imgSrc" size="300px"/>
           </div>
         </q-carousel-slide>
         <template v-slot:control>
@@ -42,12 +38,8 @@ include(CDC_PATH . '/cdc_cdn_include.php');
 <div v-if="isViewAuth && cdcControlOptions.length">
   <div class="q-gutter-md">
     <hr class="split q-mb-md" />
-        <div class="title_box q-mb-md">
-            
-        </div>
       <div class="q-pa-md">
-       
-       <!--  -->
+       <!-- 버튼 그룹(블로그, 인스타, 유튜브) -->
         <div class="q-gutter-y-md">
           <q-btn-toggle
               v-model="cdcControlVal"
@@ -60,14 +52,37 @@ include(CDC_PATH . '/cdc_cdn_include.php');
           /> 
         </div>
       </div>
+    <!-- 제목 -->
+    <div class="title_box q-md-md row">
+      <h3>제목</h3>
+      <p class="q-pl-lg text-h5">  {{wr_cdc_title}}</p>
+    </div>
+    <!-- //제목 -->
+    <hr class="split" />
+
+     <!-- 내용 -->
+    <div v-if="wr_cdc_content && isContentView">
+      <div class="title_box q-md-md">
+        <h3>내용</h3>
+      </div>
+      <div class="q-pa-md">
+        <div class="bo_v_con">
+          <div v-html="wr_cdc_content"></div>
+        </div>
+      </div>
+      <hr class="split" />
+    </div>
+     <!-- //내용 -->
+    
+     <!-- 이미지 -->
     <div v-if="imgSrcs.length && isImageView">
       <div class="title_box q-mb-md">
         <h3>이미지</h3>
       </div>
-      <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" swipeable animated control-color="primary" navigation padding arrows infinite :fullscreen="fullscreen" height="300px" class="bg-grey-1 shadow-2 rounded-borders">
+      <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" swipeable animated control-color="primary" navigation padding arrows infinite :fullscreen="fullscreen" class="bg-grey-1 shadow-2 rounded-borders">
         <q-carousel-slide v-for="(imgSrc, index) in imgSrcs" :key="index" :name="index + 1" class="column no-wrap">
           <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-            <q-img :ratio="1" fit="contain" class="full-width full-height" :src="imgSrc" />
+            <q-img :ratio="1" fit="contain" class="full-width full-height" :src="imgSrc" size="300px" />
           </div>
         </q-carousel-slide>
 
@@ -80,13 +95,15 @@ include(CDC_PATH . '/cdc_cdn_include.php');
       </q-carousel>
       <hr class="split" />
     </div>
+    <!-- //이미지 -->
+    
     <!-- 썸네일 -->
     <div v-if="thumSrc && isYoutubeView">
       <div class="title_box q-mb-md">
         <h3>썸네일</h3>
       </div>
       <div class="row items-start">
-        <q-img :src="thumSrc" style="height: 300px;" fit="contain">
+        <q-img :src="thumSrc" class="img-view-height" fit="contain">
         </q-img>
       </div>
       <hr class="split" />
@@ -98,7 +115,7 @@ include(CDC_PATH . '/cdc_cdn_include.php');
         <h3>CTA배너</h3>
       </div>
       <div class="row items-start">
-        <q-img :src="catSrc" style="width:100%; height: 250px;" fit="contain" @click="clickToAction">
+        <q-img :src="catSrc" class="img-view-height" fit="contain" @click="clickToAction">
           <q-icon class="absolute all-pointer-events" size="md" name="link" color="primary" style="bottom: 8px; right: 8px">
             <q-tooltip>해당 이미지 클릭시 {{wr_cat_link}}로 이동합니다.</q-tooltip>
           </q-icon>
@@ -112,7 +129,9 @@ include(CDC_PATH . '/cdc_cdn_include.php');
       <div class="title_box q-mb-md">
         <h3>동영상</h3>
       </div>
-      <q-video v-if="enableVideo(wr_video_link)" :ratio="16/9" :src="enableVideo(wr_video_link)"></q-video>
+      <div class="video-view-form-box">    
+        <q-video v-if="enableVideo(wr_video_link)" :ratio="16/9" :src="enableVideo(wr_video_link)"></q-video>
+      </div>
 
       <q-field class="q-py-md" v-if="video_file_info" filled square :dense="dense">
         <template v-slot:control>
@@ -133,8 +152,9 @@ include(CDC_PATH . '/cdc_cdn_include.php');
       <div class="title_box q-mb-md">
         <h3>유튜브영상</h3>
       </div>
-      <q-video v-if="enableVideo(wr_youtube_link)" :ratio="16/9" :src="enableVideo(wr_youtube_link)"></q-video>
-
+      <div class="video-view-form-box">
+        <q-video v-if="enableVideo(wr_youtube_link)" :ratio="16/9" :src="enableVideo(wr_youtube_link)"></q-video>
+      </div>
       <q-field class="q-py-md" v-if="youtube_file_info" filled square :dense="dense">
         <template v-slot:control>
           <div class="self-center full-width no-outline" tabindex="0">

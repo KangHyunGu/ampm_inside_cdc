@@ -23,7 +23,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
         $thumb['alt'] = '이미지가 없습니다.';
     }
     $img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" >';
-    $wr_href = get_pretty_url($bo_table, $list[$i]['wr_id']);
+    $wr_href = $list[$i]['href'];
     ?>
         <li class="gallery_li">
             <a href="<?php echo $wr_href; ?>" class="lt_img"><?php echo run_replace('thumb_image_tag', $img_content, $thumb); ?></a>
