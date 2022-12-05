@@ -77,7 +77,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
         if ($member['mb_id'])
         {
-            if ($row['mb_id'] === $member['mb_id'] || $is_admin)
+            if ($row['mb_id'] === $member['mb_id'] || $is_admin === 'manager')
             {
                 set_session('ss_delete_comment_'.$row['wr_id'].'_token', $token = uniqid(time()));
                 $list[$i]['del_link']  = G5_BBS_URL.'/delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
@@ -182,7 +182,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 			if ($member['mb_id'])
 			{
-				if ($cmlist[$i][$j]['mb_id'] === $member['mb_id'] || $is_admin)
+				if ($cmlist[$i][$j]['mb_id'] === $member['mb_id'] || $is_admin === 'manager')
 				{
 					set_session('ss_delete_comment_'.$cm_row['wr_id'].'_token', $token = uniqid(time()));
 					$cmlist[$i][$j]['del_link']  = G5_BBS_URL.'/delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$cm_row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;

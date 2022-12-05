@@ -202,6 +202,17 @@ include(G5_PATH.'/inc/top.php');
                      </span>
                   </div>
 	            </li>
+				<li>
+                  <label for="mb_common_data_yn">게시판 공통자료 노출여부<strong class="sound_only">필수</strong></label>
+                  <select name='mb_common_data_yn' id='mb_common_data_yn' class="frm_input">
+				  <?=codeToHtml($code_visible, $mkt['mb_common_data_yn'], "cbo", "")?>
+				  </select>
+                  <div class="s_notice2">
+                     <span class="tooltips">
+                        * 인사이드, 영상교육, 레퍼런스 게시판의 자료가 없거나 적은 경우 노출을 선택하시기 바랍니다.
+                     </span>
+                  </div>
+	            </li>
 	        </ul>
 	    </div>
 

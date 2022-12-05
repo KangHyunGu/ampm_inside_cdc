@@ -27,7 +27,11 @@ if (G5_IS_MOBILE) {	//모바일인 경우
         <div class="ft-copy">
             Copyright © 2022 AMPM Global. All rights reserved.
         </div>
-        
+
+        <div class="pc_btn">
+            <a href="<?=G5_URL.'/ae-'.$utm_member?>&device=pc">PC버전 확인하기</a>
+        </div>
+
         <!--
         <button type="button" id="top_btn"><img src="<?=G5_MARKETER_URL ?>/images/top.png"></button>
         -->
@@ -41,17 +45,23 @@ if (G5_IS_MOBILE) {	//모바일인 경우
 
 <div id="ft-btn">
     <div class="ft-btn-inner">
-        <button type="button" class="btn-1 popup-btn" data-toggle="modal" data-target="#Modal1"><i class="fas fa-comment-alt"></i></button>
+        <button type="button" class="btn-1 popup-btn" data-toggle="modal" data-target="#Modal1"><i class="fas fa-comment-dots"></i></button>
         <button type="button" class="btn-2 top-btn"><i class="fas fa-arrow-up"></i></button>
     </div>
 
     <div id="modal-inquiry">
-        <div class="popup-inner">
-            <?php
-                //상담신청
-                include(G5_MARKETER_PATH.'/inc/quick.php');
-            ?>
-        </div>
+      <div class="inside-link">
+         <a href="<?=G5_MARKETER_URL?>/#section4">
+            <img src="<?=G5_MARKETER_URL ?>/images/q_list_banner.png" alt="마케팅 인사이드 바로가기">
+         </a>
+      </div>
+      
+      <div class="popup-inner">
+         <?php
+            //상담신청
+            include(G5_MARKETER_PATH.'/inc/quick.php');
+         ?>
+      </div>
     </div>
 </div>
 
@@ -61,15 +71,19 @@ if (G5_IS_MOBILE) {	//모바일인 경우
         <div class="ft-link">
             <span>회사명. (주)에이엠피엠글로벌</span>
             <span class="none">대표. 김종규</span><br>
-            <span>주소. 서울특별시 금천구 가산디지털1로 171, 가산 SK V1센터 1001~18호</span>
-            <span class="none">FAX. 0505-842-112~4, 0505-840-1122~4</span><br>
-            <span>사업자등록번호. 105-86-67746</span>
+            <span>주소. 서울특별시 금천구 가산디지털1로 171, 가산 SK V1센터 1001~18호</span><br>
+            <span>FAX. 0505-842-112~4, 0505-840-1122~4</span>
+            <span class="none">사업자등록번호. 105-86-67746</span> <br>
             <span>통신판매업신고번호. 제 2020-서울금천-2858호</span>
             <span class="none">담당 마케터. <?=$_MARKETER_NAME?> (<a href="mailto:<?=$_MARKETER_EMAIL ?>" alt="메일"><?=$_MARKETER_EMAIL?></a>)</span>
 
             <p>
                 Copyright © 2019 AMPM Global. All rights reserved.
             </p>
+            <div class="mobile_btn">
+                <a href="<?=G5_URL.'/ae-'.$utm_member?>&device=mobile">모바일버전 확인하기</a>
+            </div>
+
         </div>
         
         <div class="ft-site">
@@ -81,6 +95,7 @@ if (G5_IS_MOBILE) {	//모바일인 경우
                     · 주말 및 공휴일 휴무
                 </p>
             </div>
+
         </div>
     </div>
 </footer>

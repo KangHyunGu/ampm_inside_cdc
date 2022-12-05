@@ -88,7 +88,10 @@ history.back();
     </div>
     <?php } ?>
 
-<?php /*
+<?php 
+exit;
+
+/*
 <article id="validation_check">
 <header>
     <hgroup>

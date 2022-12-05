@@ -26,60 +26,24 @@ include(G5_MARKETER_PATH.'/inc/_sub_header.php');
 ?>
 
 <!-- S: 컨텐츠 -->
-<section id="sub-common">
-    <div class="wrap">  
-        <div class="common-info">
-            <div class="member-title">
-                <h3 class="main-color">Customer Service</h3>
-                <h2>상담문의</h2>
-            </div>
-            <div class="member-info">
-                <!-- 마케터 이미지 -->
-                <div class="mkt-img">
-                    <?=$mb_images?>
-                </div>
-                <ul>
-                    <li>
-                        <span><i class="fas fa-mobile-alt"></i></span>
-                        <p><?=$mb['mb_tel'] ?></p>
-                    </li>
+<section id="content" class="sub6">
+    <div class="wrap">
+        <h2 class="sub-title">상담문의하기</h2>
 
-                    <?php if($mb['mb_kakao']){ ?>
-                    <li>
-                        <span><i class="fab fa-kaggle"></i></span>
-                        <p><?=$mb['mb_kakao'] ?></p>
-                    </li>
-                    <?php } ?>
+        <div class="estimate-write">
 
-                    <li>
-                        <span><i class="fas fa-envelope"></i></span>
-                        <p><?=$mb['mb_email'] ?></p>
-                    </li>
-                </ul>
-            </div>
+            <?php
+            //상담신청하기 include
+            include(G5_MARKETER_PATH.'/inc/m_quick_estimate.php');
+            ?>
+
         </div>
     </div>
 </section>
 
-<!-- S: 컨텐츠 -->
-<section id="sub-layout">
-    <div class="wrap customer">
-        <div class="layout">
-            <?php
-               //상담신청하기 include
-               include(G5_MARKETER_PATH.'/inc/m_quick_estimate.php');
-            ?>
-         </div>
-    </div>
-</section>
 <!-- E: 컨텐츠 -->
 
-
-<!-- footer -->
-<?php
-include(G5_MARKETER_PATH.'/inc/_sub_footer.php');
-?>
 <?php
 //풋터
-include_once('./_tail.php');
+include(G5_MARKETER_PATH.'/inc/_sub_footer.php');
 ?>

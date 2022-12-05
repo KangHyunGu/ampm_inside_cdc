@@ -593,7 +593,7 @@ function get_paging_marketer($write_pages, $cur_page, $total_page, $url, $add=""
 	$str = '';
     if ($cur_page > 1) {
 		$url = preg_replace('#/page=[0-9]*#', '/page=1', $url);
-        $str .= '<a href="'.$url.$add.'" class="pg_page pg_start">처음</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.$add.'" class="pg_page pg_start"><i class="fas fa-angle-double-left"></i></a>'.PHP_EOL;
     }
 
     $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
@@ -603,7 +603,7 @@ function get_paging_marketer($write_pages, $cur_page, $total_page, $url, $add=""
 
     if ($start_page > 1) {
 		$url = preg_replace('#/page=[0-9]*#', '/page='.($start_page-1), $url);
-		$str .= '<a href="'.$url.$add.'" class="pg_page pg_prev">이전</a>'.PHP_EOL;
+		$str .= '<a href="'.$url.$add.'" class="pg_page pg_prev"><i class="fas fa-angle-left"></i></a>'.PHP_EOL;
 	}
     if ($total_page > 1) {
         for ($k=$start_page;$k<=$end_page;$k++) {
@@ -619,11 +619,11 @@ function get_paging_marketer($write_pages, $cur_page, $total_page, $url, $add=""
 
     if ($total_page > $end_page) {
 		$url = preg_replace('#/page=[0-9]*#', '/page='.($end_page+1), $url);
-		$str .= '<a href="'.$url.$add.'" class="pg_page pg_next">다음</a>'.PHP_EOL;
+		$str .= '<a href="'.$url.$add.'" class="pg_page pg_next"><i class="fas fa-angle-right"></i></a>'.PHP_EOL;
 	}
     if ($cur_page < $total_page) {
 		$url = preg_replace('#/page=[0-9]*#', '/page='.$total_page, $url);
-        $str .= '<a href="'.$url.$add.'" class="pg_page pg_end">맨끝</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.$add.'" class="pg_page pg_end"><i class="fas fa-angle-double-right"></i></a>'.PHP_EOL;
     }
 
     if ($str)
@@ -640,7 +640,7 @@ function get_paging1($write_pages, $cur_page, $total_page, $url, $add="")
 	$str = '';
     if ($cur_page > 1) {
 		$url = preg_replace('#/mypage=[0-9]*#', '/mypage=1', $url);
-        $str .= '<a href="'.$url.$add.'" class="pg_page pg_start">처음</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.$add.'" class="pg_page pg_start"><i class="fas fa-angle-double-left"></i></a>'.PHP_EOL;
     }
 
     $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
@@ -650,7 +650,7 @@ function get_paging1($write_pages, $cur_page, $total_page, $url, $add="")
 
     if ($start_page > 1) {
 		$url = preg_replace('#/mypage=[0-9]*#', '/mypage='.($start_page-1), $url);
-		$str .= '<a href="'.$url.$add.'" class="pg_page pg_prev">이전</a>'.PHP_EOL;
+		$str .= '<a href="'.$url.$add.'" class="pg_page pg_prev"><i class="fas fa-angle-left"></i></a>'.PHP_EOL;
 	}
     if ($total_page > 1) {
         for ($k=$start_page;$k<=$end_page;$k++) {
@@ -665,11 +665,11 @@ function get_paging1($write_pages, $cur_page, $total_page, $url, $add="")
 
     if ($total_page > $end_page) {
 		$url = preg_replace('#/mypage=[0-9]*#', '/mypage='.($end_page+1), $url);
-		$str .= '<a href="'.$url.$add.'" class="pg_page pg_next">다음</a>'.PHP_EOL;
+		$str .= '<a href="'.$url.$add.'" class="pg_page pg_next"><i class="fas fa-angle-right"></i></a>'.PHP_EOL;
 	}
     if ($cur_page < $total_page) {
 		$url = preg_replace('#/mypage=[0-9]*#', '/mypage='.$total_page, $url);
-        $str .= '<a href="'.$url.$add.'" class="pg_page pg_end">맨끝</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.$add.'" class="pg_page pg_end"><i class="fas fa-angle-double-right"></i></a>'.PHP_EOL;
     }
 
     if ($str)
@@ -934,8 +934,13 @@ function get_record_alarm($bo_table, $mb_id){
 
 	$write_table = $g5['write_prefix'].$bo_table;
 
-	$sql = " select IFNULL(count(*), 0) as cnt from $write_table where wr_is_comment = 0 and wr_11 = '{$mb_id}' and wr_16 = 'N' ";
-	
+	//인사이트 게시판에 업로더가 게시물 추가한 경우
+	if($bo_table == 'insight'){
+		$sql = " select IFNULL(count(*), 0) as cnt from $write_table where wr_is_comment = 0 and mb_id = 'cdc' and wr_17 = '{$mb_id}' and wr_19 = 'N' ";
+	}else{
+		$sql = " select IFNULL(count(*), 0) as cnt from $write_table where wr_is_comment = 0 and wr_11 = '{$mb_id}' and wr_16 = 'N' ";
+	}
+	//echo $sql;
 	$row = sql_fetch($sql);
 
 	return $row['cnt'];
@@ -1004,4 +1009,131 @@ function get_wr_content_size($bo_table){
 		case 'longtext': return 4294967295;
 		default:  return 4294967295;
 	}
+}
+
+function latestMarketer($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=1, $options='', $utm_member, $team_code='')
+{
+    global $g5;
+    //static $css = array();
+
+    if (!$skin_dir) $skin_dir = 'basic';
+
+    if(G5_IS_MOBILE) {
+        $latest_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/latest/'.$skin_dir;
+        $latest_skin_url  = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/latest/'.$skin_dir;
+    } else {
+        $latest_skin_path = G5_SKIN_PATH.'/latest/'.$skin_dir;
+        $latest_skin_url  = G5_SKIN_URL.'/latest/'.$skin_dir;
+    }
+/*
+    $cache_fwrite = false;
+    if(G5_USE_CACHE) {
+        $cache_file = G5_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
+
+        if(!file_exists($cache_file)) {
+            $cache_fwrite = true;
+        } else {
+            if($cache_time > 0) {
+                $filetime = filemtime($cache_file);
+                if($filetime && $filetime < (G5_SERVER_TIME - 3600 * $cache_time)) {
+                    @unlink($cache_file);
+                    $cache_fwrite = true;
+                }
+            }
+
+            if(!$cache_fwrite)
+                include($cache_file);
+        }
+    }
+*/
+    if(!G5_USE_CACHE || $cache_fwrite) {
+        $list = array();
+
+        $sql = " select * from {$g5['board_table']} where bo_table = '{$bo_table}' ";
+        $board = sql_fetch($sql);
+        $bo_subject = get_text($board['bo_subject']);
+
+		$sql_order = ' wr_num, wr_reply ';
+		/////////////////////////////////////////////////////////////////////////
+		//마케터 개인화 용
+		/////////////////////////////////////////////////////////////////////////
+		$mk = get_marketer_detail($utm_member);
+
+		$mk_where = '';
+		$mk_sql_search  = '';
+		
+		if ($utm_member) {
+			if($bo_table == 'qna'){
+				$mk_sql_search .= " and (wr_11 = '{$utm_member}' OR wr_11 = '') ";
+				//$mk_sql_search .= " and (wr_11) ";
+			
+			}else if($bo_table == 'mkestimate'){
+				$mk_sql_search .= " and mb_id = '{$utm_member}' ";
+			
+			}else if($bo_table == 'request'){
+				$mk_sql_search .= " and (wr_11 = '{$utm_member}' OR wr_11 = '') ";
+			}else{
+				//각게시판 공통자료 노출여부
+				if($mk['mb_common_data_yn'] == 'Y'){
+					$mk_sql_search .= " and ( wr_17 = '{$utm_member}' OR mb_id = 'ampm' )";
+				}else{
+					$mk_sql_search .= " and wr_17 = '{$utm_member}' ";
+				}
+			}
+		}
+
+		//$mk_where = " and ".$mk_sql_search;
+		$mk_where = $mk_where.$mk_sql_search;
+		/////////////////////////////////////////////////////////////////////////
+
+		//////////////////////////////////////////////
+		//공통자료 비노출 찾아서 제외하기
+		//////////////////////////////////////////////
+		$not_wr_id = get_not_wrid($bo_table, $utm_member);
+		if($not_wr_id){
+			$mk_where.= " AND wr_id NOT IN( {$not_wr_id} )";
+		}
+		//////////////////////////////////////////////
+
+		if($options == 'my'){
+			$mk_where.= " and ca_name = '나의영상' ";
+			$sql_order = ' rand() ' ;
+		}
+		if($options == 'yo'){
+			$mk_where.= " and ca_name = '추천영상' ";
+
+			$sql_order = ' rand() ' ;
+		}
+
+        $tmp_write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
+        $sql = " select * from {$tmp_write_table} where wr_is_comment = 0 {$mk_where} order by {$sql_order} limit 0, {$rows} ";
+		//echo $sql;
+		$result = sql_query($sql);
+        for ($i=0; $row = sql_fetch_array($result); $i++) {
+            $list[$i] = get_lastMarketerlist($row, $board, $latest_skin_url, $subject_len, $sublink);
+        }
+/*
+        if($cache_fwrite) {
+            $handle = fopen($cache_file, 'w');
+            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject='".$bo_subject."';\n\$list=".var_export($list, true)."?>";
+            fwrite($handle, $cache_content);
+            fclose($handle);
+        }
+*/
+    }
+
+    /*
+    // 같은 스킨은 .css 를 한번만 호출한다.
+    if (!in_array($skin_dir, $css) && is_file($latest_skin_path.'/style.css')) {
+        echo '<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">';
+        $css[] = $skin_dir;
+    }
+    */
+
+    //ob_start();
+    include $latest_skin_path.'/latest.skin.php';
+    //$content = ob_get_contents();
+    //ob_end_clean();
+
+    return $content;
 }

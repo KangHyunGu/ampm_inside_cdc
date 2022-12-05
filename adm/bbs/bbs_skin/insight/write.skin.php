@@ -236,9 +236,9 @@ if ($board['bo_use_category']) {
 
 						<tr>
 							<th scope="row"><label for="wr_19">게시물 숨김 여부<strong class="sound_only">필수</strong></label></th>
-							<td>
+							<td> <? if($is_admin == 'uploader' && $w=='') $write['wr_19'] = 'N'; ?>
 								<select name="wr_19" id="wr_19" required class="required">
-									<?= codeToHtml($code_hide, $write['wr_19'], "cbo", "") ?>
+									<?=codeToHtml($code_hide, $write['wr_19'], "cbo", "") ?>
 								</select>
 							</td>
 						</tr>
@@ -261,7 +261,7 @@ if ($board['bo_use_category']) {
 
 			<div class="btn_confirm">
 				<a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn btn_cancel">취소</a>
-				<a href="#" @click="autoSave" class="btn_b01">임시등록</a>
+				<a href="#" @click="autoSave" class="btn btn_b02">임시등록</a>
 				<input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn btn_submit">
 			</div>
 		</form>

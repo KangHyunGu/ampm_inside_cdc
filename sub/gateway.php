@@ -39,8 +39,8 @@ if(!$view){
 //echo "/ae-".$utm_member."&team_code=".$team_code;exit;
 //echo "/ae-".$utm_member."/member".$utm_member."&team_code=".$team_code;exit;
 if($team_code){
-	move_page("/ae-".$utm_member."/member/?team_code=".$team_code);
+	move_page("/ae-".$utm_member."/?team_code=".$team_code);
 }else{
-	move_page("/ae-".$utm_member."/member/");
+	move_page("/ae-".$utm_member."/");
 }
 ?>

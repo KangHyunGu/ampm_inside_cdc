@@ -74,10 +74,12 @@ if (defined('G5_IS_ADMIN')) {
 		if (G5_IS_MOBILE) {
 			echo '<link rel="stylesheet" href="'.G5_MARKETER_CSS_URL.'/m_marketer.css">'.PHP_EOL;
 		}else{
+         echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/default.css">'.PHP_EOL;
 			echo '<link rel="stylesheet" href="'.G5_MARKETER_CSS_URL.'/marketer.css">'.PHP_EOL;
 		}
         echo '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">'.PHP_EOL;
-        echo '<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">'.PHP_EOL;
+        echo '<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css">'.PHP_EOL;
+        echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap">'.PHP_EOL;
    }
 }
 ?>
@@ -114,20 +116,8 @@ if($bodyok){
 	<?php
 	if(G5_IS_MOBILE) {
 	?>
-        <?php
-			//메인페이지 만
-			if($_SERVER['SCRIPT_NAME'] == '/marketer/index.php') { 
-		?>
 
-            <script>
-                // index 스크립트
-			</script>
-
-		<?php
-		}
-		?>
         
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script src="<?php echo G5_MARKETER_JS_URL ?>/m_quick2.js"></script>
         <script src="<?php echo G5_MARKETER_JS_URL ?>/jquery.easing.js"></script>
 		<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -154,13 +144,32 @@ if($bodyok){
             });
         })
 
+        $(document).ready(function() {
+
+            $('#m-sub-header .head-nav .menu_icon').click(function() {
+                $(this).toggleClass('open');
+                $('#m_menu').toggleClass('on');
+            });
+
+
+        });
 		</script>
+
+		<?php
+			//메인페이지 만
+			if($_SERVER['SCRIPT_NAME'] == '/marketer/mobile/index.php') { 
+		?>
         <script>
             $(function() {
                 AOS.init();
             });
         </script>
 	
+		
+		<?php
+		}
+		?>
+
 	<?php
 	}else{
 	?>
@@ -169,17 +178,18 @@ if($bodyok){
 			//메인페이지 만
 			if($_SERVER['SCRIPT_NAME'] == '/marketer/index.php') { 
 		?>
-
-			<script>
-                // index 스크립트
-			</script>
+        <script>
+            $(function() {
+                AOS.init();
+            });
+        </script>
+	
 		
 		<?php
 		}
 		?>
         
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script src="<?php echo G5_JS_URL ?>/commonScript.js"></script>
+		<script src="<?php echo G5_JS_URL ?>/commonScript.js"></script>
 		<script>
 		// header, #top_btn addclass
 		jQuery(document).ready(function() {
@@ -200,13 +210,26 @@ if($bodyok){
                 $('html,body').animate({scrollTop:$(this.hash).offset().top - 120}, 800);
             });
         })
+
+        /* 스크롤 위로 올리면 나타나는 header */
+        $(function(){ 
+            var lastScrollTop = 0;
+            $(window).scroll(function(){
+               var scrollTop = $(this).scrollTop(); 
+               
+               if(scrollTop >= 100) { // 숫자에 따라 아래로 스크롤 했을 때 사라지는 영역의 크기가 바뀝니다.
+                  if ((scrollTop > lastScrollTop) && (lastScrollTop>0)) { 
+                        $("#head_profile").css("top","-170px");
+                  } else {
+                        $("#head_profile").css("top","0px");
+                  }
+
+                  lastScrollTop = scrollTop;
+               } 
+            });
+        });
         
 		</script>
-        <script>
-            $(function() {
-                AOS.init();
-            });
-        </script>
 
 	<?php
 	}

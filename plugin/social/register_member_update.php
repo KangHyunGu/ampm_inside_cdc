@@ -24,7 +24,7 @@ $sm_id = $user_profile->sid;
 
 //아이디를 이메일주소로 사용 - feeris
 //$mb_id = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
-
+//print_r2($_POST);exit;
 $mb_id = isset($_POST['mb_email']) ? trim($_POST['mb_email']) : '';
 $mb_password    = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '';
 $mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re']) : '';

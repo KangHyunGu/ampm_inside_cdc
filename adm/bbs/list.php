@@ -68,6 +68,10 @@ if($sear_team){
 }
 
 if($member['mb_post'] == 'P6' || $is_admin == 'super' || $is_admin == 'manager'){
+}else if($is_admin == 'uploader'){	//업로더인 경우 숨김이고 업로더가 작성자인 경우
+	$marketer_search .= " and ";
+	$marketer_search .= " (a.wr_19 = 'N' AND a.mb_id = '{$member['mb_id']}') ";
+
 }else if($member['mb_post'] == 'P3' || $member['mb_post'] == 'P4'){ //본부장은 해당 본부 본인 포함 모두 
 	$marketer_search .= " and ";
 	

@@ -143,6 +143,11 @@ if(!$view){
 ?>
 
 <?php
+$g5['board_title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
+
+$g5['title'] = $mb['mb_name']."AE - ";
+$g5['title'].= strip_tags(conv_subject($view['wr_subject'], 255))." > ".$g5['board_title'];
+
 include_once('./_head.php');
 ?>
 
@@ -152,173 +157,127 @@ include(G5_MARKETER_PATH.'/inc/_sub_header.php');
 ?>
 
 <!-- S: 컨텐츠 -->
-<section id="sub-common">
-    <div class="wrap">  
-        <div class="common-info">
-            <div class="member-title">
-                <h3 class="main-color">Reference</h3>
-                <h2><?php echo ($mb['mb_slogan'])?$mb['mb_slogan']:"퍼포먼스 마케팅 PRO"; ?></h2>
-            </div>
-            <div class="member-info">
-                <!-- 마케터 이미지 -->
-                <div class="mkt-img">
-                    <?=$mb_images?>
-                </div>
-
-                <ul>
-                    <li>
-                        <span><i class="fas fa-mobile-alt"></i></span>
-                        <p><?=$mb['mb_tel'] ?></p>
-                    </li>
-
-                    <?php if($mb['mb_kakao']){ ?>
-                    <li>
-                        <span><i class="fab fa-kaggle"></i></span>
-                        <p><?=$mb['mb_kakao'] ?></p>
-                    </li>
-                    <?php } ?>
-
-                    <li>
-                        <span><i class="fas fa-envelope"></i></span>
-                        <p><?=$mb['mb_email'] ?></p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="sub-layout" class="rf-layout">
-    <div class="wrap">
-        <div class="layout">
-
-            <div class="content">
+<section id="content" class="sub2">
+   <div class="wrap">
             
-                <div class="insight-wrap">
-                    <div class="view-title">
-                        <!-- 게시글 제목 -->
-                        <h2><?=$view['subject']?></h2>
-                    </div>
-
-                    <div class="view-info">
-                        <!-- 게시글 정보 -->
-                        <ul>
-                            <li><?php echo date("Y.m.d", strtotime($view['wr_datetime'])) ?> <!--게시글 작성 날짜 --></li>
-                            <li><?=$view['wr_name']?> <!--작성자 --></li>
-                            <li><span>조회수</span> <?php echo number_format($view['wr_hit']) ?> <!--조회수 --></li>
-                        </ul>
-                        <?php
-                            if (implode('', $view['link'])) {
-                            // 링크
-                                $cnt = 0;
-                                for ($i=1; $i<=count($view['link']); $i++) {
-                                    if ($view['link'][$i]) {
-                                        $cnt++;
-                                        $link = cut_str($view['link'][$i], 70);
-                            ?>
-                            <p class="link"><span>출처</span> <a href="<?php echo $view['link_href'][$i] ?>" target="_blank"><?php echo $link ?> <!--출처 링크--></a></p>
-                            <?php
-                                    }
-                                }
-                            }
-                            ?>
-
-                    </div>
-
-                    <div class="view-text">
-                        <?php
-                            if ($view['file']['count']) {
-                                $cnt = 0;
-                                for ($i=0; $i<count($view['file']); $i++) {
-                                    if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
-                                        $cnt++;
-                                }
-                            }
-                            
-                            if($cnt) { 
-                                // 가변 파일
-                                for ($i=0; $i<count($view['file']); $i++) {
-                                    if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-                                        $view['file'][$i]['href'] = G5_MARKETER_URL."/inc/file_download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$i";
-
-                        ?>
-                        <div class="download">
-                            <div class="file">
-                                <a href="<?php echo $view['file'][$i]['href'];  ?>">
-                                    <div class="file-text">
-                                        <!--<span>첨부파일</span>-->
-                                        <p class="view_file_download">
-                                        <!--
-                                            <img src="<?php echo G5_MARKETER_URL?>/inc/img/icon_file.gif" alt="첨부">
-                                            -->
-                                            <?php echo $view['file'][$i]['source'] ?>
-                                            <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
-                                        </p>
-                                    </div>
-                                    <!-- <div class="file-img">
-                                        <i class="fas fa-file-download"></i>
-                                    </div> -->
-                                </a>
-                                <!--
-                                <span class="bo_v_file_cnt"><?php echo $view['file'][$i]['download'] ?>회 다운로드</span>
-                                <span>DATE : <?php echo $view['file'][$i]['datetime'] ?></span>
-                                -->
-                            </div>
-                        </div>
-                        <?php 
-                                    }
-                                }
-                            } 
-                            ?>
-                        <div class="view-text">
-                            <!--게시글 본문 -->
-                            <?php echo get_view_thumbnail($view['content']); ?>
-                        </div>
-                    </div>
-                
-                
-                    <!-- 이전글, 다음글 -->
-                    <div class="view-nav">
-                        <ul class="bo_v_nb">
-                            <?php
-                                if($prev_href){
-                            ?>
-                            <li class="btn_prv">
-                                <span class="nb_tit">이전글 <img src="<?=G5_MARKETER_URL ?>/images/arrowup.png"></span>
-                                <a href="<?php echo $prev_href ?>"><?php echo $prev_wr_subject ?></a>
-                                <!-- <span class="nb_date"><?=$prev_wr_datetime?></span> -->
-                            </li>
-                            <?php
-                                }
-
-                                if($next_href){
-                            ?>
-                            <li class="btn_next">
-                                <span class="nb_tit">다음글 <img src="<?=G5_MARKETER_URL ?>/images/arrowdown.png"></span>
-                                <a href="<?php echo $next_href ?>"><?php echo $next_wr_subject ?></a>
-                                <!-- <span class="nb_date"><?=$next_wr_datetime?></span> -->
-                            </li>
-                            <?php
-                                }
-                            ?>
-                        </ul>
-                    </div>
-                    
-                    <div class="view-list">
-                        <a href="/ae-<?=$utm_member?>/insight/<?php if($team_code){ echo "&team_code=".$team_code; }?>">목록 더보기</a>
-                    </div>
+      <div class="insight-wrap">
+         <div class="view-title">
+            <div class="view-info">
+                <!-- 카테고리 -->
+                <span class="vw_cate"><?php echo $view['ca_name']; // 분류 출력 끝 ?></span>
+                <div class="inner">
+                    <p><?php echo date("Y.m.d", strtotime($view['wr_datetime'])) ?> <!--게시글 작성 날짜 --></p>
+                    <p>
+                        <i class="fa-solid fa-eye"></i>
+                        <?php echo number_format($view['wr_hit']) ?> <!--조회수 -->
+                    </p>
                 </div>
             </div>
-        </div>
-    </div>
+            <!-- 게시글 제목 -->
+            <h2><?=$view['subject']?></h2>
+            <!-- 게시글 정보 -->
+            <?php
+                if (implode('', $view['link'])) {
+                // 링크
+                $cnt = 0;
+                for ($i=1; $i<=count($view['link']); $i++) {
+                    if ($view['link'][$i]) {
+                            $cnt++;
+                            $link = cut_str($view['link'][$i], 70);
+                ?>
+            <p class="link"><span>출처</span> <a href="<?php echo $view['link_href'][$i] ?>" target="_blank"><?php echo $link ?> <!--출처 링크--></a></p>
+            <?php
+                    }
+                }
+                }
+                ?>
+
+         </div>
+
+         <div class="view-text">
+               <!--게시글 본문 -->
+               <?php echo get_view_thumbnail($view['content']); ?>
+         </div>
+
+         <?php
+            if ($view['file']['count']) {
+               $cnt = 0;
+               for ($i = 0; $i < count($view['file']); $i++) {
+                  if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'])
+                     $cnt++;
+               }
+            }
+         ?>
+
+         <?php if ($view['file']['count']) { ?>
+            <!-- 첨부파일 시작 { -->
+            <div class="bo_v_file">
+               <h3>첨부파일</h3>
+               <ul>
+                  <?php
+                  // 가변 파일
+                  for ($i = 0; $i < count($view['file']); $i++) {
+                     if (isset($view['file'][$i]['source']) && $view['file'][$i]['source']) {
+                  ?>
+                        <li>
+
+                           <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download">
+                              · <?php echo $view['file'][$i]['source'] ?>
+                              <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
+                           </a>
+                           <!--
+                  <span class="bo_v_file_cnt ">다운로드 : <?php echo $view['file'][$i]['download'] ?>회 &nbsp;&nbsp;</span>
+                  <span class="">DATE : <?php echo $view['file'][$i]['datetime'] ?></span>
+                  -->
+                        </li>
+                  <?php
+                     }
+                  }
+                  ?>
+               </ul>
+            </div>
+            <!-- } 첨부파일 끝 -->
+         <?php
+            }
+         ?>
+      
+         <!-- 이전글, 다음글 -->
+         <div class="view-nav">
+            <ul class="bo_v_nb">
+                  <li class="btn">
+                    <?php
+                        if($prev_href){
+                    ?>
+
+                     <a class="btn_prv" href="<?php echo $prev_href ?>">
+                        <i class="fa-solid fa-caret-left"></i>
+                        이전글
+                    </a>
+                     <?php
+                     }
+
+                        if($next_href){
+                    ?>
+                     <a class="btn_next" href="<?php echo $next_href ?>">
+                        다음글
+                        <i class="fa-solid fa-caret-right"></i>
+                    </a>
+                     <?php
+                        }
+                    ?>
+                  </li>
+                  <li class="view-list">
+                    <a href="/ae-<?=$utm_member?>/insight/<?php if($team_code){ echo "&team_code=".$team_code; }?>">목록</a>
+                  </li>
+            </ul>
+         </div>
+      </div>
+
+   </div>
 </section>
 <!-- E: 컨텐츠 -->
 
 <!-- footer -->
 <?php
 include(G5_MARKETER_PATH.'/inc/_sub_footer.php');
-?>
-<?php
-//풋터
-include_once('./_tail.php');
 ?>

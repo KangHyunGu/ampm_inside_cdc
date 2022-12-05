@@ -28,9 +28,13 @@ $bo_table = 'insight';
 $write_table = 'g5_write_'.$bo_table;
 $list_link = "/ae-".$utm_member."/insight/";
 
-//$mk_sql_search = " ( mb_id = '{$utm_member}' OR mb_id = 'ampm' )";
-$mk_sql_search = " ( wr_17 = '{$utm_member}' OR mb_id = 'ampm' )";
-
+$mk = get_marketer_detail($utm_member);
+//각게시판 공통자료 노출여부
+if($mk['mb_common_data_yn'] == 'Y'){
+	$mk_sql_search = " ( wr_17 = '{$utm_member}' OR mb_id = 'ampm' )";
+}else{
+	$mk_sql_search = " wr_17 = '{$utm_member}' ";
+}
 //////////////////////////////////////////////
 //공통자료 비노출 찾아서 제외하기
 //////////////////////////////////////////////
@@ -238,6 +242,12 @@ $write_pages = get_paging_marketer(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $
 ?>
 
 <?php
+$g5['board_title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
+
+$g5['title'] = $mb['mb_name']."AE - ";
+$g5['title'].= strip_tags(conv_subject($row['wr_subject'], 255))." > ".$g5['board_title'];
+
+
 include_once('./_head.php');
 ?>
 
@@ -246,132 +256,95 @@ include_once('./_head.php');
 include(G5_MARKETER_PATH.'/inc/_sub_header.php');
 ?>
 
-
 <!-- S: 컨텐츠 -->
-<section id="sub-common">
-    <div class="wrap">  
-        <div class="common-info">
-            <div class="member-title">
-                <h3 class="main-color">Insight</h3>
-                <h2><?php echo ($mb['mb_slogan'])?$mb['mb_slogan']:"퍼포먼스 마케팅 PRO"; ?></h2>
+<section id="content" class="sub2">
+   <div class="wrap">
+
+      <div class="title-tab">
+         <div class="title-area">
+            <h2 class="sub-title">인사이트</h2>
+            <div class="list-count">
+               총 <span><?php echo number_format($total_count) ?></span>건 / <?php echo $page ?>Page
             </div>
-            <div class="member-info">
-                <ul>
-                    <li>
-                        <span><i class="fas fa-mobile-alt"></i></span>
-                        <p><?=$mb['mb_tel'] ?></p>
-                    </li>
-
-                    <?php if($mb['mb_kakao']){ ?>
-                    <li>
-                        <span><i class="fab fa-kaggle"></i></span>
-                        <p><?=$mb['mb_kakao'] ?></p>
-                    </li>
-                    <?php } ?>
-
-                    <li>
-                        <span><i class="fas fa-envelope"></i></span>
-                        <p><?=$mb['mb_email'] ?></p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="sub-layout" class="is-layout">
-    <div class="wrap">
-        <div class="layout">
-
-            <div class="content2" data-aos="fade-up" data-aos-offset="300" data-aos-easing="ease-in-cubic">
-                
-                <div class="insight">
-                    <div class="table-tit">insight</div>
-                    <div class="table-top">
-                        <div class="list-count">
-                            총 <span><?php echo number_format($total_count) ?></span>건 / <?php echo $page ?>Page
-                        </div>
-                        
-                        <div class="search">
-                            <!-- 게시판 검색 시작 { -->
-                            <fieldset id="bo_sch">
-                                <legend>게시물 검색</legend>
-
-                                <form name="fsearch" method="post">
-                                <label for="sfl" class="sound_only">검색대상</label>
-                                <select name="sfl" id="sfl">
-                                    <option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>업체명</option>
-                                    <option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
-                                </select>
-                                <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-                                <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력하세요">
-                                <button type="submit" value="검색" class="sch_btn"><span class="sound_only">검색</span></button>
-                                </form>
-                            </fieldset>
-                            <!-- } 게시판 검색 끝 -->   
-                        </div>   
-                    </div>
-                </div>
+         </div>
             
-                <div class="insight-list">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">번호</th>
-                                <th scope="col">제목</th>
-                                <th scope="col">조회수</th>
-                                <th scope="col">작성일</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $colspan = 4;
-                            for ($i=0; $i<count($list); $i++) {
-                            ?>
-                            <tr>
-                                <td class="td_num">
-                                <?php
-                                    if($list[$i]['is_notice']){
-                                        echo '<span>공지</span>';
-                                    }else{
-                                        echo $list[$i]['num'];
-                                    }
-                                ?>
-                                </td>
-                                <td class="td_subject">
-                                    <a href="<?=$list[$i]['href']?>"><?php echo $list[$i]['subject'] ?></a>
-                                    <?php
-                                    // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
-                                    // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
-                    
-                                    if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
-                                    // if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
-                                    //if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
-                                    // if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
-                                    //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
-                                    ?>
-                                </td>
-                                <td class="td_view"><?php echo $list[$i]['wr_hit'] ?></td>
-                                <td class="td_datetime"><?php echo date("Y-m-d", strtotime($list[$i]['wr_datetime'])) ?></td>
-                            </tr>
-                            <?php
-                                }
-                            ?>
-                            <?php if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- 페이징 -->
-                <?php echo $write_pages;  ?>
-            </div>
-		
-            <?php
-                //마케터 프로필
-                include(G5_MARKETER_PATH.'/inc/mkt_profile.php');
-            ?>
-        </div>
-    </div>
+         <div class="search">
+            <!-- 게시판 검색 시작 { -->
+            <fieldset id="bo_sch">
+               <form name="fsearch" method="post">
+               <label for="sfl" class="sound_only">검색대상</label>
+               <select name="sfl" id="sfl">
+					<option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
+					<option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
+					<option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
+               </select>
+               <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+               <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력하세요">
+               <button type="submit" value="검색" class="sch_btn">검색</button>
+               </form>
+            </fieldset>
+            <!-- } 게시판 검색 끝 -->   
+         </div>   
+      </div>
+
+      <div class="insight-list">
+         <table>
+            <thead>
+                  <tr>
+                     <th scope="col">No.</th>
+                     <th scope="col">구분</th>
+                     <th scope="col">제목</th>
+                     <th scope="col">등록일</th>
+                     <th scope="col">조회수</th>
+                  </tr>
+            </thead>
+            <tbody>
+                  <?php
+                  $colspan = 5;
+                  for ($i=0; $i<count($list); $i++) {
+                  ?>
+                  <tr>
+                     <td class="td_num">
+                     <?php
+                        if($list[$i]['is_notice']){
+                              echo '<span>공지</span>';
+                        }else{
+                              echo $list[$i]['num'];
+                        }
+                     ?>
+                     </td>
+                     <td class="td_category">
+                        <span><?php echo $list[$i]['ca_name'] ?></span>
+                     </td>
+                     <td class="td_subject">
+                        <a href="<?=$list[$i]['href']?>"><?php echo $list[$i]['subject'] ?></a>
+                        <?php
+                        // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
+                        // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
+         
+                        if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
+                        // if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
+                        //if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
+                        // if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
+                        //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
+                        ?>
+                     </td>
+                     <td class="td_datetime"><?php echo date("Y-m-d", strtotime($list[$i]['wr_datetime'])) ?></td>
+                     <td class="td_view"><?php echo $list[$i]['wr_hit'] ?></td>
+                  </tr>
+                  <?php
+                     }
+                  ?>
+                  <?php if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
+            </tbody>
+         </table>
+      </div>
+      
+      <!-- 페이징 -->
+      <?php echo $write_pages;  ?>
+      </div>
+
+   </div>
 </section>
 <!-- E: 컨텐츠 -->
 

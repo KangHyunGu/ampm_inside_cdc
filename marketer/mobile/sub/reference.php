@@ -1,7 +1,7 @@
 <?php
-//if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
+
 $g5['title'] = "REFERENCE 리스트";
 ?>
 <?php
@@ -24,8 +24,13 @@ $bo_table = 'reference';
 $write_table = 'g5_write_'.$bo_table;
 $list_link = "/ae-".$utm_member."/reference/";
 
-//$mk_sql_search = " ( mb_id = '{$utm_member}' OR mb_id = 'ampm' )";
-$mk_sql_search = " ( wr_17 = '{$utm_member}' OR mb_id = 'ampm' )";
+$mk = get_marketer_detail($utm_member);
+//각게시판 공통자료 노출여부
+if($mk['mb_common_data_yn'] == 'Y'){
+	$mk_sql_search = " ( wr_17 = '{$utm_member}' OR mb_id = 'ampm' )";
+}else{
+	$mk_sql_search = " wr_17 = '{$utm_member}' ";
+}
 
 //////////////////////////////////////////////
 //공통자료 비노출 찾아서 제외하기
@@ -57,7 +62,15 @@ if ($stx || $stx === '0') {     //검색이면
 /////////////////////////////////////////////////////////////////////////
 $mk_where = " and ".$mk_sql_search;
 /////////////////////////////////////////////////////////////////////////
+
+//업체
+if($sear_wr_8){
+	$mk_where.= " and wr_8 like '%{$sear_wr_8}%' ";
+}
+
+
 $sql = " select count(*) as cnt from {$write_table} WHERE 1 $sql_search {$mk_where} ";
+//echo $sql;
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
@@ -69,6 +82,8 @@ if(G5_IS_MOBILE) {
     $page_rows = $board['bo_page_rows'];
     $list_page_rows = $board['bo_page_rows'];
 }
+
+$config['cf_mobile_pages'] = 7;
 
 if (!$page) $page = 1;						// 페이지가 없으면 첫 페이지 (1 페이지)
 
@@ -87,12 +102,6 @@ if (!$is_search_bbs) {
 
     for ($k=0; $k<$board_notice_count; $k++) {
         if (trim($arr_notice[$k]) == '') continue;
-
-		/////////////////////////////////////////////////////////////////////////
-		//마케터 개인화 용
-		/////////////////////////////////////////////////////////////////////////
-		$mk_where = " and ".$mk_sql_search;
-		/////////////////////////////////////////////////////////////////////////
 
         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$arr_notice[$k]}' {$mk_where} ");
 
@@ -159,20 +168,8 @@ if ($sst) {
 }
 
 if ($is_search_bbs) {
-	/////////////////////////////////////////////////////////////////////////
-	//마케터 개인화 용
-	/////////////////////////////////////////////////////////////////////////
-	$mk_where = " and ".$mk_sql_search;
-	/////////////////////////////////////////////////////////////////////////
-
 	$sql = " select distinct wr_parent from {$write_table} where 1 {$sql_search} {$mk_where} {$sql_order} limit {$from_record}, $page_rows ";
 } else {
-	/////////////////////////////////////////////////////////////////////////
-	//마케터 개인화 용
-	/////////////////////////////////////////////////////////////////////////
-	$mk_where = " and ".$mk_sql_search;
-	/////////////////////////////////////////////////////////////////////////
-
 	$sql = " select * from {$write_table} where wr_is_comment = 0 {$mk_where} ";
     if(!empty($notice_array))
         $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
@@ -233,8 +230,13 @@ if($team_code){
 $write_pages = get_paging_marketer(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $list_link);
 ?>
 
-
 <?php
+$g5['board_title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
+
+$g5['title'] = $mb['mb_name']."AE - ";
+$g5['title'].= strip_tags(conv_subject($row['wr_subject'], 255))." > ".$g5['board_title'];
+
+
 include_once('./_head.php');
 ?>
 
@@ -244,139 +246,82 @@ include(G5_MARKETER_PATH.'/inc/_sub_header.php');
 ?>
 
 <!-- S: 컨텐츠 -->
-<section id="sub-common">
-    <div class="wrap">  
-        <div class="common-info">
-            <div class="member-title">
-                <h3 class="main-color">Reference</h3>
-                <h2><?php echo ($mb['mb_slogan'])?$mb['mb_slogan']:"퍼포먼스 마케팅 PRO"; ?></h2>
-            </div>
-            <div class="member-info">
-                <!-- 마케터 이미지 -->
-                <div class="mkt-img">
-                    <?=$mb_images?>
-                </div>
-
-                <ul>
-                    <li>
-                        <span><i class="fas fa-mobile-alt"></i></span>
-                        <p><?=$mb['mb_tel'] ?></p>
-                    </li>
-
-                    <?php if($mb['mb_kakao']){ ?>
-                    <li>
-                        <span><i class="fab fa-kaggle"></i></span>
-                        <p><?=$mb['mb_kakao'] ?></p>
-                    </li>
-                    <?php } ?>
-
-                    <li>
-                        <span><i class="fas fa-envelope"></i></span>
-                        <p><?=$mb['mb_email'] ?></p>
-                    </li>
-                </ul>
+<section id="content" class="sub4">
+    <div class="wrap">
+        <div class="title-tab">
+            <h2 class="sub-title">레퍼런스</h2>
+            <div class="list-count">
+                총 <span><?php echo number_format($total_count) ?></span>건 / <?php echo $page ?>Page
             </div>
         </div>
-    </div>
-</section>
 
+        <div class="search">
+            <!-- 게시판 검색 시작 { -->
+            <fieldset id="bo_sch">
+                <form name="fsearch" method="post">
+                <label for="sfl" class="sound_only">검색대상</label>
+                <select name="sfl" id="sfl">
+                    <option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>제목</option>
+                    <option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
+                    <option value="wr_subject||wr_content"<?php echo get_selected($sfl, 'wr_subject||wr_content'); ?>>제목+내용</option>
+                </select>
+                <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력하세요">
+                <button type="submit" value="검색" class="sch_btn">검색</button>
+                </form>
+            </fieldset>
+            <!-- } 게시판 검색 끝 -->   
+        </div>   
 
-<section id="sub-layout" class="rf-layout">
-    <div class="wrap">
-        <div class="layout">
+        <div class="reference-list">
+            <!-- 래퍼런스 목록 -->
+            <ul class="grid">
+                <?php
+                for ($i=0; $i<count($list); $i++) {
+                    /*
+                    $thumb = get_list_thumbnail($bo_table, $list[$i]['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
 
-            <div class="content2" data-aos="fade-up" data-aos-easing="ease-in-cubic">
+                    if($thumb['src']) {
+                        $img_content = '<img src="'.$thumb['src'].'"
+                        alt="'.$thumb['alt'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
+                    } else {
+                        $img_content = '<span style="width:'.$board['bo_gallery_width'].'px;height:'.$board['bo_gallery_height'].'px">no image</span>';
+                    }
+                    */
+                    $file = get_file($bo_table, $list[$i]['wr_id']);
+
+                    $img_link = $file[0]['path'].'/'.$file[0]['file'];
+                    if($file[0]['file']){
+                        $img_content = '<img src="'.$img_link.'" alt="'.$list[$i]['wr_subject'].'" title="'.$list[$i]['wr_subject'].'" ';
+                    }else{
+                        $img_content = '<img src="'.G5_MARKETER_URL.'/images/no_images.jpg" alt="'.$list[$i]['wr_subject'].'" title="'.$list[$i]['wr_subject'].'" ';
+                    }
+                ?>
+            
+                <li class="item">
+                    <a href="<?php echo $list[$i]['href'] ?>">
+                        <div class="rf-img">
+                            <!-- 이미지 -->
+                            <?echo $img_content ?>
+                        </div>
+                    </a>
+                </li>
+
+                <?php
+                    }
+                ?>
                 
-                <div class="reference">
-                    <div class="table-tit">Reference</div>
-                    <div class="list-count">
-                        총 <span><?php echo number_format($total_count) ?></span>건 / <?php echo $page ?>Page
-                    </div>
-
-                    <div class="table-top">
-                        
-                        <div class="search">
-                            <!-- 게시판 검색 시작 { -->
-                            <fieldset id="bo_sch">
-                                <legend>게시물 검색</legend>
-
-                                <form name="fsearch" method="post">
-                                <label for="sfl" class="sound_only">검색대상</label>
-                                <select name="sfl" id="sfl">
-                                    <option value="wr_subject"<?php echo get_selected($sfl, 'wr_subject', true); ?>>업체명</option>
-                                    <option value="wr_content"<?php echo get_selected($sfl, 'wr_content'); ?>>내용</option>
-                                </select>
-                                <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-                                <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력하세요">
-                                <button type="submit" value="검색" class="sch_btn"><span class="sound_only">검색</span></button>
-                                </form>
-                            </fieldset>
-                            <!-- } 게시판 검색 끝 -->   
-                        </div>   
-                    </div>
-                </div>
-                <div class="table-list">
-                    <!-- 래퍼런스 목록 -->
-                    <ul class="grid">
-                        <?php
-                        for ($i=0; $i<count($list); $i++) {
-                            /*
-                            $thumb = get_list_thumbnail($bo_table, $list[$i]['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
-
-                            if($thumb['src']) {
-                                $img_content = '<img src="'.$thumb['src'].'"
-                                alt="'.$thumb['alt'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
-                            } else {
-                                $img_content = '<span style="width:'.$board['bo_gallery_width'].'px;height:'.$board['bo_gallery_height'].'px">no image</span>';
-                            }
-                            */
-                            $file = get_file($bo_table, $list[$i]['wr_id']);
-
-                            $img_link = $file[0]['path'].'/'.$file[0]['file'];
-                            if($file[0]['file']){
-                                $img_content = '<img src="'.$img_link.'" alt="'.$list[$i]['wr_subject'].'" title="'.$list[$i]['wr_subject'].'" ';
-                            }else{
-                                $img_content = '<img src="'.G5_MARKETER_URL.'/images/no_images.jpg" alt="'.$list[$i]['wr_subject'].'" title="'.$list[$i]['wr_subject'].'" ';
-                            }
-                        ?>
-                    
-                        <li class="item">
-                            <a href="<?php echo $list[$i]['href'] ?>">
-                                <div class="rf-img">
-                                    <!-- 이미지 -->
-                                    <?echo $img_content ?>
-                                </div>
-                                </div>
-                                <div class="rf-title">
-                                    <!-- 업체(광고주명) -->
-                                    <p><?echo $list[$i]['subject'];?></p>
-                                </div>
-                            </a>
-                        </li>
-
-                        <?php
-                            }
-                        ?>
-                        
-                        <?php if (count($list) == 0) { echo '<div class="empty">게시물이 없습니다.</div>'; } ?>
-                    </ul>
-                    
-                    <!-- 페이징 -->
-                    <?php echo $write_pages;  ?>
-                </div>
-
-            </div>
-
+                <?php if (count($list) == 0) { echo '<div class="empty">게시물이 없습니다.</div>'; } ?>
+            </ul>
+            
+            <!-- 페이징 -->
+            <?php echo $write_pages;  ?>
         </div>
     </div>
 </section>
 <!-- E: 컨텐츠 -->
 
-<!-- footer -->
-<?php
-include(G5_MARKETER_PATH.'/inc/_sub_footer.php');
-?>
 <?php
 //풋터
-include_once('./_tail.php');
+include(G5_MARKETER_PATH.'/inc/_sub_footer.php');
 ?>

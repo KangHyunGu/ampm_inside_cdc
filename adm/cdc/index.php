@@ -147,6 +147,18 @@ $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['c
     <!-- cdc_list -->
     <div id="cdc_list">
         <div class="cdc_title">CDC 컨텐츠</div>
+			<!-- 검색, 글쓰기 버튼 -->
+			<div class="bt_wrap">
+
+				<div class="bo_fx">
+					<!-- CDC 용 스킨페이지 구성 필요 -->
+					<ul class="btn_bo_adm">
+                  		<li><a href="<?=G5_ADMBBS_URL?>/board.php?bo_table=insight" class="btn_b04">인사이트</a></li>
+					</ul>
+				</div>
+
+			</div> 
+			<!-- } 검색, 글쓰기 버튼 -->
 
         <!-- 전체게시물 목록 시작 { -->
         <form name="fnewlist" id="fnewlist" method="post" action="#" onsubmit="return fnew_submit(this);">
@@ -171,6 +183,7 @@ $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['c
                                 </th>
                             <?php } ?>
                             <th scope="co;">게시판</th>
+                            <th scope="co;">노출여부</th>
                             <th scope="col">매체</th>
                             <th scope="col">제목</th>
                             <th scope="col">내용확인</th>
@@ -211,6 +224,10 @@ $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['c
                                 <td class="td_board">
                                     <!-- 인사이트 / 교육영상 / 레퍼런스 -->
                                     <?php echo $bo_subject ?>
+                                </td>
+                                <td class="td_board">
+                                    <!-- 노출여부 -->
+                                    <?=codeToName($code_hide, $list[$i]['wr_19'])?>
                                 </td>
                                 <td class="td_media">
                                     <!-- 업로드 된 매체 아이콘만 보이기 -->

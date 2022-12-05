@@ -17,21 +17,11 @@ if($w == 'u'){
 
 $file_size = count($_FILES);
 $is_insta = $_POST['is_insta'];
-
+// 해시태그 개선 사항 요청(2022.12.05)
 $commonSql = "is_youtube = '{$_POST['is_youtube']}',
                     is_blog = '{$_POST['is_blog']}',
                     is_insta = '$is_insta',
                     wr_cat_link = '{$_POST['wr_cat_link']}',
-                    wr_mhash_1 = '{$_POST['wr_mhash_1']}',
-                    wr_mhash_2 = '{$_POST['wr_mhash_2']}',
-                    wr_mhash_3 = '{$_POST['wr_mhash_3']}',
-                    wr_shash_1 = '{$_POST['wr_shash_1']}',
-                    wr_shash_2 = '{$_POST['wr_shash_2']}',
-                    wr_shash_3 = '{$_POST['wr_shash_3']}',
-                    wr_shash_4 = '{$_POST['wr_shash_4']}',
-                    wr_shash_5 = '{$_POST['wr_shash_5']}',
-                    wr_shash_6 = '{$_POST['wr_shash_6']}',
-                    wr_shash_7 = '{$_POST['wr_shash_7']}',
                     wr_ytag = '{$_POST['wr_ytag']}',
                     wr_video_link = '{$_POST['wr_video_link']}',
                     wr_youtube_link = '{$_POST['wr_youtube_link']}',
@@ -39,8 +29,7 @@ $commonSql = "is_youtube = '{$_POST['is_youtube']}',
                     wr_cdc_content = '$wr_content',
                     wr_cdc_title = '$wr_subject',
                     wr_cdc_file = '$file_size',
-                    wr_mhash = '{$_POST['wr_mhash']}',
-                    wr_shash = '{$_POST['wr_shash']}'";
+                    wr_hash = '{$_POST['wr_hash']}'";
                     
     $cdc_sql = str_replace("{fieldSet}", $commonSql, $cdc_sql);
     sql_query($cdc_sql);

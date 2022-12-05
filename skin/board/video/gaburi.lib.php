@@ -57,4 +57,23 @@ function get_vimeoThumb($id) {
     return $thumbUrl;
 }
 
-?>
+//À¯Æ©ºê½æ³×ÀÏ
+if ( ! function_exists('get_youtube_code')) {
+    function get_youtube_code($url) { 
+
+        if (empty($url) || !$url) { 
+            return;
+        } 
+
+        preg_match('@https?://(?:www\.)?youtube\.com/(?:watch\?|\?)[^>]*v[/=]([a-zA-Z0-9-_]+)@', $url, $matches);
+        $code = $matches[1];
+
+        if (!$code) { 
+            preg_match('@https?://(?:www\.)?youtu\.be/([a-zA-Z0-9-_]+)@', $url, $matches);
+            $code = $matches[1];
+        }
+
+        return $code;
+
+    } 
+}

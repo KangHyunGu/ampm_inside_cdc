@@ -1,6 +1,6 @@
 <?php
-//if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 $g5['title'] = "REFERENCE 상세보기";
 ?>
@@ -148,6 +148,12 @@ if(!$view){
 ?>
 
 <?php
+$g5['board_title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
+
+$g5['title'] = $mb['mb_name']."AE - ";
+$g5['title'].= strip_tags(conv_subject($view['wr_subject'], 255))." > ".$g5['board_title'];
+
+
 include_once('./_head.php');
 ?>
 
@@ -157,145 +163,89 @@ include(G5_MARKETER_PATH.'/inc/_sub_header.php');
 ?>
 
 <!-- S: 컨텐츠 -->
-<section id="sub-common">
-    <div class="wrap">  
-        <div class="common-info">
-            <div class="member-title">
-                <h3 class="main-color">Reference</h3>
-                <h2><?php echo ($mb['mb_slogan'])?$mb['mb_slogan']:"퍼포먼스 마케팅 PRO"; ?></h2>
-            </div>
-            <div class="member-info">
-                <!-- 마케터 이미지 -->
-                <div class="mkt-img">
-                    <?=$mb_images?>
-                </div>
 
-                <ul>
-                    <li>
-                        <span><i class="fas fa-mobile-alt"></i></span>
-                        <p><?=$mb['mb_tel'] ?></p>
-                    </li>
-
-                    <?php if($mb['mb_kakao']){ ?>
-                    <li>
-                        <span><i class="fab fa-kaggle"></i></span>
-                        <p><?=$mb['mb_kakao'] ?></p>
-                    </li>
-                    <?php } ?>
-
-                    <li>
-                        <span><i class="fas fa-envelope"></i></span>
-                        <p><?=$mb['mb_email'] ?></p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="reference-view">
-    <!-- 타이틀 영역 -->
-    <!-- background=첨부이미지 -->
-    <div class="title-box" style="background:url(<?=$img_link?>) center center no-repeat; background-size:cover;">
-        <div class="title-bg"></div>
-    </div>
-    
-    <div class="content wrap">
-        <!-- 래퍼런스 view -->
-        <div class="rf-view">
-            <div class="rf-box">
-                <div class="rf-title">
-                    <h1><?=$view['subject']?><span>마케팅 사례</span></h1>
-                </div>
-
-                <?php if($view['wr_4']){ ?>
-                    <div class="rf-view-title">
-                        <div class="view-title">
-                            <!-- 홈페이지 URL -->
-                            <p>Homepage URL</p>
-                            <a href="<?=$view['wr_4']?>" target="_blank">
-                                <?=$view['wr_4']?>
-                            </a>
-                        </div>
+<section id="content" class="sub4">
+    <!-- 래퍼런스 view -->
+    <div class="wrap">
+        <div class="reference-wrap">
+                <div class="view-title">
+                    <div class="view-info">
+                        <!-- 카테고리 -->
+                        <span class="vw_cate"><?php echo $view['ca_name']; // 분류 출력 끝 ?></span>
                     </div>
-                <?php } ?>
-            </div>
-            
-            <div class="rf-con">
-                <table>
-                    <!-- 마케팅 KPI -->
-                    <?php if($view['wr_1']){ ?>
-                    <tr>
-                        <th>마케팅 KPI</th>
-                        <td><?=$view['wr_1']?></td>
-                    </tr>
-                    <?php } ?>
-                    <!-- 집행매체 -->
-                    <?php if($view['wr_2']){ ?>
-                    <tr>
-                        <th>집행매체</th>
-                        <td><?=$view['wr_2']?></td>
-                    </tr>
-                    <?php } ?>
-                    <!-- 집행성과 -->
-                    <?php if($view['wr_3']){ ?>
-                    <tr>
-                        <th>집행성과</th>
-                        <td><?=$view['wr_3']?></td>
-                    </tr>
-                    <?php } ?>
-                    <!-- 집행내용 -->
-                    <?php if($view['content']){ ?>
-                    <tr>
-                        <th>집행내용</th>
-                        <td class="view-text"><?php echo get_view_thumbnail($view['content']); ?></td>
-                    </tr>
-                    <?php } ?>
-                </table>
+                    <!-- 게시글 제목 -->
+                    <h2><?=$view['subject']?></h2>
+                </div>
 
-                <div class="board">
+                <div class="view-text">
+                    <table>
+                        <!-- 마케팅 KPI -->
+                        <?php if($view['wr_1']){ ?>
+                        <tr>
+                            <th>마케팅 KPI</th>
+                            <td><?=$view['wr_1']?></td>
+                        </tr>
+                        <?php } ?>
+                        <!-- 집행매체 -->
+                        <?php if($view['wr_2']){ ?>
+                        <tr>
+                            <th>집행매체</th>
+                            <td><?=$view['wr_2']?></td>
+                        </tr>
+                        <?php } ?>
+                        <!-- 집행성과 -->
+                        <?php if($view['wr_3']){ ?>
+                        <tr>
+                            <th>집행성과</th>
+                            <td><?=$view['wr_3']?></td>
+                        </tr>
+                        <?php } ?>
+                        <!-- 집행내용 -->
+                        <?php if($view['content']){ ?>
+                        <tr>
+                            <th>집행내용</th>
+                            <td class="view-text"><?php echo get_view_thumbnail($view['content']); ?></td>
+                        </tr>
+                        <?php } ?>
+                    </table>
+
                     <!-- 이전글, 다음글 -->
                     <div class="view-nav">
                         <ul class="bo_v_nb">
-                            <?php
-                                if($prev_href){
-                            ?>
-                            <li class="btn_prv">
-                                <span class="nb_tit">이전글 <img src="<?=G5_MARKETER_URL ?>/images/arrowup.png"></span>
-                                <a href="<?php echo $prev_href ?>"><?php echo $prev_wr_subject ?></a>
-                            </li>
-                            <?php
+                            <li class="btn">
+                                <?php
+                                    if($prev_href){
+                                ?>
+
+                                <a class="btn_prv" href="<?php echo $prev_href ?>">
+                                    <i class="fa-solid fa-caret-left"></i>
+                                    이전글
+                                </a>
+                                <?php
                                 }
 
-                                if($next_href){
-                            ?>
-                            <li class="btn_next">
-                                <span class="nb_tit">다음글 <img src="<?=G5_MARKETER_URL ?>/images/arrowdown.png"></span>
-                                <a href="<?php echo $next_href ?>"><?php echo $next_wr_subject ?></a>
+                                    if($next_href){
+                                ?>
+                                <a class="btn_next" href="<?php echo $next_href ?>">
+                                    다음글
+                                    <i class="fa-solid fa-caret-right"></i>
+                                </a>
+                                <?php
+                                    }
+                                ?>
                             </li>
-                            <?php
-                                }
-                            ?>
+                            <li class="view-list">
+                                <a href="/ae-<?=$utm_member?>/reference/<?php if($team_code){ echo "&team_code=".$team_code; }?>">목록</a>
+                            </li>
                         </ul>
                     </div>
-                    
-                    <div class="view-list">
-                        <a href="/ae-<?=$utm_member?>/reference/<?php if($team_code){ echo "&team_code=".$team_code; }?>">목록 더보기</a>
-                    </div>
                 </div>
-            </div>
         </div>
-
     </div>
-            
 </section>
 <!-- E: 컨텐츠 -->
 
-<!-- footer -->
 <?php
-include(G5_MARKETER_PATH.'/inc/_sub_footer.php');
-?>
-<?php
-//풋터
-include_once('./_tail.php');
+    //풋터
+    include(G5_MARKETER_PATH.'/inc/_sub_footer.php');
 ?>

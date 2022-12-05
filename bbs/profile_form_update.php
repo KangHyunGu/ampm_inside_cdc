@@ -88,6 +88,7 @@ $sql_common = "  mb_license 		= '{$arrLicense}',
                  mb_facebooklink 	= '{$_POST['mb_facebooklink']}',
                  mb_instagramlink 	= '{$_POST['mb_instagramlink']}',
                  mb_youtubelink 	= '{$_POST['mb_youtubelink']}',
+                 mb_common_data_yn 	= '{$_POST['mb_common_data_yn']}',
 
 				 mb_part 	= '{$_POST['mb_part']}',
                  mb_team 	= '{$_POST['mb_team']}',

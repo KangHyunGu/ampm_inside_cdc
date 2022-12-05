@@ -7,7 +7,7 @@ include_once(G5_LIB_PATH.'/register.lib.php');
     <div id="mk-quick">
 
         <div class="customer_box">
-            <h1>빠른상담 신청하기</h1>
+            <h1><span class="main-color"><?=$mb['mb_name'] ?>AE</span>에게 상담신청하기</h1>
 
             <form name="frmMain1" id="frmMain1">
                 <input type="hidden" name="proc_mode" id="proc_mode1" value="edit">

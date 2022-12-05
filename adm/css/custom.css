@@ -13,3 +13,18 @@
 .col-right{
     float: right;
 }
+
+.btn_b04 {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 110px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 15px;
+    background: #1acb86;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 3px;
+}

@@ -7,8 +7,8 @@
         <td>
             <q-field :model-value="bf_file" ref="images" :rules="mandatory('cdc_files[]', '이미지')" :reactive-rules="true">
                 <template v-slot:control>
-                    <div class="q-gutter-md row items-start">
-                        <imageform v-for="i in 10" :key="i" v-model="bf_file[i - 1]" :bf_file="bf_file[i - 1]" :add_icon_size="'60px'" @remove="removeImageFile" style="width:130px; height:100px;">
+                    <div class="q-gutter-md row items-start full-width">
+                        <imageform v-for="i in 10" :key="i" v-model="bf_file[i - 1]" :bf_file="bf_file[i - 1]" :add_icon_size="'60px'" @remove="removeImageFile" style="height:100px;">
                         </imageform>
                     </div>
                 </template>
@@ -68,27 +68,13 @@
         </td>
     </tr>
 
-    <!-- 메인 해시태그(3개) -->
-    <tr v-if="isMainHashTag">
-        <th scope="row">메인 해시태그</th>
+    <!-- 해시태그(최대 30개) 개선사항 요청(2022.12.05)-->
+    <tr v-if="isHashTags">
+        <th scope="row">해시태그</th>
         <td>
             <div class="q-gutter-md">
                 <div class="row items-start">
-                    <q-select label="메인 해시태그(해시태그 구분시 Enter키를 이용해주시기 바랍니다.)" v-model="mhashs" use-input use-chips outlined multiple hide-dropdown-icon input-debounce="0" @new-value="addMhash" dense size="90" />
-                </div>
-            </div>
-
-            </q-field>
-        </td>
-    </tr>
-
-    <!-- 서브 해시태그(7개) -->
-    <tr v-if="isSubHashTag">
-        <th scope="row">서브 해시태그</th>
-        <td>
-            <div class="q-gutter-md">
-                <div class="row items-start">
-                    <q-select label="서브 해시태그(해시태그 구분시 Enter키를 이용해주시기 바랍니다.)" v-model="shashs" use-input use-chips outlined multiple hide-dropdown-icon input-debounce="0" @new-value="addShash" dense size="90" />
+                    <q-select label="해시태그(해시태그 구분시 Enter키를 이용해주시기 바랍니다.)" v-model="hashs" use-input use-chips outlined multiple hide-dropdown-icon input-debounce="0" @new-value="addHashTags" dense size="90" />
                 </div>
             </div>
         </td>

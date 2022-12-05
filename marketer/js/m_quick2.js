@@ -1,19 +1,9 @@
 $(document).ready(function() {
 
-	$('#m_quick').click(function(){
-
-		$('#m_quick_open').addClass('on');
-		$(this).addClass('on');
-	});
-
-
-    
-    $('#m_quick_open .close').click(function(){
-
-		$('#m_quick_open').removeClass('on');
-		$('#m_quick').removeClass('on');
-	});
-
+	$('#m-sub-header .head-nav .menu_icon').click(function() {
+        $(this).toggleClass('open');
+        $('#m_menu').toggleClass('on');
+    });
     
 
 });

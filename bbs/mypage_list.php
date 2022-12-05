@@ -198,9 +198,10 @@ if ($stx && $sfl) {
 // 정렬에 사용하는 QUERY_STRING
 $qstr2 = 'bo_table='.$bo_table.'&amp;go_table='.$go_table.'&amp;sop='.$sop.'&amp;view='.$view;
 
-if(!$sst)
-    $sst  = "wr_num, wr_reply";
-
+if(!$sst){
+    //$sst  = "wr_num, wr_reply";
+    $sst  = "wr_datetime desc, wr_num, wr_reply";
+}
 if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
 }

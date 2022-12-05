@@ -26,6 +26,10 @@ $user_nick = social_relace_nick($user_profile->displayName);
 $user_email = isset($user_profile->emailVerified) ? $user_profile->emailVerified : $user_profile->email;
 $user_id = $user_profile->sid ? preg_replace("/[^0-9a-z_]+/i", "", $user_profile->sid) : get_social_convert_id($user_profile->identifier, $provider_name);
 
+//echo $user_profile->displayName." | ".$user_nick." | ".$user_id;
+//print_r2($_POST);
+//exit;
+
 if(! $user_nick) {
     $tmp = explode('_', $user_id);
     $user_nick = $tmp[1];

@@ -37,7 +37,7 @@ include(G5_PATH.'/inc/_inc_loginMeberInfo.php');
 
 	<?php if($is_admin=='super' || $is_admin=='manager' || $member['ampmkey'] == 'Y'){   //마케터 ?>
 	<ul id="ol_after_private" class="w-box">
-		<li><a href="<?=$go_amypage?>">마이페이지</a></li>
+		<li><a href="<?=$go_amypage?>">마이페이지 <span><?=get_record_alarm('insight', $member['mb_id'])?></span> <!-- 업로드등록 알람 --></a></li>
     	<li><a href="<?=$go_qna?>" class="ol_after_reply">답변대기 <span><?=get_record_alarm('qna', $member['mb_id'])?></span> <!-- 답변대기 알람 --></a></li>
 		<li><a href="<?=$go_reqeust?>" class="ol_after_req">대행의뢰 <span><?=get_record_alarm('request', $member['mb_id'])?></span> <!-- 대행의뢰 알람 --></a></li>
 		<li><a href="<?=$go_estimate?>" class="ol_after_now">상담현황 <span><?=get_record_alarm('mkestimate', $member['mb_id'])?></span> <!-- 상담현황 알람 --></a></li>

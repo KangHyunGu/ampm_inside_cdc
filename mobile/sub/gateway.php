@@ -33,8 +33,8 @@ if(!$view){
 //move_page("/sub/sub1-2-view.php?utm_member=".$view['wr_1']."#empty");
 //move_page("/ae-".$view['wr_1']);
 if($team_code){
-	move_page("/ae-".$utm_member."/member/?team_code=".$team_code);
+	move_page("/ae-".$utm_member."/?team_code=".$team_code);
 }else{
-	move_page("/ae-".$utm_member."/member/");
+	move_page("/ae-".$utm_member."/");
 }
 ?>

@@ -40,7 +40,10 @@ include(G5_PATH.'/inc/_inc_loginMeberInfo.php');
             <div class="p_m_menu">
                 <ul id="ol_after_private" class="w-box">
                     <li>
-                        <a href="<?=$go_amypage?>">
+                        <span class="pop">
+                            <?=get_record_alarm('insight', $member['mb_id'])?>
+                        </span><!-- 업로드등록 알람 -->
+                       <a href="<?=$go_amypage?>">
                             <i class="fas fa-house-user"></i>
                             <span>마이페이지</span>
                         </a>

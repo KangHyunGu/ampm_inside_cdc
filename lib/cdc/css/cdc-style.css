@@ -101,4 +101,9 @@ hr .split{
 #bo_v_con img {max-width:100%;height:auto} */
 
 
- 
+.desktop .drop-zone {
+    width:calc(100% / 5 - 20px);
+}
+.drop-zone {
+    width: calc(100% / 2 - 20px);
+}

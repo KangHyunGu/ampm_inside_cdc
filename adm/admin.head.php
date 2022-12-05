@@ -170,7 +170,7 @@ function imageview(id, w, h)
 				}else if ($is_admin != 'super' && ($menu['menu'.$key][0][0] == '300000')){
 					continue;
 				//총관리자 권한이 아닌 경우 해당 메뉴 비노출 처리(20220630) - 게시판	
-				}else if ($is_admin != 'super' && $is_admin != 'manager' && $is_admin != 'ma_admin' && ($menu['menu'.$key][0][0] == '600000')){
+				}else if ($is_admin != 'super' && $is_admin != 'manager' && $is_admin != 'ma_admin' && $is_admin != 'uploader' && ($menu['menu'.$key][0][0] == '600000')){
 					continue;
 				//총관리자 권한이 아닌 경우 해당 메뉴 비노출 처리(20220630) - CDC	
 				}else if ($is_admin != 'super' && $is_admin != 'uploader' && ($menu['menu'.$key][0][0] == '700000')){

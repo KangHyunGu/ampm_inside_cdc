@@ -57,5 +57,6 @@ $(document).ready(function() {
 
 
 $(function() {
-        AOS.init();
+	//미사용인거 같아서 주석처리 -- feeris
+	//AOS.init();
 });
